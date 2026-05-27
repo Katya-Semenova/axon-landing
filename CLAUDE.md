@@ -39,4 +39,4 @@ All three from Google Fonts.
 7. CTA + Footer
 
 ## Status
-Skeleton not started. Awaiting Section 1 (Hero) spec.
+Skeleton complete. Awaiting approved composition from artifact prototype. No section work started in Code yet.
