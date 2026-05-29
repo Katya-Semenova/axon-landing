@@ -334,16 +334,16 @@ export default function Home() {
             <div className="grid grid-cols-3 items-center border-b border-bg/8 py-10 px-10 gap-4">
               <div className="text-center">
                 <p className="font-body text-xs font-semibold uppercase tracking-widest text-soft/40 mb-3">Before</p>
-                <div className="font-display text-bg/25 line-through decoration-soft/30" style={{ fontSize: 'clamp(40px,5.5vw,72px)', lineHeight: 1 }}>6<span style={{ fontSize: '0.42em', marginLeft: 3 }}>hrs</span></div>
+                <div className="font-display text-bg/25 line-through decoration-soft/30" style={{ fontSize: 'clamp(40px,5.5vw,72px)', lineHeight: 1 }}>6<span className="text-[0.42em] ml-[3px]">hrs</span></div>
                 <p className="font-body text-xs text-soft/30 mt-2">of reformatting</p>
               </div>
               <div className="text-center flex flex-col items-center gap-2">
-                <span className="text-accent" style={{ fontSize: '2rem' }}>→</span>
+                <span className="text-accent text-[2rem]">→</span>
                 <span className="font-body text-xs text-soft/40 uppercase tracking-widest">with Axon</span>
               </div>
               <div className="text-center">
                 <p className="font-body text-xs font-semibold uppercase tracking-widest text-accent/70 mb-3">With Axon</p>
-                <div className="font-display text-bg" style={{ fontSize: 'clamp(40px,5.5vw,72px)', lineHeight: 1 }}>12<span style={{ fontSize: '0.42em', marginLeft: 3, color: 'rgba(244,240,232,0.55)' }}>min</span></div>
+                <div className="font-display text-bg" style={{ fontSize: 'clamp(40px,5.5vw,72px)', lineHeight: 1 }}>12<span className="text-[0.42em] ml-[3px] text-bg/55">min</span></div>
                 <p className="font-body text-xs text-soft/50 mt-2">from raw data</p>
               </div>
             </div>
@@ -379,7 +379,7 @@ export default function Home() {
                     {/* Browser chrome */}
                     <div style={{ background: 'rgba(26,39,66,0.05)', borderBottom: '1px solid rgba(26,39,66,0.08)', padding: '8px 16px', display: 'flex', gap: 6, alignItems: 'center' }}>
                       {[.18, .13, .08].map((op, i) => <div key={i} style={{ width: 10, height: 10, borderRadius: '50%', background: `rgba(26,39,66,${op})` }} />)}
-                      <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: 'rgba(139,149,168,0.5)', marginLeft: 8 }}>axon.ai/canvas</span>
+                      <span className="font-body text-[11px] text-soft/50 ml-2">axon.ai/canvas</span>
                     </div>
 
                     <div style={{ position: 'relative', height: 'calc(340px - 37px)' }}>
@@ -390,7 +390,7 @@ export default function Home() {
                           <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(200,168,107,0.18)', border: '1px solid rgba(200,168,107,0.28)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C8A86B" strokeWidth="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>
                           </div>
-                          <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: '#8B95A8', textAlign: 'center' }}>Drop files here or <span style={{ color: '#C8A86B', textDecoration: 'underline' }}>browse</span></p>
+                          <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: '#8B95A8', textAlign: 'center' }}>Drop files here or <span className="text-accent underline">browse</span></p>
                         </div>
                         <div style={{ display: 'flex', gap: 8 }}>
                           <div style={{ height: 28, padding: '0 12px', borderRadius: 8, background: 'rgba(26,39,66,0.07)', border: '1px solid rgba(26,39,66,0.1)', fontFamily: "'Inter',sans-serif", fontSize: 11, color: '#8B95A8', display: 'flex', alignItems: 'center', gap: 6 }}>📄 data.csv</div>
@@ -408,7 +408,7 @@ export default function Home() {
                             <div style={{ flex: 1, background: '#E8EAED', border: '1px solid rgba(26,39,66,0.1)', borderRadius: '12px 12px 12px 2px', padding: 14 }}>
                               {i === 0
                                 ? <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 13, color: '#1A2742', lineHeight: 1.5 }}>Parsing 3 files, 47 tables, 218K rows...</p>
-                                : <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 13, color: '#1A2742' }}>Detected <span style={{ color: '#C8A86B', fontWeight: 500 }}>6 insights</span> worth surfacing.</p>
+                                : <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 13, color: '#1A2742' }}>Detected <span className="text-accent font-medium">6 insights</span> worth surfacing.</p>
                               }
                             </div>
                           </div>
