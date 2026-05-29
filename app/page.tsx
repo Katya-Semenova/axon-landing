@@ -1,7 +1,732 @@
+'use client';
+
+import { useEffect, useRef } from 'react';
+
 export default function Home() {
+  const heroRef = useRef<HTMLElement>(null);
+  const chaosLayerRef = useRef<HTMLDivElement>(null);
+  const heroCardsRef = useRef<HTMLDivElement>(null);
+  const heroBottomRef = useRef<HTMLDivElement>(null);
+
+  // ── Hero chaos animation ──
+  useEffect(() => {
+    const hero = heroRef.current;
+    const chaosLayer = chaosLayerRef.current;
+    const heroCards = heroCardsRef.current;
+    const heroBottom = heroBottomRef.current;
+    if (!hero || !chaosLayer || !heroCards || !heroBottom) return;
+
+    let heroState = 'before';
+
+    const TOKENS = ['218,439','47','$1,040M','0.78','-12%','Q3','71%','0.82','SELECT *','GROUP BY','WHERE date >','JOIN ON','null,4.2,89','2024-Q3','user_id','revenue','churn_rate','mrr','retention','/','<','>','{','}','→','≠'];
+    const COLORS = ['rgba(26,39,66,0.55)','rgba(26,39,66,0.40)','rgba(139,149,168,0.60)','rgba(139,149,168,0.45)','rgba(200,168,107,0.65)','rgba(200,168,107,0.48)'];
+
+    const SCREENSHOT_SVGS = [
+      `<svg xmlns='http://www.w3.org/2000/svg' width='110' height='72' viewBox='0 0 110 72'><rect width='110' height='72' rx='6' fill='white' stroke='rgba(26,39,66,0.12)' stroke-width='1'/><rect x='4' y='4' width='102' height='10' rx='2' fill='rgba(26,39,66,0.08)'/><rect x='4' y='18' width='34' height='7' rx='1' fill='rgba(200,168,107,0.3)'/><rect x='42' y='18' width='28' height='7' rx='1' fill='rgba(26,39,66,0.07)'/><rect x='74' y='18' width='32' height='7' rx='1' fill='rgba(26,39,66,0.07)'/><rect x='4' y='29' width='34' height='7' rx='1' fill='rgba(26,39,66,0.06)'/><rect x='42' y='29' width='28' height='7' rx='1' fill='rgba(200,168,107,0.18)'/><rect x='74' y='29' width='32' height='7' rx='1' fill='rgba(26,39,66,0.06)'/><rect x='4' y='40' width='34' height='7' rx='1' fill='rgba(26,39,66,0.05)'/><rect x='42' y='40' width='28' height='7' rx='1' fill='rgba(26,39,66,0.05)'/><rect x='74' y='40' width='32' height='7' rx='1' fill='rgba(200,168,107,0.22)'/><rect x='4' y='51' width='34' height='7' rx='1' fill='rgba(26,39,66,0.04)'/><rect x='42' y='51' width='28' height='7' rx='1' fill='rgba(26,39,66,0.04)'/><rect x='74' y='51' width='32' height='7' rx='1' fill='rgba(26,39,66,0.04)'/><rect x='4' y='62' width='60' height='4' rx='1' fill='rgba(139,149,168,0.2)'/></svg>`,
+      `<svg xmlns='http://www.w3.org/2000/svg' width='120' height='80' viewBox='0 0 120 80'><rect width='120' height='80' rx='6' fill='white' stroke='rgba(26,39,66,0.12)' stroke-width='1'/><rect x='4' y='4' width='54' height='34' rx='3' fill='rgba(26,39,66,0.85)'/><rect x='62' y='4' width='54' height='15' rx='3' fill='rgba(200,168,107,0.35)'/><rect x='62' y='23' width='54' height='15' rx='3' fill='rgba(26,39,66,0.1)'/><rect x='4' y='42' width='112' height='3' rx='1' fill='rgba(26,39,66,0.08)'/><rect x='4' y='50' width='26' height='24' rx='3' fill='rgba(200,168,107,0.22)'/><rect x='34' y='50' width='26' height='24' rx='3' fill='rgba(26,39,66,0.07)'/><rect x='64' y='50' width='52' height='24' rx='3' fill='rgba(26,39,66,0.05)'/></svg>`,
+      `<svg xmlns='http://www.w3.org/2000/svg' width='100' height='68' viewBox='0 0 100 68'><rect width='100' height='68' rx='6' fill='white' stroke='rgba(26,39,66,0.12)' stroke-width='1'/><rect x='4' y='4' width='55' height='6' rx='2' fill='rgba(26,39,66,0.12)'/><rect x='4' y='14' width='30' height='4' rx='1' fill='rgba(139,149,168,0.3)'/><rect x='8' y='52' width='10' height='10' rx='1' fill='rgba(26,39,66,0.7)'/><rect x='22' y='38' width='10' height='24' rx='1' fill='rgba(200,168,107,0.8)'/><rect x='36' y='44' width='10' height='18' rx='1' fill='rgba(26,39,66,0.5)'/><rect x='50' y='30' width='10' height='32' rx='1' fill='rgba(200,168,107,0.6)'/><rect x='64' y='42' width='10' height='20' rx='1' fill='rgba(26,39,66,0.4)'/><rect x='78' y='34' width='10' height='28' rx='1' fill='rgba(200,168,107,0.5)'/><line x1='8' y1='62' x2='92' y2='62' stroke='rgba(26,39,66,0.15)' stroke-width='1'/></svg>`,
+    ];
+
+    const COLS = 8, ROWS = 6, EXCL = 248;
+
+    interface ChaosItem {
+      el: HTMLElement;
+      x: number; y: number; rot: number;
+      baseOp: number;
+      driftR: number; driftT: number; driftOff: number;
+      breatheT: number; breatheOff: number;
+      breatheLo: number; breatheHi: number;
+      driftAng: number;
+      driftAnim: Animation | null;
+      breatheAnim: Animation | null;
+    }
+
+    function buildChaos(): ChaosItem[] {
+      const vw = window.innerWidth, vh = window.innerHeight;
+      const cx = vw / 2, cy = vh / 2;
+      const cw = vw / COLS, ch = vh / ROWS;
+      const data: ChaosItem[] = [];
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          const x = (c + 0.2 + Math.random() * 0.6) * cw;
+          const y = (r + 0.2 + Math.random() * 0.6) * ch;
+          if (Math.hypot(x - cx, y - cy) < EXCL) continue;
+          const isScreenshot = Math.random() < 0.15;
+          const baseOp = isScreenshot ? 0.18 + Math.random() * 0.12 : 0.38 + Math.random() * 0.30;
+          const driftR = 16 + Math.random() * 22;
+          const driftT = 22000 + Math.random() * 18000;
+          const driftOff = Math.random() * driftT;
+          const breatheT = 8000 + Math.random() * 4000;
+          const breatheOff = Math.random() * breatheT;
+          const rot = (Math.random() - 0.5) * (isScreenshot ? 6 : 10);
+          const el = document.createElement(isScreenshot ? 'div' : 'span');
+          if (isScreenshot) {
+            el.innerHTML = SCREENSHOT_SVGS[Math.floor(Math.random() * SCREENSHOT_SVGS.length)];
+            el.style.cssText = `position:absolute;left:${x}px;top:${y}px;transform:rotate(${rot}deg);opacity:0;will-change:transform,opacity;pointer-events:none;filter:drop-shadow(0 2px 8px rgba(26,39,66,0.08))`;
+          } else {
+            el.textContent = TOKENS[Math.floor(Math.random() * TOKENS.length)];
+            el.style.cssText = `position:absolute;left:${x}px;top:${y}px;font-family:'JetBrains Mono',monospace;font-size:${10 + Math.random() * 5}px;color:${COLORS[Math.floor(Math.random() * COLORS.length)]};transform:rotate(${rot}deg);opacity:0;will-change:transform,opacity;white-space:nowrap;pointer-events:none`;
+          }
+          chaosLayer.appendChild(el);
+          data.push({
+            el, x, y, rot, baseOp, driftR, driftT, driftOff, breatheT, breatheOff,
+            breatheLo: Math.max(0.25, baseOp - 0.1),
+            breatheHi: Math.min(0.85, baseOp + 0.12),
+            driftAng: Math.random() * Math.PI * 2,
+            driftAnim: null, breatheAnim: null,
+          });
+        }
+      }
+      return data;
+    }
+
+    const chaosData = buildChaos();
+
+    function startDrift(d: ChaosItem) {
+      const steps = 8;
+      const kfs: Keyframe[] = [];
+      for (let i = 0; i <= steps; i++) {
+        const a = d.driftAng + (i / steps) * Math.PI * 2;
+        kfs.push({ transform: `translate(${Math.cos(a) * d.driftR}px,${Math.sin(a) * d.driftR}px) rotate(${d.rot}deg)` });
+      }
+      d.driftAnim = d.el.animate(kfs, { duration: d.driftT, delay: -d.driftOff, iterations: Infinity, easing: 'linear' });
+    }
+
+    function startBreathe(d: ChaosItem) {
+      d.breatheAnim = d.el.animate(
+        [{ opacity: d.breatheLo }, { opacity: d.breatheHi }, { opacity: d.breatheLo }],
+        { duration: d.breatheT, delay: -d.breatheOff, iterations: Infinity, easing: 'ease-in-out' }
+      );
+    }
+
+    function startAllDrift() {
+      chaosData.forEach(d => { if (!d.driftAnim) startDrift(d); if (!d.breatheAnim) startBreathe(d); });
+    }
+
+    function runEntrance() {
+      heroState = 'entering';
+      const l1 = hero.querySelectorAll<HTMLElement>('#headlineLine1 .hw');
+      const l2 = hero.querySelectorAll<HTMLElement>('#headlineLine2 .hw');
+      l1.forEach((w, i) => w.animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 360, delay: i * 190, fill: 'forwards', easing: 'ease-out' }));
+      l2.forEach((w, i) => w.animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 360, delay: 750 + i * 190, fill: 'forwards', easing: 'ease-out' }));
+
+      const vw = window.innerWidth, vh = window.innerHeight;
+      chaosData.forEach((d, i) => {
+        d.el.style.left = (vw / 2) + 'px';
+        d.el.style.top = (vh / 2) + 'px';
+        const anim = d.el.animate([
+          { opacity: 0, transform: `translate(-50%,-50%) rotate(${d.rot}deg) scale(0.4)` },
+          { opacity: d.baseOp, transform: `translate(${d.x - vw / 2}px,${d.y - vh / 2}px) rotate(${d.rot}deg) scale(1)` },
+        ], { duration: 900, delay: i * 14, fill: 'forwards', easing: 'cubic-bezier(0.25,0.46,0.45,0.94)' });
+        anim.onfinish = () => {
+          d.el.style.left = d.x + 'px';
+          d.el.style.top = d.y + 'px';
+          d.el.style.opacity = String(d.baseOp);
+        };
+      });
+
+      setTimeout(() => {
+        if (!heroCards) return;
+        const a = heroCards.animate([{ opacity: 0, transform: 'translateY(18px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 700, fill: 'forwards', easing: 'ease-out' });
+        a.onfinish = () => { heroCards.style.opacity = '1'; heroCards.style.transform = 'none'; };
+      }, 600);
+
+      setTimeout(() => {
+        if (!heroBottom) return;
+        const a = heroBottom.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 600, fill: 'forwards', easing: 'ease-out' });
+        a.onfinish = () => { heroBottom.style.opacity = '1'; };
+      }, 1000);
+
+      setTimeout(() => { heroState = 'drifting'; startAllDrift(); }, 1800);
+    }
+
+    const obs = new IntersectionObserver(entries => {
+      const v = entries[0].isIntersecting;
+      if (v && heroState === 'before') runEntrance();
+      else if (v && heroState === 'drifting') chaosData.forEach(d => { d.driftAnim?.play(); d.breatheAnim?.play(); });
+      else if (!v && heroState === 'drifting') chaosData.forEach(d => { d.driftAnim?.pause(); d.breatheAnim?.pause(); });
+    }, { threshold: 0.15 });
+
+    obs.observe(hero);
+
+    return () => {
+      obs.disconnect();
+      chaosData.forEach(d => {
+        d.driftAnim?.cancel();
+        d.breatheAnim?.cancel();
+        d.el.remove();
+      });
+    };
+  }, []);
+
+  // ── Shift scroll mechanism ──
+  useEffect(() => {
+    const shiftSection = document.getElementById('shift');
+    const shiftHeader = document.getElementById('shiftHeader');
+    const shiftTrack = document.getElementById('shiftTrack');
+    if (!shiftTrack) return;
+
+    const screens = document.querySelectorAll<HTMLElement>('.mock-screen');
+    const panels = document.querySelectorAll<HTMLElement>('.act-panel');
+    const dots = document.querySelectorAll<HTMLElement>('.act-dot');
+    const ACT_COUNT = 5;
+    let activeAct = -1;
+
+    function setHeaderVar() {
+      const h = shiftHeader ? shiftHeader.parentElement!.offsetHeight : 200;
+      document.documentElement.style.setProperty('--shift-header', h + 'px');
+    }
+    setHeaderVar();
+    window.addEventListener('resize', setHeaderVar);
+
+    function activateAct(idx: number) {
+      if (idx === activeAct) return;
+      activeAct = idx;
+      screens.forEach((s, i) => { s.classList.toggle('active', i === idx); s.style.opacity = i === idx ? '1' : '0'; });
+      panels.forEach((p, i) => { p.style.opacity = i === idx ? '1' : '0'; p.style.pointerEvents = i === idx ? 'auto' : 'none'; });
+      dots.forEach((d, i) => { d.style.background = i === idx ? '#C8A86B' : 'rgba(26,39,66,0.2)'; d.style.transform = i === idx ? 'scale(1.4)' : 'scale(1)'; });
+    }
+    activateAct(0);
+
+    function onScroll() {
+      if (!shiftTrack) return;
+      const rect = shiftTrack.getBoundingClientRect();
+      const scrolled = -rect.top;
+      const scrollable = shiftTrack.offsetHeight - window.innerHeight;
+      if (scrollable <= 0) return;
+      const progress = Math.max(0, Math.min(1, scrolled / scrollable));
+      const idx = Math.min(ACT_COUNT - 1, Math.floor(progress * ACT_COUNT));
+      activateAct(idx);
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', setHeaderVar);
+    };
+  }, []);
+
+  // ── Modes intersection observer ──
+  useEffect(() => {
+    const grid = document.getElementById('modesGrid');
+    if (!grid) return;
+    const cols = grid.querySelectorAll<HTMLElement>('.mode-col');
+    const obs = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        cols.forEach(c => { c.style.opacity = '1'; c.style.transform = 'translateY(0)'; });
+      }
+    }, { threshold: 0.2 });
+    obs.observe(grid);
+    return () => obs.disconnect();
+  }, []);
+
   return (
-    <main className="min-h-screen bg-cream flex items-center justify-center">
-      <h1 className="font-playfair text-7xl text-navy">Axon</h1>
-    </main>
+    <>
+      {/* ═══ NAV ═══ */}
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-primary/10">
+        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+          <span className="font-display font-semibold text-primary text-xl tracking-tight">Axon</span>
+          <div className="flex items-center gap-6">
+            <a href="https://axon-app-chi.vercel.app/" target="_blank" className="text-sm font-body text-soft hover:text-primary transition-colors">Try Axon</a>
+            <a href="#" className="text-sm font-body text-primary border border-primary/30 px-4 py-1.5 rounded hover:bg-primary hover:text-bg transition-all">Sign in</a>
+          </div>
+        </div>
+      </nav>
+
+      {/* ═══ HERO ═══ */}
+      <section id="hero" ref={heroRef} style={{ height: '100vh', position: 'relative', overflow: 'hidden', background: '#F4F0E8' }}>
+        <div id="chaosLayer" ref={chaosLayerRef} style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 1 }} />
+        <div id="heroContent" style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 0, zIndex: 2, padding: '0 24px' }}>
+          <div id="heroHeadline" style={{ textAlign: 'center', lineHeight: 1.05, marginBottom: 32 }}>
+            <div id="headlineLine1" style={{ fontFamily: "'Instrument Serif',serif", fontSize: 'clamp(38px,5.2vw,82px)', fontWeight: 400, color: '#1A2742', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '0.22em', marginBottom: '0.06em' }}>
+              {['From', 'data', 'to', 'story.'].map(w => <span key={w} className="hw" style={{ opacity: 0 }}>{w}</span>)}
+            </div>
+            <div id="headlineLine2" style={{ fontFamily: "'Instrument Serif',serif", fontSize: 'clamp(38px,5.2vw,82px)', fontWeight: 400, fontStyle: 'italic', color: '#C8A86B', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '0.22em' }}>
+              {['Without', 'translation.'].map(w => <span key={w} className="hw" style={{ opacity: 0 }}>{w}</span>)}
+            </div>
+          </div>
+
+          <div id="heroCards" ref={heroCardsRef} style={{ display: 'flex', gap: 14, flexWrap: 'wrap', justifyContent: 'center', opacity: 0, transform: 'translateY(20px)', marginBottom: 28 }}>
+            {/* Revenue mix card */}
+            <div style={{ width: 192, height: 112, background: '#fff', border: '1px solid rgba(26,39,66,0.12)', borderRadius: 12, padding: 10, display: 'flex', flexDirection: 'column', gap: 5, boxShadow: '0 2px 12px rgba(26,39,66,.05)' }}>
+              <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 8, color: '#8B95A8', letterSpacing: '.07em', textTransform: 'uppercase' }}>Revenue mix</div>
+              <div style={{ flex: 1, display: 'grid', gap: 3, gridTemplateColumns: '2fr 1fr', gridTemplateRows: '1fr 1fr' }}>
+                <div style={{ background: '#1A2742', borderRadius: 3, gridRow: 'span 2', opacity: .82 }} />
+                <div style={{ background: '#C8A86B', borderRadius: 3, opacity: .72 }} />
+                <div style={{ background: '#8B95A8', borderRadius: 3, opacity: .42 }} />
+              </div>
+            </div>
+            {/* Churn by segment */}
+            <div style={{ width: 192, height: 112, background: '#fff', border: '1px solid rgba(26,39,66,0.12)', borderRadius: 12, padding: 10, display: 'flex', flexDirection: 'column', gap: 5, boxShadow: '0 2px 12px rgba(26,39,66,.05)' }}>
+              <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 8, color: '#8B95A8', letterSpacing: '.07em', textTransform: 'uppercase' }}>Churn by segment</div>
+              <div style={{ flex: 1, display: 'flex', alignItems: 'flex-end', justifyContent: 'space-around', paddingBottom: 2 }}>
+                {[{ h: 26, op: .3, opDot: .42 }, { h: 48, col: '#C8A86B', opDot: 1 }, { h: 34, op: .3, opDot: .42 }, { h: 18, op: .2, opDot: .32 }].map((seg, i) => (
+                  <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <div style={{ width: 2, height: seg.h, background: seg.col ?? `rgba(26,39,66,${seg.op})`, borderRadius: 1 }} />
+                    <div style={{ width: 7, height: 7, borderRadius: '50%', background: seg.col ?? `rgba(26,39,66,${seg.opDot})`, marginTop: -1 }} />
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* Activity heatmap */}
+            <div style={{ width: 192, height: 112, background: '#fff', border: '1px solid rgba(26,39,66,0.12)', borderRadius: 12, padding: 10, display: 'flex', flexDirection: 'column', gap: 5, boxShadow: '0 2px 12px rgba(26,39,66,.05)' }}>
+              <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 8, color: '#8B95A8', letterSpacing: '.07em', textTransform: 'uppercase' }}>Activity heatmap</div>
+              <div style={{ flex: 1, display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gridTemplateRows: 'repeat(3,1fr)', gap: 3 }}>
+                {[['#C8A86B',.22],['#C8A86B',.68],['#1A2742',.18],['#C8A86B',.88],['#1A2742',.13],['#C8A86B',.48],['#C8A86B',.78],['#1A2742',.1],['#C8A86B',.38],['#1A2742',.22],['#C8A86B',.58],['#C8A86B',.32]].map(([col, op], i) => (
+                  <div key={i} style={{ borderRadius: 2, background: col as string, opacity: op as number }} />
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div id="heroBottom" ref={heroBottomRef} style={{ textAlign: 'center', opacity: 0, maxWidth: 500 }}>
+            <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 15, color: '#8B95A8', lineHeight: 1.7, margin: '0 0 22px' }}>
+              Drop your data. Get your story.<br />Axon&apos;s AI finds the signal — you own the narrative.
+            </p>
+            <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 10 }}>
+              <a href="https://axon-app-chi.vercel.app/" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#1A2742', color: '#F4F0E8', fontFamily: "'Inter',sans-serif", fontSize: 13, fontWeight: 500, padding: '12px 24px', borderRadius: 8, textDecoration: 'none' }}>Try Axon free →</a>
+              <a href="#problem" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, border: '1px solid rgba(26,39,66,.2)', color: '#1A2742', fontFamily: "'Inter',sans-serif", fontSize: 13, fontWeight: 500, padding: '12px 24px', borderRadius: 8, textDecoration: 'none' }}>See how it works ↓</a>
+            </div>
+            <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, color: 'rgba(139,149,168,.6)' }}>No credit card. First deck on us.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ PROBLEM ═══ */}
+      <section id="problem" className="py-28 px-6 border-t divider">
+        <div className="max-w-5xl mx-auto">
+          <div className="mb-16 max-w-2xl">
+            <span className="text-xs font-body font-semibold uppercase tracking-widest text-accent mb-4 block">Why Axon</span>
+            <h2 className="font-display text-4xl md:text-5xl font-semibold text-primary leading-tight">
+              Your data already<br />
+              <span style={{ fontWeight: 300 }}>knows the story.</span>
+            </h2>
+            <p className="font-body text-soft mt-5 text-base leading-relaxed max-w-lg">
+              The insight is there. The bottleneck is the translation layer between raw numbers and a room that acts on them.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-5 mb-16">
+            {[
+              { icon: '🎯', tag: 'Control', title: "You stay the director.", body: "Define the purpose — \"board meeting\", \"weekly ops\", \"investor update\" — and Axon structures the narrative around your intent. The final call is always yours.", quote: '"I\'m the director. The tool is my crew."' },
+              { icon: '🧠', tag: 'Clarity', title: "The exhausting part is invisible.", body: "The AI agent parses, cleans, and ranks — surfacing a clear menu of insights, not a data dump. You think about decisions, not formatting.", quote: '"The exhausting part is already done. I can think clearly now."' },
+              { icon: '✦', tag: 'Craft', title: "You're not processing. You're crafting.", body: "Axon proposes visual concepts — you choose the hierarchy, the metaphor, the mood. Small creative calls that make the story feel human, not generated.", quote: '"I\'m not just processing data — I\'m crafting something. And it looks amazing."' },
+              { icon: '🔒', tag: 'Confidence', title: "Send it without checking twice.", body: "The deck builds itself in real time — charts, headers, data blocks assembling as you work. Each section locks in with a visual confirmation. Nothing goes out broken.", quote: '"I\'m not afraid to share this. I\'m proud to."' },
+            ].map(card => (
+              <div key={card.tag} className="rounded-2xl border border-primary/10 bg-white/50 p-7 group hover:border-accent/40 transition-all duration-300">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-primary/8 flex items-center justify-center flex-shrink-0 text-lg">{card.icon}</div>
+                  <div>
+                    <p className="text-xs font-body font-semibold uppercase tracking-widest text-accent mb-1">{card.tag}</p>
+                    <h3 className="font-display text-xl font-semibold text-primary mb-3">{card.title}</h3>
+                    <p className="font-body text-sm text-soft leading-relaxed mb-4">{card.body}</p>
+                    <p className="font-body text-sm text-primary/60 italic border-l-2 border-accent/40 pl-3">{card.quote}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* 12 min stat */}
+          <div className="rounded-2xl bg-primary overflow-hidden">
+            <div className="grid grid-cols-3 items-center border-b border-bg/8 py-10 px-10 gap-4">
+              <div className="text-center">
+                <p className="font-body text-xs font-semibold uppercase tracking-widest text-soft/40 mb-3">Before</p>
+                <div className="font-display text-bg/25 line-through decoration-soft/30" style={{ fontSize: 'clamp(40px,5.5vw,72px)', fontWeight: 700, lineHeight: 1 }}>6<span style={{ fontSize: '0.42em', fontWeight: 300, marginLeft: 3 }}>hrs</span></div>
+                <p className="font-body text-xs text-soft/30 mt-2">of reformatting</p>
+              </div>
+              <div className="text-center flex flex-col items-center gap-2">
+                <span className="text-accent" style={{ fontSize: '2rem' }}>→</span>
+                <span className="font-body text-xs text-soft/40 uppercase tracking-widest">with Axon</span>
+              </div>
+              <div className="text-center">
+                <p className="font-body text-xs font-semibold uppercase tracking-widest text-accent/70 mb-3">With Axon</p>
+                <div className="font-display text-bg" style={{ fontSize: 'clamp(40px,5.5vw,72px)', fontWeight: 700, lineHeight: 1 }}>12<span style={{ fontSize: '0.42em', fontWeight: 300, marginLeft: 3, color: 'rgba(244,240,232,0.55)' }}>min</span></div>
+                <p className="font-body text-xs text-soft/50 mt-2">from raw data</p>
+              </div>
+            </div>
+            <div className="grid md:grid-cols-4 gap-0 divide-x divide-bg/8 px-2 py-8">
+              {['Parses every row, column, and relationship', 'Ranks insights by financial, time, and strategic value', 'Selects chart types that serve the story, not the default', 'Assembles a deck you\'re proud to put your name on'].map((txt, i) => (
+                <div key={i} className="px-6 py-2 flex flex-col gap-2">
+                  <div className="w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0"><span className="text-accent text-xs font-semibold">{i + 1}</span></div>
+                  <p className="font-body text-sm text-bg/65 leading-relaxed">{txt}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ THE SHIFT ═══ */}
+      <section id="shift" className="border-t divider">
+        <div className="py-20 px-6">
+          <div className="max-w-5xl mx-auto" id="shiftHeader">
+            <span className="text-xs font-body font-semibold uppercase tracking-widest text-accent">The Shift</span>
+            <h2 className="font-display text-4xl md:text-5xl font-semibold text-primary mt-3 leading-tight">Three files in.<br />A board-ready deck out.</h2>
+          </div>
+        </div>
+
+        <div id="shiftTrack" style={{ height: 'calc(500vh + var(--shift-header, 200px))', position: 'relative' }}>
+          <div id="shiftSticky" style={{ position: 'sticky', top: 0, height: '100vh' }} className="px-6">
+            <div className="max-w-5xl mx-auto h-full flex items-center">
+              <div className="grid md:grid-cols-2 gap-10 w-full items-center">
+
+                {/* LEFT: browser mockup */}
+                <div>
+                  <div style={{ overflow: 'hidden', borderRadius: 16, border: '1px solid rgba(26,39,66,0.12)', background: 'rgba(255,255,255,0.4)', boxShadow: '0 2px 20px rgba(26,39,66,0.06)', height: 340 }}>
+                    {/* Browser chrome */}
+                    <div style={{ background: 'rgba(26,39,66,0.05)', borderBottom: '1px solid rgba(26,39,66,0.08)', padding: '8px 16px', display: 'flex', gap: 6, alignItems: 'center' }}>
+                      {[.18, .13, .08].map((op, i) => <div key={i} style={{ width: 10, height: 10, borderRadius: '50%', background: `rgba(26,39,66,${op})` }} />)}
+                      <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: 'rgba(139,149,168,0.5)', marginLeft: 8 }}>axon.ai/canvas</span>
+                    </div>
+
+                    <div style={{ position: 'relative', height: 'calc(340px - 37px)' }}>
+
+                      {/* Screen 0: Drop data */}
+                      <div className="mock-screen active" data-screen="0" style={{ position: 'absolute', inset: 0, padding: 24, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: 16, opacity: 1 }}>
+                        <div style={{ width: '100%', border: '2px dashed rgba(26,39,66,0.18)', borderRadius: 12, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12, padding: 28, background: 'rgba(26,39,66,0.02)' }}>
+                          <div style={{ width: 48, height: 48, borderRadius: 12, background: 'rgba(200,168,107,0.18)', border: '1px solid rgba(200,168,107,0.28)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C8A86B" strokeWidth="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>
+                          </div>
+                          <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: '#8B95A8', textAlign: 'center' }}>Drop files here or <span style={{ color: '#C8A86B', textDecoration: 'underline' }}>browse</span></p>
+                        </div>
+                        <div style={{ display: 'flex', gap: 8 }}>
+                          <div style={{ height: 28, padding: '0 12px', borderRadius: 8, background: 'rgba(26,39,66,0.07)', border: '1px solid rgba(26,39,66,0.1)', fontFamily: "'Inter',sans-serif", fontSize: 11, color: '#8B95A8', display: 'flex', alignItems: 'center', gap: 6 }}>📄 data.csv</div>
+                          <div style={{ height: 28, padding: '0 12px', borderRadius: 8, background: 'rgba(26,39,66,0.07)', border: '1px solid rgba(26,39,66,0.1)', fontFamily: "'Inter',sans-serif", fontSize: 11, color: '#8B95A8', display: 'flex', alignItems: 'center', gap: 6 }}>📊 metrics.sql</div>
+                        </div>
+                      </div>
+
+                      {/* Screen 1: AI thinks */}
+                      <div className="mock-screen" data-screen="1" style={{ position: 'absolute', inset: 0, padding: 24, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 12, opacity: 0 }}>
+                        {[{ text: 'Parsing 3 files, 47 tables, 218K rows...' }, { text: null }].map((msg, i) => (
+                          <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
+                            <div style={{ width: 28, height: 28, borderRadius: '50%', background: '#1A2742', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 2 }}>
+                              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F4F0E8" strokeWidth="2"><circle cx="12" cy="12" r="3" /><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4" /></svg>
+                            </div>
+                            <div style={{ flex: 1, background: '#E8EAED', border: '1px solid rgba(26,39,66,0.1)', borderRadius: '12px 12px 12px 2px', padding: 14 }}>
+                              {i === 0
+                                ? <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 13, color: '#1A2742', lineHeight: 1.5 }}>Parsing 3 files, 47 tables, 218K rows...</p>
+                                : <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 13, color: '#1A2742' }}>Detected <span style={{ color: '#C8A86B', fontWeight: 500 }}>6 insights</span> worth surfacing.</p>
+                              }
+                            </div>
+                          </div>
+                        ))}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 6, paddingLeft: 40 }}>
+                          {[0, 0.2, 0.4].map((delay, i) => (
+                            <span key={i} className="thinking-dot" style={{ width: 6, height: 6, borderRadius: '50%', background: 'rgba(139,149,168,0.5)', display: 'inline-block', animationDelay: `${delay}s` }} />
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Screen 2: Insights connect */}
+                      <div className="mock-screen" data-screen="2" style={{ position: 'absolute', inset: 0, padding: 20, opacity: 0 }}>
+                        <div style={{ height: '100%', display: 'flex', gap: 12, alignItems: 'center' }}>
+                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6, flex: 1 }}>
+                            {[
+                              { label: 'Rev ↑12%', gold: true },
+                              { label: 'Churn ↓', gold: false },
+                              { label: 'CAC stable', gold: false },
+                              { label: 'EU leads', gold: true, light: true },
+                              { label: 'Q3 peak', gold: false },
+                              { label: 'NPS 72', gold: true },
+                            ].map((chip, i) => (
+                              <div key={i} className="insight-chip" style={{ borderRadius: 8, background: chip.gold ? (chip.light ? 'rgba(200,168,107,0.1)' : 'rgba(200,168,107,0.15)') : 'rgba(26,39,66,0.06)', border: chip.gold ? (chip.light ? '1px solid rgba(200,168,107,0.2)' : '1px solid rgba(200,168,107,0.25)') : '1px solid rgba(26,39,66,0.1)', padding: '6px 8px', fontFamily: "'Inter',sans-serif", fontSize: 11, color: chip.gold ? 'rgba(26,39,66,0.7)' : '#8B95A8' }}>{chip.label}</div>
+                            ))}
+                          </div>
+                          <svg style={{ width: 40, flexShrink: 0, alignSelf: 'stretch' }} viewBox="0 0 40 260" preserveAspectRatio="none">
+                            {[['M0 25 Q20 25 40 80','#C8A86B',0.5],['M0 65 Q20 65 40 80','#8B95A8',0.4],['M0 105 Q20 105 40 130','#8B95A8',0.4],['M0 145 Q20 145 40 130','#C8A86B',0.5],['M0 185 Q20 185 40 180','#8B95A8',0.4],['M0 225 Q20 225 40 180','#8B95A8',0.3]].map(([d, stroke, op], i) => (
+                              <path key={i} className="connector-draw" d={d as string} stroke={stroke as string} strokeWidth="1" fill="none" opacity={op as number} />
+                            ))}
+                          </svg>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: 76 }}>
+                            {[['Growth', false], ['Revenue', true], ['Retention', false]].map(([label, gold], i) => (
+                              <div key={i} className="dataset-node" style={{ borderRadius: 8, background: gold ? 'rgba(200,168,107,0.1)' : 'rgba(26,39,66,0.07)', border: gold ? '1px solid rgba(200,168,107,0.2)' : '1px solid rgba(26,39,66,0.1)', padding: 8, textAlign: 'center', fontFamily: "'Inter',sans-serif", fontSize: 11, color: gold ? '#C8A86B' : '#8B95A8' }}>{label}</div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Screen 3: Visualize */}
+                      <div className="mock-screen" data-screen="3" style={{ position: 'absolute', inset: 0, padding: 14, opacity: 0 }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, height: '100%' }}>
+                          <div style={{ borderRadius: 8, border: '1px solid rgba(26,39,66,0.1)', background: 'rgba(255,255,255,0.5)', padding: 8, display: 'flex', flexDirection: 'column', gap: 4 }}>
+                            <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 8, color: 'rgba(139,149,168,0.7)', textTransform: 'uppercase', letterSpacing: '.06em' }}>Revenue mix</p>
+                            <div style={{ flex: 1, display: 'grid', gap: 3, gridTemplateColumns: '2fr 1fr', gridTemplateRows: '1fr 1fr' }}>
+                              <div style={{ background: '#1A2742', borderRadius: 3, gridRow: 'span 2', opacity: .78 }} />
+                              <div style={{ background: '#C8A86B', borderRadius: 3, opacity: .65 }} />
+                              <div style={{ background: '#8B95A8', borderRadius: 3, opacity: .38 }} />
+                            </div>
+                          </div>
+                          <div style={{ borderRadius: 8, border: '1px solid rgba(26,39,66,0.1)', background: 'rgba(255,255,255,0.5)', padding: 8, display: 'flex', flexDirection: 'column' }}>
+                            <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 8, color: 'rgba(139,149,168,0.7)', textTransform: 'uppercase', letterSpacing: '.06em', marginBottom: 8 }}>Churn</p>
+                            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
+                              {[[.45,'rgba(26,39,66,0.45)',.6,'rgba(26,39,66,0.6)'],[.7,'#C8A86B',1,'#C8A86B'],[.82,'rgba(26,39,66,0.45)',1,'rgba(26,39,66,0.6)'],[.28,'rgba(139,149,168,0.5)',1,'rgba(139,149,168,0.6)']].map(([w, col, , dotCol], i) => (
+                                <div key={i} style={{ position: 'relative', height: 1, background: 'rgba(26,39,66,0.12)' }}>
+                                  <div style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', height: 1, background: col as string, width: `${(w as number) * 100}%` }} />
+                                  <div style={{ position: 'absolute', left: `${(w as number) * 100}%`, top: '50%', transform: 'translate(-50%,-50%)', width: 7, height: 7, borderRadius: '50%', background: dotCol as string }} />
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                          <div style={{ gridColumn: 'span 2', borderRadius: 8, border: '1px solid rgba(26,39,66,0.1)', background: 'rgba(255,255,255,0.5)', padding: 8 }}>
+                            <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 8, color: 'rgba(139,149,168,0.7)', textTransform: 'uppercase', letterSpacing: '.06em', marginBottom: 6 }}>Activity heatmap</p>
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(8,1fr)', gap: 2 }}>
+                              {[['#C8A86B',.22],['#C8A86B',.58],['#C8A86B',.82],['#C8A86B',.35],['#1A2742',.18],['#C8A86B',.68],['#1A2742',.1],['#C8A86B',.9],['#1A2742',.22],['#C8A86B',.42],['#1A2742',.14],['#C8A86B',.72],['#C8A86B',.52],['#1A2742',.18],['#C8A86B',.48],['#1A2742',.28]].map(([col, op], i) => (
+                                <div key={i} style={{ height: 14, borderRadius: 2, background: col as string, opacity: op as number }} />
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Screen 4: Ship */}
+                      <div className="mock-screen" data-screen="4" style={{ position: 'absolute', inset: 0, padding: 24, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 20, opacity: 0 }}>
+                        <div style={{ position: 'relative', width: 180, height: 108 }}>
+                          <div style={{ position: 'absolute', left: 24, right: 24, top: 20, borderRadius: 8, background: 'rgba(139,149,168,0.18)', border: '1px solid rgba(26,39,66,0.08)', height: 70 }} />
+                          <div style={{ position: 'absolute', left: 12, right: 12, top: 10, borderRadius: 8, background: 'rgba(26,39,66,0.14)', border: '1px solid rgba(26,39,66,0.1)', height: 70 }} />
+                          <div style={{ position: 'absolute', left: 0, right: 0, top: 0, borderRadius: 8, background: '#1A2742', border: '1px solid rgba(26,39,66,0.2)', height: 70, display: 'flex', alignItems: 'flex-end', padding: '8px 10px' }}>
+                            <div style={{ display: 'flex', alignItems: 'flex-end', gap: 3, width: '100%' }}>
+                              {[[.6,14],[.7,26],[.55,18],[.4,10],[.65,22]].map(([op, h], i) => (
+                                <div key={i} style={{ flex: 1, borderRadius: '2px 2px 0 0', background: '#C8A86B', opacity: op as number, height: h as number }} />
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                        <div style={{ display: 'flex', gap: 8 }}>
+                          <div className="export-tag" style={{ borderRadius: 20, background: 'rgba(200,168,107,0.15)', border: '1px solid rgba(200,168,107,0.28)', padding: '6px 14px', fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 500, color: '#C8A86B' }}>PPTX</div>
+                          <div className="export-tag" style={{ borderRadius: 20, background: 'rgba(26,39,66,0.07)', border: '1px solid rgba(26,39,66,0.12)', padding: '6px 14px', fontFamily: "'Inter',sans-serif", fontSize: 12, color: '#8B95A8' }}>PDF</div>
+                          <div className="export-tag" style={{ borderRadius: 20, background: 'rgba(26,39,66,0.07)', border: '1px solid rgba(26,39,66,0.12)', padding: '6px 14px', fontFamily: "'Inter',sans-serif", fontSize: 12, color: '#8B95A8', display: 'flex', alignItems: 'center', gap: 4 }}>Link ↗</div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  {/* Dots */}
+                  <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginTop: 14 }}>
+                    {[0,1,2,3,4].map(i => (
+                      <div key={i} className="act-dot" data-dot={i} style={{ width: 6, height: 6, borderRadius: '50%', background: i === 0 ? '#C8A86B' : 'rgba(26,39,66,0.2)', transform: i === 0 ? 'scale(1.4)' : 'scale(1)', transition: 'all .3s' }} />
+                    ))}
+                  </div>
+                </div>
+
+                {/* RIGHT: act text panels */}
+                <div style={{ position: 'relative', height: 220 }}>
+                  {[
+                    { num: '01', title: 'Drop your data.', desc: 'Any CSV, SQL dump, or analytics export. Axon parses it.' },
+                    { num: '02', title: 'The AI agent thinks.', desc: 'It reads tables, finds patterns, surfaces what matters.' },
+                    { num: '03', title: 'Insights connect.', desc: 'The agent groups findings into datasets, ready to visualize.' },
+                    { num: '04', title: 'Stories visualize themselves.', desc: 'Treemaps, heatmaps, lollipops — every chart chosen for clarity.' },
+                    { num: '05', title: 'Ship the deck.', desc: 'Export as PPTX, PDF, live link. Present in minutes, not days.' },
+                  ].map((act, i) => (
+                    <div key={i} className="act-panel" data-panel={i} style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingLeft: 24, borderLeft: '2px solid #C8A86B', opacity: i === 0 ? 1 : 0, transition: 'opacity .3s', pointerEvents: i === 0 ? 'auto' : 'none' }}>
+                      <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: '#C8A86B', marginBottom: 8 }}>{act.num}</p>
+                      <h3 className="font-display" style={{ fontSize: '1.75rem', fontWeight: 600, color: '#1A2742', marginBottom: 10 }}>{act.title}</h3>
+                      <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, color: '#8B95A8', lineHeight: 1.6 }}>{act.desc}</p>
+                    </div>
+                  ))}
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ THREE MODES ═══ */}
+      <section id="modes" className="py-28 px-6 border-t divider">
+        <div className="max-w-5xl mx-auto">
+          <div className="mb-16 text-center">
+            <span className="text-xs font-body font-semibold uppercase tracking-widest text-accent">The Workflow</span>
+            <h2 className="font-display text-4xl md:text-5xl font-semibold text-primary mt-3 leading-tight">Three chapters. One workspace.</h2>
+          </div>
+          <div className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-primary/10" id="modesGrid">
+
+            {/* Canvas */}
+            <div className="mode-col px-8 py-6 md:py-0 md:first:pl-0 flex flex-col gap-6" style={{ opacity: 0, transform: 'translateY(1rem)', transition: 'opacity .5s ease, transform .5s ease' }}>
+              <div className="rounded-xl border border-primary/10 bg-white/40 overflow-hidden canvas-preview" style={{ height: 180 }}>
+                <div className="h-full p-5 flex flex-col justify-between">
+                  <div className="flex gap-2 items-start flex-wrap">
+                    <div className="node-chip rounded-lg bg-accent/20 border border-accent/30 px-3 py-1.5 text-xs font-body text-primary/70">Revenue ↑</div>
+                    <div className="node-chip rounded-lg bg-primary/8 px-3 py-1.5 text-xs font-body text-soft">Churn ↓</div>
+                    <div className="node-chip rounded-lg bg-highlight border border-primary/10 px-3 py-1.5 text-xs font-body text-soft">CAC stable</div>
+                  </div>
+                  <svg className="w-full" height="48" viewBox="0 0 260 48" preserveAspectRatio="none">
+                    <path className="connector-path" d="M30 8 Q130 48 230 8" stroke="#C8A86B" strokeWidth="1.5" fill="none" strokeDasharray="4 3" opacity="0.6" />
+                    <path className="connector-path2" d="M60 8 Q130 30 200 8" stroke="#8B95A8" strokeWidth="1" fill="none" strokeDasharray="3 4" opacity="0.4" />
+                  </svg>
+                  <div className="rounded-lg bg-primary/5 border border-primary/8 p-2.5">
+                    <div className="flex gap-1.5 mb-1.5"><div className="h-1.5 rounded bg-accent/50 flex-1" /><div className="h-1.5 rounded bg-primary/15 w-1/3" /></div>
+                    <div className="flex gap-1.5"><div className="h-1.5 rounded bg-primary/10 w-1/4" /><div className="h-1.5 rounded bg-accent/30 flex-1" /></div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <p className="text-xs font-body font-semibold uppercase tracking-widest text-soft/60 mb-3">Chapter I</p>
+                <h3 className="font-display text-2xl font-semibold text-primary mb-1">Canvas.<br /><span className="text-soft font-normal">The thinking.</span></h3>
+                <p className="font-body text-sm text-soft leading-relaxed mt-3">Explore. Connect. Discover what your data is hiding.</p>
+              </div>
+            </div>
+
+            {/* Slides */}
+            <div className="mode-col px-8 py-6 md:py-0 flex flex-col gap-6" style={{ opacity: 0, transform: 'translateY(1rem)', transition: 'opacity .5s ease .12s, transform .5s ease .12s' }}>
+              <div className="rounded-xl border border-primary/10 bg-white/40 overflow-hidden" style={{ height: 180 }}>
+                <div className="h-full p-4 flex flex-col gap-2 slides-preview">
+                  <div className="rounded-lg bg-primary border border-primary/20 p-3 flex-1 flex flex-col justify-between">
+                    <div className="flex gap-1 mb-2"><div className="h-1.5 rounded bg-bg/30 w-2/3" /></div>
+                    <div className="flex items-end gap-1 h-10">
+                      {[[40],[70],[55],[90],[65]].map(([h], i) => (
+                        <div key={i} className="slide-bar flex-1 rounded-t bg-accent/70" style={{ height: `${h}%` }} />
+                      ))}
+                    </div>
+                    <div className="flex gap-1 mt-2"><div className="h-1 rounded bg-bg/20 flex-1" /><div className="h-1 rounded bg-bg/20 w-1/2" /></div>
+                  </div>
+                  <div className="flex items-center gap-1.5 px-1"><div className="w-1.5 h-3 bg-accent/80 rounded-sm cursor-blink" /><div className="h-1 rounded bg-primary/15 flex-1" /></div>
+                </div>
+              </div>
+              <div>
+                <p className="text-xs font-body font-semibold uppercase tracking-widest text-soft/60 mb-3">Chapter II</p>
+                <h3 className="font-display text-2xl font-semibold text-primary mb-1">Slides.<br /><span className="text-soft font-normal">The writing.</span></h3>
+                <p className="font-body text-sm text-soft leading-relaxed mt-3">Edit. Refine. Add your voice to the AI&apos;s draft.</p>
+              </div>
+            </div>
+
+            {/* Present */}
+            <div className="mode-col px-8 py-6 md:py-0 md:last:pr-0 flex flex-col gap-6" style={{ opacity: 0, transform: 'translateY(1rem)', transition: 'opacity .5s ease .24s, transform .5s ease .24s' }}>
+              <div className="rounded-xl border border-primary/10 bg-white/40 overflow-hidden" style={{ height: 180 }}>
+                <div className="h-full p-4 flex flex-col items-center justify-center gap-3 present-preview">
+                  <div className="relative w-full" style={{ height: 90 }}>
+                    <div className="present-slide absolute inset-x-8 top-6 rounded-lg bg-soft/20 border border-primary/8" style={{ height: 56 }} />
+                    <div className="present-slide absolute inset-x-5 top-3 rounded-lg bg-primary/15 border border-primary/10" style={{ height: 56 }} />
+                    <div className="present-slide absolute inset-x-2 top-0 rounded-lg bg-primary border border-primary/20 flex items-center justify-center" style={{ height: 56 }}>
+                      <div className="flex items-end gap-1 px-4">
+                        {[[20],[32],[26],[18]].map(([h], i) => <div key={i} className="flex-1 rounded-t bg-accent/60" style={{ height: h }} />)}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <div className="export-tag rounded-full bg-accent/15 border border-accent/25 px-3 py-1 text-xs font-body text-accent font-medium">PPTX</div>
+                    <div className="export-tag rounded-full bg-primary/8 border border-primary/12 px-3 py-1 text-xs font-body text-soft">PDF</div>
+                    <div className="export-tag rounded-full bg-primary/8 border border-primary/12 px-3 py-1 text-xs font-body text-soft">Link ↗</div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <p className="text-xs font-body font-semibold uppercase tracking-widest text-soft/60 mb-3">Chapter III</p>
+                <h3 className="font-display text-2xl font-semibold text-primary mb-1">Present.<br /><span className="text-soft font-normal">The delivery.</span></h3>
+                <p className="font-body text-sm text-soft leading-relaxed mt-3">Export. Share. Ship the story before the meeting starts.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ PROTOTYPE TEASER ═══ */}
+      <section id="prototype" className="py-20 px-6 border-t divider bg-primary">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
+          <div className="max-w-lg">
+            <span className="text-xs font-body font-semibold uppercase tracking-widest text-accent mb-4 block">Live Prototype</span>
+            <h2 className="font-display text-4xl font-semibold text-bg leading-tight mb-4">Ready to feel<br />the neural connection?</h2>
+            <p className="font-body text-soft/70 leading-relaxed text-base">The Axon prototype is live. Drop a real dataset, watch the agent think, and get your first deck in under 12 minutes.</p>
+          </div>
+          <div className="flex flex-col items-center gap-4 flex-shrink-0">
+            <div className="rounded-2xl border border-bg/10 bg-bg/5 p-5 w-64">
+              <div className="flex gap-1.5 mb-3">
+                {[.20,.15,.10].map((op, i) => <div key={i} className="w-2.5 h-2.5 rounded-full" style={{ background: `rgba(244,240,232,${op})` }} />)}
+                <span className="text-xs font-body text-bg/30 ml-2">axon-app-chi.vercel.app</span>
+              </div>
+              <div className="grid gap-2">
+                <div className="h-8 rounded-lg bg-accent/20 border border-accent/20 flex items-center px-3"><span className="text-xs font-body text-accent/80">▪ Revenue insight</span></div>
+                <div className="h-8 rounded-lg bg-bg/8 border border-bg/10 flex items-center px-3"><span className="text-xs font-body text-bg/40">▪ Churn signal</span></div>
+                <div className="h-6 rounded bg-bg/5 border border-bg/8 flex items-center px-3"><span className="text-xs font-body text-bg/25">[ dataset canvas ]</span></div>
+              </div>
+            </div>
+            <a href="https://axon-app-chi.vercel.app/" target="_blank" className="inline-flex items-center gap-3 bg-accent text-primary font-body font-semibold text-sm px-8 py-4 rounded-xl hover:bg-accent/90 transition-all">Open the prototype →</a>
+            <p className="text-xs font-body text-soft/40">No signup needed</p>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ FEATURES ═══ */}
+      <section id="features" className="py-28 px-6 border-t divider">
+        <div className="max-w-5xl mx-auto">
+          <div className="mb-14">
+            <span className="text-xs font-body font-semibold uppercase tracking-widest text-accent">Built for analysts</span>
+            <h2 className="font-display text-4xl font-semibold text-primary mt-3 leading-tight">Everything the neural<br />connection needs.</h2>
+          </div>
+          <div className="grid md:grid-cols-3 gap-5">
+            {[
+              { icon: <><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></>, title: 'Signal detection', desc: 'The agent identifies trends, outliers, and correlations before you even ask.' },
+              { icon: <><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /></>, title: 'Smart charts', desc: 'Chart type is chosen by the story, not by default. No more misleading bar charts.' },
+              { icon: <><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></>, title: 'One-click export', desc: 'PPTX, PDF, or a shareable live link. Ready for any room.' },
+              { icon: <><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 00-3-3.87" /><path d="M16 3.13a4 4 0 010 7.75" /></>, title: 'Team collaboration', desc: 'Comment, iterate, and version-track with your whole team in real time.' },
+              { icon: <><rect x="2" y="3" width="20" height="14" rx="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" /></>, title: 'Live presentations', desc: 'Present straight from Axon. No downloads, no version confusion.' },
+              { icon: <><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></>, title: 'Data privacy', desc: 'Your data is never used to train models. Processed and discarded.' },
+            ].map(f => (
+              <div key={f.title} className="feature-card rounded-xl p-6">
+                <div className="w-9 h-9 rounded-lg bg-accent/15 flex items-center justify-center mb-5">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A86B" strokeWidth="1.8">{f.icon}</svg>
+                </div>
+                <h3 className="font-display text-lg font-semibold text-primary mb-2">{f.title}</h3>
+                <p className="font-body text-sm text-soft leading-relaxed">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ SOCIAL PROOF ═══ */}
+      <section id="proof" className="py-28 px-6 border-t divider">
+        <div className="max-w-5xl mx-auto">
+          <div className="mb-14 text-center">
+            <span className="text-xs font-body font-semibold uppercase tracking-widest text-accent">What people say</span>
+            <h2 className="font-display text-4xl font-semibold text-primary mt-3">The data spoke.<br /><span className="text-soft font-light">They just listened.</span></h2>
+          </div>
+          <div className="grid md:grid-cols-3 gap-5">
+            {[
+              { quote: '"I used to spend Sunday night reformatting pivot tables. Now I spend Sunday night doing literally anything else."', initials: 'SR', name: 'Sarah R.', role: 'Senior Analyst, Fintech', highlight: false },
+              { quote: '"The chart choices alone are worth it. I\'d been using bar charts for everything. Axon knew better."', initials: 'MK', name: 'Marcus K.', role: 'Head of Strategy, SaaS', highlight: true },
+              { quote: '"My team went from three-day deck cycles to same-day. The board doesn\'t know what happened. We do."', initials: 'JP', name: 'Jamie P.', role: 'VP Data, Retail Group', highlight: false },
+            ].map(t => (
+              <div key={t.initials} className={`rounded-xl border ${t.highlight ? 'border-accent/20 bg-white/50' : 'border-primary/10 bg-white/40'} p-7`}>
+                <p className="font-display text-base text-primary/80 leading-relaxed mb-6 italic">{t.quote}</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-accent/20 flex items-center justify-center font-body text-sm font-semibold text-accent">{t.initials}</div>
+                  <div><p className="font-body text-sm font-semibold text-primary">{t.name}</p><p className="font-body text-xs text-soft">{t.role}</p></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ CTA ═══ */}
+      <section id="cta" className="py-28 px-6 border-t divider">
+        <div className="max-w-2xl mx-auto text-center">
+          <h2 className="font-display text-5xl font-bold text-primary mb-5 leading-tight">Your data has a story.<br /><span className="text-accent">Time to tell it.</span></h2>
+          <p className="font-body text-soft mb-10 leading-relaxed">Join thousands of analysts who&apos;ve stopped translating and started presenting.</p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center mb-5">
+            <a href="https://axon-app-chi.vercel.app/" target="_blank" className="inline-flex items-center justify-center gap-2 bg-primary text-bg font-body font-medium text-sm px-8 py-4 rounded-lg hover:bg-primary/90 transition-all">Try Axon free →</a>
+            <a href="#" className="inline-flex items-center justify-center gap-2 border border-primary/25 text-primary font-body font-medium text-sm px-8 py-4 rounded-lg hover:border-accent hover:text-accent transition-all">Book a demo</a>
+          </div>
+          <p className="text-xs font-body text-soft/60">No credit card. First deck on us.</p>
+        </div>
+      </section>
+
+      {/* ═══ FOOTER ═══ */}
+      <footer className="border-t divider py-10 px-6">
+        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <span className="font-display font-semibold text-primary text-lg">Axon</span>
+          <p className="text-xs font-body text-soft/40 text-center hidden sm:block">The Neural Network for Your Data Narrative.</p>
+          <div className="flex gap-6">
+            {['Privacy','Terms','Blog','Contact'].map(l => (
+              <a key={l} href="#" className="text-xs font-body text-soft hover:text-primary transition-colors">{l}</a>
+            ))}
+          </div>
+        </div>
+      </footer>
+    </>
   );
 }
