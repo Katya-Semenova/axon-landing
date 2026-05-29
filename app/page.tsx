@@ -16,6 +16,12 @@ export default function Home() {
     const heroBottom = heroBottomRef.current;
     if (!hero || !chaosLayer || !heroCards || !heroBottom) return;
 
+    // Capture as non-null consts so closures retain the narrowed type
+    const root = hero;
+    const layer = chaosLayer;
+    const cards = heroCards;
+    const bottom = heroBottom;
+
     let heroState = 'before';
 
     const TOKENS = ['218,439','47','$1,040M','0.78','-12%','Q3','71%','0.82','SELECT *','GROUP BY','WHERE date >','JOIN ON','null,4.2,89','2024-Q3','user_id','revenue','churn_rate','mrr','retention','/','<','>','{','}','→','≠'];
@@ -67,7 +73,7 @@ export default function Home() {
             el.textContent = TOKENS[Math.floor(Math.random() * TOKENS.length)];
             el.style.cssText = `position:absolute;left:${x}px;top:${y}px;font-family:'JetBrains Mono',monospace;font-size:${10 + Math.random() * 5}px;color:${COLORS[Math.floor(Math.random() * COLORS.length)]};transform:rotate(${rot}deg);opacity:0;will-change:transform,opacity;white-space:nowrap;pointer-events:none`;
           }
-          chaosLayer.appendChild(el);
+          layer.appendChild(el);
           data.push({
             el, x, y, rot, baseOp, driftR, driftT, driftOff, breatheT, breatheOff,
             breatheLo: Math.max(0.25, baseOp - 0.1),
@@ -105,8 +111,8 @@ export default function Home() {
 
     function runEntrance() {
       heroState = 'entering';
-      const l1 = hero.querySelectorAll<HTMLElement>('#headlineLine1 .hw');
-      const l2 = hero.querySelectorAll<HTMLElement>('#headlineLine2 .hw');
+      const l1 = root.querySelectorAll<HTMLElement>('#headlineLine1 .hw');
+      const l2 = root.querySelectorAll<HTMLElement>('#headlineLine2 .hw');
       l1.forEach((w, i) => w.animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 360, delay: i * 190, fill: 'forwards', easing: 'ease-out' }));
       l2.forEach((w, i) => w.animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 360, delay: 750 + i * 190, fill: 'forwards', easing: 'ease-out' }));
 
@@ -126,15 +132,13 @@ export default function Home() {
       });
 
       setTimeout(() => {
-        if (!heroCards) return;
-        const a = heroCards.animate([{ opacity: 0, transform: 'translateY(18px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 700, fill: 'forwards', easing: 'ease-out' });
-        a.onfinish = () => { heroCards.style.opacity = '1'; heroCards.style.transform = 'none'; };
+        const a = cards.animate([{ opacity: 0, transform: 'translateY(18px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 700, fill: 'forwards', easing: 'ease-out' });
+        a.onfinish = () => { cards.style.opacity = '1'; cards.style.transform = 'none'; };
       }, 600);
 
       setTimeout(() => {
-        if (!heroBottom) return;
-        const a = heroBottom.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 600, fill: 'forwards', easing: 'ease-out' });
-        a.onfinish = () => { heroBottom.style.opacity = '1'; };
+        const a = bottom.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 600, fill: 'forwards', easing: 'ease-out' });
+        a.onfinish = () => { bottom.style.opacity = '1'; };
       }, 1000);
 
       setTimeout(() => { heroState = 'drifting'; startAllDrift(); }, 1800);
@@ -147,7 +151,7 @@ export default function Home() {
       else if (!v && heroState === 'drifting') chaosData.forEach(d => { d.driftAnim?.pause(); d.breatheAnim?.pause(); });
     }, { threshold: 0.15 });
 
-    obs.observe(hero);
+    obs.observe(root);
 
     return () => {
       obs.disconnect();
