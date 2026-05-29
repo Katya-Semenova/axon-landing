@@ -301,7 +301,7 @@ export default function Home() {
             <span className="text-xs font-body font-semibold uppercase tracking-widest text-accent mb-4 block">Why Axon</span>
             <h2 className="font-display text-4xl md:text-5xl text-primary leading-tight">
               Your data already<br />
-              <span style={{ fontWeight: 300 }}>knows the story.</span>
+              <span className="italic text-accent">knows the story.</span>
             </h2>
             <p className="font-body text-soft mt-5 text-base leading-relaxed max-w-lg">
               The insight is there. The bottleneck is the translation layer between raw numbers and a room that acts on them.
@@ -364,7 +364,7 @@ export default function Home() {
         <div className="py-20 px-6">
           <div className="max-w-5xl mx-auto" id="shiftHeader">
             <span className="text-xs font-body font-semibold uppercase tracking-widest text-accent">The Shift</span>
-            <h2 className="font-display text-4xl md:text-5xl text-primary mt-3 leading-tight">Three files in.<br />A board-ready deck out.</h2>
+            <h2 className="font-display text-4xl md:text-5xl text-primary mt-3 leading-tight">Three files in.<br /><span className="italic text-accent">A board-ready deck out.</span></h2>
           </div>
         </div>
 
@@ -539,7 +539,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto">
           <div className="mb-16 text-center">
             <span className="text-xs font-body font-semibold uppercase tracking-widest text-accent">The Workflow</span>
-            <h2 className="font-display text-4xl md:text-5xl text-primary mt-3 leading-tight">Three chapters. One workspace.</h2>
+            <h2 className="font-display text-4xl md:text-5xl text-primary mt-3 leading-tight">Three chapters.<br /><span className="italic text-accent">One workspace.</span></h2>
           </div>
           <div className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-primary/10" id="modesGrid">
 
@@ -628,7 +628,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
           <div className="max-w-lg">
             <span className="text-xs font-body font-semibold uppercase tracking-widest text-accent mb-4 block">Live Prototype</span>
-            <h2 className="font-display text-4xl text-bg leading-tight mb-4">Ready to feel<br />the neural connection?</h2>
+            <h2 className="font-display text-4xl text-bg leading-tight mb-4">Ready to feel<br /><span className="italic text-accent">the neural connection?</span></h2>
             <p className="font-body text-soft/70 leading-relaxed text-base">The Axon prototype is live. Drop a real dataset, watch the agent think, and get your first deck in under 12 minutes.</p>
           </div>
           <div className="flex flex-col items-center gap-4 flex-shrink-0">
@@ -654,7 +654,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto">
           <div className="mb-14">
             <span className="text-xs font-body font-semibold uppercase tracking-widest text-accent">Built for analysts</span>
-            <h2 className="font-display text-4xl text-primary mt-3 leading-tight">Everything the neural<br />connection needs.</h2>
+            <h2 className="font-display text-4xl text-primary mt-3 leading-tight">Everything the neural<br /><span className="italic text-accent">connection needs.</span></h2>
           </div>
           <div className="grid md:grid-cols-3 gap-5">
             {[
@@ -682,7 +682,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto">
           <div className="mb-14 text-center">
             <span className="text-xs font-body font-semibold uppercase tracking-widest text-accent">What people say</span>
-            <h2 className="font-display text-4xl text-primary mt-3">The data spoke.<br /><span className="text-soft font-light">They just listened.</span></h2>
+            <h2 className="font-display text-4xl text-primary mt-3 leading-tight">The data spoke.<br /><span className="italic text-accent">They just listened.</span></h2>
           </div>
           <div className="grid md:grid-cols-3 gap-5">
             {[
@@ -705,7 +705,7 @@ export default function Home() {
       {/* ═══ CTA ═══ */}
       <section id="cta" className="py-28 px-6 border-t divider">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="font-display text-5xl text-primary mb-5 leading-tight">Your data has a story.<br /><span className="text-accent">Time to tell it.</span></h2>
+          <h2 className="font-display text-5xl text-primary mb-5 leading-tight">Your data has a story.<br /><span className="italic text-accent">Time to tell it.</span></h2>
           <p className="font-body text-soft mb-10 leading-relaxed">Join thousands of analysts who&apos;ve stopped translating and started presenting.</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center mb-5">
             <a href="https://axon-app-chi.vercel.app/" target="_blank" className="inline-flex items-center justify-center gap-2 bg-primary text-bg font-body font-medium text-sm px-8 py-4 rounded-lg hover:bg-primary/90 transition-all">Try Axon free →</a>
