@@ -40,6 +40,11 @@ body {
   margin: 0;
 }
 
+/* Instrument Serif ships at weight 400 only — prevent browser synthetic bold */
+.font-display {
+  font-weight: 400 !important;
+}
+
 nav {
   backdrop-filter: blur(12px);
   background: rgba(244, 240, 232, 0.88);

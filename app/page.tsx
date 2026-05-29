@@ -227,7 +227,7 @@ export default function Home() {
       {/* ═══ NAV ═══ */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-primary/10">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <span className="font-display font-semibold text-primary text-xl tracking-tight">Axon</span>
+          <span className="font-display text-primary text-xl tracking-tight">Axon</span>
           <div className="flex items-center gap-6">
             <a href="https://axon-app-chi.vercel.app/" target="_blank" className="text-sm font-body text-soft hover:text-primary transition-colors">Try Axon</a>
             <a href="#" className="text-sm font-body text-primary border border-primary/30 px-4 py-1.5 rounded hover:bg-primary hover:text-bg transition-all">Sign in</a>
@@ -299,7 +299,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto">
           <div className="mb-16 max-w-2xl">
             <span className="text-xs font-body font-semibold uppercase tracking-widest text-accent mb-4 block">Why Axon</span>
-            <h2 className="font-display text-4xl md:text-5xl font-semibold text-primary leading-tight">
+            <h2 className="font-display text-4xl md:text-5xl text-primary leading-tight">
               Your data already<br />
               <span style={{ fontWeight: 300 }}>knows the story.</span>
             </h2>
@@ -320,7 +320,7 @@ export default function Home() {
                   <div className="w-10 h-10 rounded-xl bg-primary/8 flex items-center justify-center flex-shrink-0 text-lg">{card.icon}</div>
                   <div>
                     <p className="text-xs font-body font-semibold uppercase tracking-widest text-accent mb-1">{card.tag}</p>
-                    <h3 className="font-display text-xl font-semibold text-primary mb-3">{card.title}</h3>
+                    <h3 className="font-display text-xl text-primary mb-3">{card.title}</h3>
                     <p className="font-body text-sm text-soft leading-relaxed mb-4">{card.body}</p>
                     <p className="font-body text-sm text-primary/60 italic border-l-2 border-accent/40 pl-3">{card.quote}</p>
                   </div>
@@ -334,7 +334,7 @@ export default function Home() {
             <div className="grid grid-cols-3 items-center border-b border-bg/8 py-10 px-10 gap-4">
               <div className="text-center">
                 <p className="font-body text-xs font-semibold uppercase tracking-widest text-soft/40 mb-3">Before</p>
-                <div className="font-display text-bg/25 line-through decoration-soft/30" style={{ fontSize: 'clamp(40px,5.5vw,72px)', fontWeight: 700, lineHeight: 1 }}>6<span style={{ fontSize: '0.42em', fontWeight: 300, marginLeft: 3 }}>hrs</span></div>
+                <div className="font-display text-bg/25 line-through decoration-soft/30" style={{ fontSize: 'clamp(40px,5.5vw,72px)', lineHeight: 1 }}>6<span style={{ fontSize: '0.42em', marginLeft: 3 }}>hrs</span></div>
                 <p className="font-body text-xs text-soft/30 mt-2">of reformatting</p>
               </div>
               <div className="text-center flex flex-col items-center gap-2">
@@ -343,7 +343,7 @@ export default function Home() {
               </div>
               <div className="text-center">
                 <p className="font-body text-xs font-semibold uppercase tracking-widest text-accent/70 mb-3">With Axon</p>
-                <div className="font-display text-bg" style={{ fontSize: 'clamp(40px,5.5vw,72px)', fontWeight: 700, lineHeight: 1 }}>12<span style={{ fontSize: '0.42em', fontWeight: 300, marginLeft: 3, color: 'rgba(244,240,232,0.55)' }}>min</span></div>
+                <div className="font-display text-bg" style={{ fontSize: 'clamp(40px,5.5vw,72px)', lineHeight: 1 }}>12<span style={{ fontSize: '0.42em', marginLeft: 3, color: 'rgba(244,240,232,0.55)' }}>min</span></div>
                 <p className="font-body text-xs text-soft/50 mt-2">from raw data</p>
               </div>
             </div>
@@ -364,7 +364,7 @@ export default function Home() {
         <div className="py-20 px-6">
           <div className="max-w-5xl mx-auto" id="shiftHeader">
             <span className="text-xs font-body font-semibold uppercase tracking-widest text-accent">The Shift</span>
-            <h2 className="font-display text-4xl md:text-5xl font-semibold text-primary mt-3 leading-tight">Three files in.<br />A board-ready deck out.</h2>
+            <h2 className="font-display text-4xl md:text-5xl text-primary mt-3 leading-tight">Three files in.<br />A board-ready deck out.</h2>
           </div>
         </div>
 
@@ -522,7 +522,7 @@ export default function Home() {
                   ].map((act, i) => (
                     <div key={i} className="act-panel" data-panel={i} style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingLeft: 24, borderLeft: '2px solid #C8A86B', opacity: i === 0 ? 1 : 0, transition: 'opacity .3s', pointerEvents: i === 0 ? 'auto' : 'none' }}>
                       <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: '#C8A86B', marginBottom: 8 }}>{act.num}</p>
-                      <h3 className="font-display" style={{ fontSize: '1.75rem', fontWeight: 600, color: '#1A2742', marginBottom: 10 }}>{act.title}</h3>
+                      <h3 className="font-display" style={{ fontSize: '1.75rem', color: '#1A2742', marginBottom: 10 }}>{act.title}</h3>
                       <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, color: '#8B95A8', lineHeight: 1.6 }}>{act.desc}</p>
                     </div>
                   ))}
@@ -539,7 +539,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto">
           <div className="mb-16 text-center">
             <span className="text-xs font-body font-semibold uppercase tracking-widest text-accent">The Workflow</span>
-            <h2 className="font-display text-4xl md:text-5xl font-semibold text-primary mt-3 leading-tight">Three chapters. One workspace.</h2>
+            <h2 className="font-display text-4xl md:text-5xl text-primary mt-3 leading-tight">Three chapters. One workspace.</h2>
           </div>
           <div className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-primary/10" id="modesGrid">
 
@@ -564,7 +564,7 @@ export default function Home() {
               </div>
               <div>
                 <p className="text-xs font-body font-semibold uppercase tracking-widest text-soft/60 mb-3">Chapter I</p>
-                <h3 className="font-display text-2xl font-semibold text-primary mb-1">Canvas.<br /><span className="text-soft font-normal">The thinking.</span></h3>
+                <h3 className="font-display text-2xl text-primary mb-1">Canvas.<br /><span className="text-soft font-normal">The thinking.</span></h3>
                 <p className="font-body text-sm text-soft leading-relaxed mt-3">Explore. Connect. Discover what your data is hiding.</p>
               </div>
             </div>
@@ -587,7 +587,7 @@ export default function Home() {
               </div>
               <div>
                 <p className="text-xs font-body font-semibold uppercase tracking-widest text-soft/60 mb-3">Chapter II</p>
-                <h3 className="font-display text-2xl font-semibold text-primary mb-1">Slides.<br /><span className="text-soft font-normal">The writing.</span></h3>
+                <h3 className="font-display text-2xl text-primary mb-1">Slides.<br /><span className="text-soft font-normal">The writing.</span></h3>
                 <p className="font-body text-sm text-soft leading-relaxed mt-3">Edit. Refine. Add your voice to the AI&apos;s draft.</p>
               </div>
             </div>
@@ -614,7 +614,7 @@ export default function Home() {
               </div>
               <div>
                 <p className="text-xs font-body font-semibold uppercase tracking-widest text-soft/60 mb-3">Chapter III</p>
-                <h3 className="font-display text-2xl font-semibold text-primary mb-1">Present.<br /><span className="text-soft font-normal">The delivery.</span></h3>
+                <h3 className="font-display text-2xl text-primary mb-1">Present.<br /><span className="text-soft font-normal">The delivery.</span></h3>
                 <p className="font-body text-sm text-soft leading-relaxed mt-3">Export. Share. Ship the story before the meeting starts.</p>
               </div>
             </div>
@@ -628,7 +628,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
           <div className="max-w-lg">
             <span className="text-xs font-body font-semibold uppercase tracking-widest text-accent mb-4 block">Live Prototype</span>
-            <h2 className="font-display text-4xl font-semibold text-bg leading-tight mb-4">Ready to feel<br />the neural connection?</h2>
+            <h2 className="font-display text-4xl text-bg leading-tight mb-4">Ready to feel<br />the neural connection?</h2>
             <p className="font-body text-soft/70 leading-relaxed text-base">The Axon prototype is live. Drop a real dataset, watch the agent think, and get your first deck in under 12 minutes.</p>
           </div>
           <div className="flex flex-col items-center gap-4 flex-shrink-0">
@@ -654,7 +654,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto">
           <div className="mb-14">
             <span className="text-xs font-body font-semibold uppercase tracking-widest text-accent">Built for analysts</span>
-            <h2 className="font-display text-4xl font-semibold text-primary mt-3 leading-tight">Everything the neural<br />connection needs.</h2>
+            <h2 className="font-display text-4xl text-primary mt-3 leading-tight">Everything the neural<br />connection needs.</h2>
           </div>
           <div className="grid md:grid-cols-3 gap-5">
             {[
@@ -669,7 +669,7 @@ export default function Home() {
                 <div className="w-9 h-9 rounded-lg bg-accent/15 flex items-center justify-center mb-5">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A86B" strokeWidth="1.8">{f.icon}</svg>
                 </div>
-                <h3 className="font-display text-lg font-semibold text-primary mb-2">{f.title}</h3>
+                <h3 className="font-display text-lg text-primary mb-2">{f.title}</h3>
                 <p className="font-body text-sm text-soft leading-relaxed">{f.desc}</p>
               </div>
             ))}
@@ -682,7 +682,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto">
           <div className="mb-14 text-center">
             <span className="text-xs font-body font-semibold uppercase tracking-widest text-accent">What people say</span>
-            <h2 className="font-display text-4xl font-semibold text-primary mt-3">The data spoke.<br /><span className="text-soft font-light">They just listened.</span></h2>
+            <h2 className="font-display text-4xl text-primary mt-3">The data spoke.<br /><span className="text-soft font-light">They just listened.</span></h2>
           </div>
           <div className="grid md:grid-cols-3 gap-5">
             {[
@@ -705,7 +705,7 @@ export default function Home() {
       {/* ═══ CTA ═══ */}
       <section id="cta" className="py-28 px-6 border-t divider">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="font-display text-5xl font-bold text-primary mb-5 leading-tight">Your data has a story.<br /><span className="text-accent">Time to tell it.</span></h2>
+          <h2 className="font-display text-5xl text-primary mb-5 leading-tight">Your data has a story.<br /><span className="text-accent">Time to tell it.</span></h2>
           <p className="font-body text-soft mb-10 leading-relaxed">Join thousands of analysts who&apos;ve stopped translating and started presenting.</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center mb-5">
             <a href="https://axon-app-chi.vercel.app/" target="_blank" className="inline-flex items-center justify-center gap-2 bg-primary text-bg font-body font-medium text-sm px-8 py-4 rounded-lg hover:bg-primary/90 transition-all">Try Axon free →</a>
@@ -718,7 +718,7 @@ export default function Home() {
       {/* ═══ FOOTER ═══ */}
       <footer className="border-t divider py-10 px-6">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="font-display font-semibold text-primary text-lg">Axon</span>
+          <span className="font-display text-primary text-lg">Axon</span>
           <p className="text-xs font-body text-soft/40 text-center hidden sm:block">The Neural Network for Your Data Narrative.</p>
           <div className="flex gap-6">
             {['Privacy','Terms','Blog','Contact'].map(l => (
