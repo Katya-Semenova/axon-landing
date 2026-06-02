@@ -312,52 +312,136 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-5 mb-16">
-            {[
-              { icon: '🎯', tag: 'Control', title: "You stay the director.", body: "Define the purpose — \"board meeting\", \"weekly ops\", \"investor update\" — and Axon structures the narrative around your intent. The final call is always yours.", quote: '"I\'m the director. The tool is my crew."' },
-              { icon: '🧠', tag: 'Clarity', title: "The exhausting part is invisible.", body: "The AI agent parses, cleans, and ranks — surfacing a clear menu of insights, not a data dump. You think about decisions, not formatting.", quote: '"The exhausting part is already done. I can think clearly now."' },
-              { icon: '✦', tag: 'Craft', title: "You're not processing. You're crafting.", body: "Axon proposes visual concepts — you choose the hierarchy, the metaphor, the mood. Small creative calls that make the story feel human, not generated.", quote: '"I\'m not just processing data — I\'m crafting something. And it looks amazing."' },
-              { icon: '🔒', tag: 'Confidence', title: "Send it without checking twice.", body: "The deck builds itself in real time — charts, headers, data blocks assembling as you work. Each section locks in with a visual confirmation. Nothing goes out broken.", quote: '"I\'m not afraid to share this. I\'m proud to."' },
-            ].map(card => (
-              <div key={card.tag} className="rounded-2xl border border-primary/10 bg-white/50 p-7 group hover:border-accent/40 transition-all duration-300">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-primary/8 flex items-center justify-center flex-shrink-0 text-lg">{card.icon}</div>
+          {/* Two-column layout: bento grid left, right panel right */}
+          <div style={{ display: 'grid', gridTemplateColumns: '476px 476px', gap: 24, alignItems: 'start' }}>
+
+            {/* ── LEFT: 4×5 bento grid with overflow crop ── */}
+            {/* Container: shows rows 2–4 fully, rows 1+5 peek 30px; cols peek 24px left+right */}
+            <div style={{ width: 492, height: 722, overflow: 'hidden', borderRadius: 16, flexShrink: 0 }}>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(4, 210px)',
+                gridTemplateRows: 'repeat(5, 210px)',
+                gap: 8,
+                marginTop: -180,
+                marginLeft: -186,
+              }}>
+
+                {/* ── ROW 1: all ghost — 30px peeking at top ── */}
+                {[0,1,2,3].map(i => (
+                  <div key={`r1-${i}`} style={{ borderRadius: 12, background: 'rgba(180,198,220,0.26)', border: '1px solid rgba(180,198,220,0.15)' }} />
+                ))}
+
+                {/* ── ROW 2: ghost | Control (navy) | ghost | ghost ── */}
+                <div style={{ borderRadius: 12, background: 'rgba(180,198,220,0.26)', border: '1px solid rgba(180,198,220,0.15)' }} />
+                {/* Control — navy */}
+                <div style={{ borderRadius: 12, background: '#1A2742', padding: '18px 18px 22px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                  <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 9, letterSpacing: '.12em', textTransform: 'uppercase', color: 'rgba(244,240,232,0.38)', margin: 0 }}>Control</p>
                   <div>
-                    <p className="text-xs font-body font-semibold uppercase tracking-widest text-accent mb-1">{card.tag}</p>
-                    <h3 className="font-display text-xl text-primary mb-3">{card.title}</h3>
-                    <p className="font-body text-sm text-soft leading-relaxed mb-4">{card.body}</p>
-                    <p className="font-body text-sm text-primary/60 italic border-l-2 border-accent/40 pl-3">{card.quote}</p>
+                    <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 26, fontWeight: 400, color: '#F4F0E8', lineHeight: 1.1, margin: '0 0 8px' }}>You stay<br />the director</h3>
+                    <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: 'rgba(244,240,232,0.48)', lineHeight: 1.45, margin: 0 }}>Define the purpose — board meeting, investor update — and Axon structures around your intent.</p>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+                <div style={{ borderRadius: 12, background: 'rgba(180,198,220,0.26)', border: '1px solid rgba(180,198,220,0.15)' }} />
+                <div style={{ borderRadius: 12, background: 'rgba(180,198,220,0.26)', border: '1px solid rgba(180,198,220,0.15)' }} />
 
-          {/* 12 min stat */}
-          <div className="rounded-2xl bg-primary overflow-hidden">
-            <div className="grid grid-cols-3 items-center border-b border-bg/8 py-10 px-10 gap-4">
-              <div className="text-center">
-                <p className="font-body text-xs font-semibold uppercase tracking-widest text-soft/40 mb-3">Before</p>
-                <div className="font-display text-bg/25 line-through decoration-soft/30" style={{ fontSize: 'clamp(40px,5.5vw,72px)', lineHeight: 1 }}>6<span className="text-[0.42em] ml-[3px]">hrs</span></div>
-                <p className="font-body text-xs text-soft/30 mt-2">of reformatting</p>
-              </div>
-              <div className="text-center flex flex-col items-center gap-2">
-                <span className="text-accent text-[2rem]">→</span>
-                <span className="font-body text-xs text-soft/40 uppercase tracking-widest">with Axon</span>
-              </div>
-              <div className="text-center">
-                <p className="font-body text-xs font-semibold uppercase tracking-widest text-accent/70 mb-3">With Axon</p>
-                <div className="font-display text-bg" style={{ fontSize: 'clamp(40px,5.5vw,72px)', lineHeight: 1 }}>12<span className="text-[0.42em] ml-[3px] text-bg/55">min</span></div>
-                <p className="font-body text-xs text-soft/50 mt-2">from raw data</p>
+                {/* ── ROW 3: ghost | Craft (gold) | Clarity (navy) | ghost ── */}
+                <div style={{ borderRadius: 12, background: 'rgba(180,198,220,0.26)', border: '1px solid rgba(180,198,220,0.15)' }} />
+                {/* Craft — gold */}
+                <div style={{ borderRadius: 12, background: '#C8A86B', padding: '18px 18px 22px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                  <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 9, letterSpacing: '.12em', textTransform: 'uppercase', color: 'rgba(26,39,66,0.45)', margin: 0 }}>Craft</p>
+                  <div>
+                    <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 26, fontWeight: 400, color: '#1A2742', lineHeight: 1.1, margin: '0 0 8px' }}>You&apos;re crafting,<br />not processing</h3>
+                    <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: 'rgba(26,39,66,0.58)', lineHeight: 1.45, margin: 0 }}>Axon proposes visual concepts — you choose the hierarchy, the metaphor, the mood.</p>
+                  </div>
+                </div>
+                {/* Clarity — navy */}
+                <div style={{ borderRadius: 12, background: '#1A2742', padding: '18px 18px 22px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                  <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 9, letterSpacing: '.12em', textTransform: 'uppercase', color: 'rgba(244,240,232,0.38)', margin: 0 }}>Clarity</p>
+                  <div>
+                    <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 26, fontWeight: 400, color: '#F4F0E8', lineHeight: 1.1, margin: '0 0 8px' }}>The exhausting<br />part is invisible</h3>
+                    <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: 'rgba(244,240,232,0.48)', lineHeight: 1.45, margin: 0 }}>The AI parses, cleans, and ranks — surfacing insights, not a data dump.</p>
+                  </div>
+                </div>
+                <div style={{ borderRadius: 12, background: 'rgba(180,198,220,0.26)', border: '1px solid rgba(180,198,220,0.15)' }} />
+
+                {/* ── ROW 4: ghost | ghost | Confidence (gold) | ghost ── */}
+                <div style={{ borderRadius: 12, background: 'rgba(180,198,220,0.26)', border: '1px solid rgba(180,198,220,0.15)' }} />
+                <div style={{ borderRadius: 12, background: 'rgba(180,198,220,0.26)', border: '1px solid rgba(180,198,220,0.15)' }} />
+                {/* Confidence — gold */}
+                <div style={{ borderRadius: 12, background: '#C8A86B', padding: '18px 18px 22px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                  <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 9, letterSpacing: '.12em', textTransform: 'uppercase', color: 'rgba(26,39,66,0.45)', margin: 0 }}>Confidence</p>
+                  <div>
+                    <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 26, fontWeight: 400, color: '#1A2742', lineHeight: 1.1, margin: '0 0 8px' }}>Send it without<br />checking twice</h3>
+                    <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: 'rgba(26,39,66,0.58)', lineHeight: 1.45, margin: 0 }}>The deck builds itself in real time — charts assembling as you work.</p>
+                  </div>
+                </div>
+                <div style={{ borderRadius: 12, background: 'rgba(180,198,220,0.26)', border: '1px solid rgba(180,198,220,0.15)' }} />
+
+                {/* ── ROW 5: all ghost — 30px peeking at bottom ── */}
+                {[0,1,2,3].map(i => (
+                  <div key={`r5-${i}`} style={{ borderRadius: 12, background: 'rgba(180,198,220,0.26)', border: '1px solid rgba(180,198,220,0.15)' }} />
+                ))}
+
               </div>
             </div>
-            <div className="grid md:grid-cols-4 gap-0 divide-x divide-bg/8 px-2 py-8">
-              {['Parses every row, column, and relationship', 'Ranks insights by financial, time, and strategic value', 'Selects chart types that serve the story, not the default', 'Assembles a deck you\'re proud to put your name on'].map((txt, i) => (
-                <div key={i} className="px-6 py-2 flex flex-col gap-2">
-                  <div className="w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0"><span className="text-accent text-xs font-semibold">{i + 1}</span></div>
-                  <p className="font-body text-sm text-bg/65 leading-relaxed">{txt}</p>
+
+            {/* ── RIGHT panel — same height as bento, content centered ── */}
+            <div style={{ width: 476, height: 722, borderRadius: 18, background: '#EDEAE0', padding: '48px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 28, boxSizing: 'border-box', flexShrink: 0 }}>
+
+              {/* Numbered steps */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+                {[
+                  'Parses every row, column, and relationship',
+                  'Ranks insights by financial, time, and strategic value',
+                  'Selects chart types that serve the story, not the default',
+                  "Assembles a deck you're proud to put your name on",
+                ].map((txt, i) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 14 }}>
+                    <div style={{ width: 24, height: 24, borderRadius: '50%', border: '1.5px solid rgba(200,168,107,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, color: 'rgba(200,168,107,0.85)', fontWeight: 600 }}>{i + 1}</span>
+                    </div>
+                    <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12.5, color: 'rgba(26,39,66,0.65)', lineHeight: 1.55, margin: 0, marginTop: 1 }}>{txt}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Stats block */}
+              <div>
+                <div style={{ width: '100%', borderRadius: 14, background: '#1A2742', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  {/* 6hrs with diagonal strikethrough */}
+                  <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'baseline', gap: 3 }}>
+                    <span style={{ fontFamily: "'Instrument Serif',serif", fontSize: 72, color: 'rgba(244,240,232,0.25)', lineHeight: 1 }}>6</span>
+                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 20, color: 'rgba(244,240,232,0.25)', paddingBottom: 6 }}>hrs</span>
+                    <div style={{
+                      position: 'absolute',
+                      left: '-6%', right: '-12%',
+                      top: '50%',
+                      height: 2.5,
+                      background: 'rgba(139,149,168,0.75)',
+                      borderRadius: 1,
+                      transform: 'translateY(-50%) rotate(-28deg)',
+                      transformOrigin: 'center center',
+                    }} />
+                  </div>
+                  {/* Arrow + label */}
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+                    <span style={{ color: '#C8A86B', fontSize: 18, lineHeight: 1 }}>→</span>
+                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 8.5, color: 'rgba(244,240,232,0.4)', textTransform: 'uppercase', letterSpacing: '.1em' }}>with Axon</span>
+                  </div>
+                  {/* 12min */}
+                  <div style={{ display: 'inline-flex', alignItems: 'baseline', gap: 3 }}>
+                    <span style={{ fontFamily: "'Instrument Serif',serif", fontSize: 72, color: '#F4F0E8', lineHeight: 1 }}>12</span>
+                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 20, color: 'rgba(244,240,232,0.5)', paddingBottom: 6 }}>min</span>
+                  </div>
                 </div>
-              ))}
+                {/* Labels outside below */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8, paddingLeft: 2, paddingRight: 2 }}>
+                  <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, color: 'rgba(26,39,66,0.42)' }}>of reformatting</span>
+                  <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, color: 'rgba(26,39,66,0.42)' }}>from raw data</span>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
