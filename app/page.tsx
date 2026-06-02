@@ -229,9 +229,9 @@ export default function Home() {
   return (
     <>
       {/* ═══ NAV ═══ */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-primary/10">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <span className="font-display text-primary text-xl tracking-tight">Axon</span>
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-primary/10 px-6">
+        <div className="max-w-5xl mx-auto h-16 flex items-center justify-between">
+          <span className="font-mono text-[13px] font-medium tracking-[0.14em] text-primary">AXON</span>
           <div className="flex items-center gap-6">
             <a href="https://axon-app-chi.vercel.app/" target="_blank" className="text-sm font-body text-soft hover:text-primary transition-colors">Try Axon</a>
             <a href="#" className="text-sm font-body text-primary border border-primary/30 px-4 py-1.5 rounded hover:bg-primary hover:text-bg transition-all">Sign in</a>
@@ -806,7 +806,7 @@ export default function Home() {
       {/* ═══ FOOTER ═══ */}
       <footer className="border-t divider py-10 px-6">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="font-display text-primary text-lg">Axon</span>
+          <span className="font-mono text-[13px] font-medium tracking-[0.14em] text-primary">AXON</span>
           <p className="text-xs font-body text-soft/40 text-center hidden sm:block">The Neural Network for Your Data Narrative.</p>
           <div className="flex gap-6">
             {['Privacy','Terms','Blog','Contact'].map(l => (
