@@ -298,151 +298,141 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══ PROBLEM ═══ */}
-      <section id="problem" className="py-28 px-6 border-t divider">
-        <div className="max-w-5xl mx-auto">
-          <div className="mb-16 max-w-2xl">
-            <span className="text-xs font-body font-semibold uppercase tracking-widest text-accent mb-4 block">Why Axon</span>
-            <h2 className="font-display text-4xl md:text-5xl text-primary leading-tight">
-              Your data already<br />
-              <span className="italic text-accent">knows the story.</span>
+      {/* ═══ PROBLEM / WHY AXON ═══ */}
+      <section id="problem" style={{ background: '#F4F0E8', borderTop: '1px solid rgba(26,39,66,0.1)', padding: '113px 24px 112px' }}>
+        <div style={{ maxWidth: 1152, margin: '0 auto' }}>
+
+          {/* ── Header ── */}
+          <div style={{ marginBottom: 56, maxWidth: 672 }}>
+            <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: '1.2px', textTransform: 'uppercase', color: '#C8A86B', display: 'block', marginBottom: 16 }}>
+              Why Axon
+            </span>
+            <h2 style={{ margin: 0 }}>
+              <span style={{ display: 'block', fontFamily: "'Instrument Serif',serif", fontSize: 72, fontWeight: 400, lineHeight: '60px', color: '#1A2742' }}>Your data already</span>
+              <span style={{ display: 'block', fontFamily: "'Instrument Serif',serif", fontSize: 72, fontWeight: 400, fontStyle: 'italic', lineHeight: '86px', color: '#C8A86B' }}>knows the story.</span>
             </h2>
-            <p className="font-body text-soft mt-5 text-base leading-relaxed max-w-lg">
+            <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 16, lineHeight: '26px', color: 'rgba(26,39,66,0.8)', margin: '4px 0 0', maxWidth: 512 }}>
               The insight is there. The bottleneck is the translation layer between raw numbers and a room that acts on them.
             </p>
           </div>
 
-          {/* Two-column layout: bento grid left, right panel right */}
-          <div style={{ display: 'grid', gridTemplateColumns: '476px 476px', gap: 24, alignItems: 'start' }}>
+          {/* ── Two boxes ── */}
+          <div style={{ display: 'grid', gridTemplateColumns: '566px 566px', gap: 20, alignItems: 'start' }}>
 
-            {/* ── LEFT: 4×5 bento grid with overflow crop ── */}
-            {/* Container: shows rows 2–4 fully, rows 1+5 peek 30px; cols peek 24px left+right */}
-            <div style={{ width: 492, height: 722, overflow: 'hidden', borderRadius: 16, flexShrink: 0 }}>
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(4, 210px)',
-                gridTemplateRows: 'repeat(5, 210px)',
-                gap: 8,
-                marginTop: -180,
-                marginLeft: -186,
-              }}>
+            {/* LEFT BOX — staggered bento cards */}
+            {/* background matches section cream so the box feels unified */}
+            <div style={{ borderRadius: 16, overflow: 'hidden', background: '#F4F0E8', height: 775, position: 'relative', flexShrink: 0 }}>
 
-                {/* ── ROW 1: all ghost — 30px peeking at top ── */}
-                {[0,1,2,3].map(i => (
-                  <div key={`r1-${i}`} style={{ borderRadius: 12, background: 'rgba(180,198,220,0.26)', border: '1px solid rgba(180,198,220,0.15)' }} />
-                ))}
+              {/* ── Decorative background: 4-col × 5-row masked grid (z-index 0) ──
+                  Col 1 (x=-164) and col 4 (x=514) extend outside the 566px box and
+                  are clipped by overflow:hidden, creating the "infinite grid" edge peek.
+                  ~52px of each outer column is visible at the left/right edges. */}
+              <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+                {[-166, 58, 282, 506, 730].flatMap(top =>
+                  [-164, 62, 288, 514].map(left => (
+                    <div
+                      key={`${top}-${left}`}
+                      style={{
+                        position: 'absolute', left, top, width: 216, height: 216,
+                        borderRadius: 14,
+                        background: 'rgba(180,198,220,0.22)',
+                        border: '1px solid rgba(180,198,220,0.14)',
+                      }}
+                    />
+                  ))
+                )}
+              </div>
 
-                {/* ── ROW 2: ghost | Control (navy) | ghost | ghost ── */}
-                <div style={{ borderRadius: 12, background: 'rgba(180,198,220,0.26)', border: '1px solid rgba(180,198,220,0.15)' }} />
-                {/* Control — navy */}
-                <div style={{ borderRadius: 12, background: '#1A2742', padding: '18px 18px 22px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 9, letterSpacing: '.12em', textTransform: 'uppercase', color: 'rgba(244,240,232,0.38)', margin: 0 }}>Control</p>
-                  <div>
-                    <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 26, fontWeight: 400, color: '#F4F0E8', lineHeight: 1.1, margin: '0 0 8px' }}>You stay<br />the director</h3>
-                    <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: 'rgba(244,240,232,0.48)', lineHeight: 1.45, margin: 0 }}>Define the purpose — board meeting, investor update — and Axon structures around your intent.</p>
-                  </div>
+              {/* ── Cards (z-index 1) ── */}
+
+              {/* Control — navy, top-left */}
+              <div style={{ position: 'absolute', zIndex: 1, left: 62, top: 58, width: 216, height: 216, borderRadius: 16, background: 'rgba(26,39,66,0.85)', border: '1px solid rgba(26,39,66,0.1)', padding: 17, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box' }}>
+                <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: '1.2px', textTransform: 'uppercase', color: 'rgba(244,240,232,0.88)' }}>Control</span>
+                <div>
+                  <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 32, fontWeight: 400, lineHeight: '32px', color: 'rgba(244,240,232,0.88)', margin: '0 0 6px' }}>You stay<br />the director</h3>
+                  <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, lineHeight: '16px', color: 'rgba(244,240,232,0.88)', margin: 0 }}>Define the purpose — Axon structures around your intent. The final call is always yours.</p>
                 </div>
-                <div style={{ borderRadius: 12, background: 'rgba(180,198,220,0.26)', border: '1px solid rgba(180,198,220,0.15)' }} />
-                <div style={{ borderRadius: 12, background: 'rgba(180,198,220,0.26)', border: '1px solid rgba(180,198,220,0.15)' }} />
+              </div>
 
-                {/* ── ROW 3: ghost | Craft (gold) | Clarity (navy) | ghost ── */}
-                <div style={{ borderRadius: 12, background: 'rgba(180,198,220,0.26)', border: '1px solid rgba(180,198,220,0.15)' }} />
-                {/* Craft — gold */}
-                <div style={{ borderRadius: 12, background: '#C8A86B', padding: '18px 18px 22px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 9, letterSpacing: '.12em', textTransform: 'uppercase', color: 'rgba(26,39,66,0.45)', margin: 0 }}>Craft</p>
-                  <div>
-                    <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 26, fontWeight: 400, color: '#1A2742', lineHeight: 1.1, margin: '0 0 8px' }}>You&apos;re crafting,<br />not processing</h3>
-                    <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: 'rgba(26,39,66,0.58)', lineHeight: 1.45, margin: 0 }}>Axon proposes visual concepts — you choose the hierarchy, the metaphor, the mood.</p>
-                  </div>
+              {/* Craft — gold, middle-left */}
+              <div style={{ position: 'absolute', zIndex: 1, left: 62, top: 282, width: 216, height: 216, borderRadius: 16, background: 'rgba(200,168,107,0.8)', border: '1px solid rgba(26,39,66,0.1)', padding: 17, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box' }}>
+                <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: '1.2px', textTransform: 'uppercase', color: '#1A2742' }}>Craft</span>
+                <div>
+                  <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 32, fontWeight: 400, lineHeight: '34px', color: '#1A2742', margin: '0 0 6px' }}>You&apos;re crafting</h3>
+                  <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, lineHeight: '16px', color: '#1A2742', margin: 0 }}>Axon proposes visual concepts — you choose the hierarchy, the metaphor, the mood.</p>
                 </div>
-                {/* Clarity — navy */}
-                <div style={{ borderRadius: 12, background: '#1A2742', padding: '18px 18px 22px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 9, letterSpacing: '.12em', textTransform: 'uppercase', color: 'rgba(244,240,232,0.38)', margin: 0 }}>Clarity</p>
-                  <div>
-                    <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 26, fontWeight: 400, color: '#F4F0E8', lineHeight: 1.1, margin: '0 0 8px' }}>The exhausting<br />part is invisible</h3>
-                    <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: 'rgba(244,240,232,0.48)', lineHeight: 1.45, margin: 0 }}>The AI parses, cleans, and ranks — surfacing insights, not a data dump.</p>
-                  </div>
+              </div>
+
+              {/* Clarity — navy, middle-right */}
+              <div style={{ position: 'absolute', zIndex: 1, left: 288, top: 282, width: 216, height: 216, borderRadius: 16, background: 'rgba(26,39,66,0.85)', border: '1px solid rgba(26,39,66,0.1)', padding: 17, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box' }}>
+                <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: '1.2px', textTransform: 'uppercase', color: 'rgba(244,240,232,0.88)' }}>Clarity</span>
+                <div>
+                  <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 32, fontWeight: 400, lineHeight: '32px', color: 'rgba(244,240,232,0.88)', margin: '0 0 6px' }}>The exhausting<br />part is invisible</h3>
+                  <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, lineHeight: '16px', color: 'rgba(244,240,232,0.88)', margin: 0 }}>AI agent parses, cleans, and ranks. You think about decisions, not formatting.</p>
                 </div>
-                <div style={{ borderRadius: 12, background: 'rgba(180,198,220,0.26)', border: '1px solid rgba(180,198,220,0.15)' }} />
+              </div>
 
-                {/* ── ROW 4: ghost | ghost | Confidence (gold) | ghost ── */}
-                <div style={{ borderRadius: 12, background: 'rgba(180,198,220,0.26)', border: '1px solid rgba(180,198,220,0.15)' }} />
-                <div style={{ borderRadius: 12, background: 'rgba(180,198,220,0.26)', border: '1px solid rgba(180,198,220,0.15)' }} />
-                {/* Confidence — gold */}
-                <div style={{ borderRadius: 12, background: '#C8A86B', padding: '18px 18px 22px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 9, letterSpacing: '.12em', textTransform: 'uppercase', color: 'rgba(26,39,66,0.45)', margin: 0 }}>Confidence</p>
-                  <div>
-                    <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 26, fontWeight: 400, color: '#1A2742', lineHeight: 1.1, margin: '0 0 8px' }}>Send it without<br />checking twice</h3>
-                    <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, color: 'rgba(26,39,66,0.58)', lineHeight: 1.45, margin: 0 }}>The deck builds itself in real time — charts assembling as you work.</p>
-                  </div>
+              {/* Confidence — gold, bottom-right */}
+              <div style={{ position: 'absolute', zIndex: 1, left: 288, top: 506, width: 216, height: 216, borderRadius: 16, background: 'rgba(200,168,107,0.8)', border: '1px solid rgba(26,39,66,0.1)', padding: 17, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box' }}>
+                <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: '1.2px', textTransform: 'uppercase', color: '#1A2742' }}>Confidence</span>
+                <div>
+                  <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 32, fontWeight: 400, lineHeight: '32px', color: '#1A2742', margin: '0 0 6px' }}>Send it without<br />checking twice</h3>
+                  <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, lineHeight: '16px', color: '#1A2742', margin: 0 }}>The deck builds itself in real time — charts, headers, data blocks assembling as you work.</p>
                 </div>
-                <div style={{ borderRadius: 12, background: 'rgba(180,198,220,0.26)', border: '1px solid rgba(180,198,220,0.15)' }} />
-
-                {/* ── ROW 5: all ghost — 30px peeking at bottom ── */}
-                {[0,1,2,3].map(i => (
-                  <div key={`r5-${i}`} style={{ borderRadius: 12, background: 'rgba(180,198,220,0.26)', border: '1px solid rgba(180,198,220,0.15)' }} />
-                ))}
-
               </div>
             </div>
 
-            {/* ── RIGHT panel — same height as bento, content centered ── */}
-            <div style={{ width: 476, height: 722, borderRadius: 18, background: '#EDEAE0', padding: '48px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 28, boxSizing: 'border-box', flexShrink: 0 }}>
+            {/* RIGHT BOX — numbered steps + stats */}
+            <div style={{ borderRadius: 16, overflow: 'hidden', background: 'rgba(200,168,107,0.15)', height: 775, position: 'relative', flexShrink: 0 }}>
+              <div style={{ position: 'absolute', left: 113, right: 89, top: 179 }}>
 
-              {/* Numbered steps */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+                {/* Numbered steps */}
                 {[
                   'Parses every row, column, and relationship',
                   'Ranks insights by financial, time, and strategic value',
                   'Selects chart types that serve the story, not the default',
                   "Assembles a deck you're proud to put your name on",
                 ].map((txt, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 14 }}>
-                    <div style={{ width: 24, height: 24, borderRadius: '50%', border: '1.5px solid rgba(200,168,107,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                      <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, color: 'rgba(200,168,107,0.85)', fontWeight: 600 }}>{i + 1}</span>
+                  <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: 6.875, paddingTop: 8, paddingBottom: 8, ...(i < 3 ? { borderRight: '1px solid rgba(244,240,232,0.08)', paddingRight: 1 } : {}) }}>
+                    <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'rgba(200,168,107,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, color: '#C8A86B', lineHeight: 1 }}>{i + 1}</span>
                     </div>
-                    <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12.5, color: 'rgba(26,39,66,0.65)', lineHeight: 1.55, margin: 0, marginTop: 1 }}>{txt}</p>
+                    <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, lineHeight: '16px', color: 'rgba(26,39,66,0.6)', margin: 0 }}>{txt}</p>
                   </div>
                 ))}
-              </div>
 
-              {/* Stats block */}
-              <div>
-                <div style={{ width: '100%', borderRadius: 14, background: '#1A2742', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  {/* 6hrs with diagonal strikethrough */}
-                  <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'baseline', gap: 3 }}>
-                    <span style={{ fontFamily: "'Instrument Serif',serif", fontSize: 72, color: 'rgba(244,240,232,0.25)', lineHeight: 1 }}>6</span>
-                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 20, color: 'rgba(244,240,232,0.25)', paddingBottom: 6 }}>hrs</span>
-                    <div style={{
-                      position: 'absolute',
-                      left: '-6%', right: '-12%',
-                      top: '50%',
-                      height: 2.5,
-                      background: 'rgba(139,149,168,0.75)',
-                      borderRadius: 1,
-                      transform: 'translateY(-50%) rotate(-28deg)',
-                      transformOrigin: 'center center',
-                    }} />
+                {/* Stats block */}
+                <div style={{ marginTop: 24, position: 'relative' }}>
+                  <div style={{ background: '#1A2742', borderRadius: 8, height: 80, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 32, border: '1px solid rgba(244,240,232,0.08)' }}>
+                    {/* 6 hrs — crossed out */}
+                    <div style={{ position: 'relative', display: 'flex', alignItems: 'baseline', gap: 2 }}>
+                      <span style={{ fontFamily: "'Instrument Serif',serif", fontSize: 72, lineHeight: '60px', color: '#8B95A8' }}>6</span>
+                      <span style={{ fontFamily: "'Instrument Serif',serif", fontSize: 30.2, lineHeight: '30.24px', color: '#8B95A8' }}>hrs</span>
+                      <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <div style={{ width: '120%', height: 1.5, background: 'rgba(139,149,168,0.75)', borderRadius: 1, transform: 'rotate(-30deg)' }} />
+                      </div>
+                    </div>
+                    {/* with Axon + arrow */}
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+                      <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, fontWeight: 600, color: '#F4F0E8', lineHeight: '20px' }}>with Axon</span>
+                      <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 32, color: '#C8A86B', lineHeight: '48px' }}>→</span>
+                    </div>
+                    {/* 12 min */}
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: 2 }}>
+                      <span style={{ fontFamily: "'Instrument Serif',serif", fontSize: 72, lineHeight: '72px', color: '#F4F0E8' }}>12</span>
+                      <span style={{ fontFamily: "'Instrument Serif',serif", fontSize: 30.2, lineHeight: '30.24px', color: '#F4F0E8' }}>min</span>
+                    </div>
                   </div>
-                  {/* Arrow + label */}
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-                    <span style={{ color: '#C8A86B', fontSize: 18, lineHeight: 1 }}>→</span>
-                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 8.5, color: 'rgba(244,240,232,0.4)', textTransform: 'uppercase', letterSpacing: '.1em' }}>with Axon</span>
-                  </div>
-                  {/* 12min */}
-                  <div style={{ display: 'inline-flex', alignItems: 'baseline', gap: 3 }}>
-                    <span style={{ fontFamily: "'Instrument Serif',serif", fontSize: 72, color: '#F4F0E8', lineHeight: 1 }}>12</span>
-                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 20, color: 'rgba(244,240,232,0.5)', paddingBottom: 6 }}>min</span>
+                  {/* Labels below stats block */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 10 }}>
+                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: '#1A2742' }}>of reformatting</span>
+                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, color: '#1A2742' }}>from raw data</span>
                   </div>
                 </div>
-                {/* Labels outside below */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8, paddingLeft: 2, paddingRight: 2 }}>
-                  <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, color: 'rgba(26,39,66,0.42)' }}>of reformatting</span>
-                  <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 10, color: 'rgba(26,39,66,0.42)' }}>from raw data</span>
-                </div>
-              </div>
 
+              </div>
             </div>
+
           </div>
         </div>
       </section>
@@ -451,8 +441,11 @@ export default function Home() {
       <section id="shift" className="border-t divider">
         <div className="py-20 px-6">
           <div className="max-w-5xl mx-auto" id="shiftHeader">
-            <span className="text-xs font-body font-semibold uppercase tracking-widest text-accent">The Shift</span>
-            <h2 className="font-display text-4xl md:text-5xl text-primary mt-3 leading-tight">Three files in.<br /><span className="italic text-accent">A board-ready deck out.</span></h2>
+            <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: '1.2px', textTransform: 'uppercase', color: '#C8A86B', display: 'block', marginBottom: 16 }}>The Shift</span>
+            <h2 style={{ margin: 0 }}>
+              <span style={{ display: 'block', fontFamily: "'Instrument Serif',serif", fontSize: 72, fontWeight: 400, lineHeight: '60px', color: '#1A2742' }}>Three files in.</span>
+              <span style={{ display: 'block', fontFamily: "'Instrument Serif',serif", fontSize: 72, fontWeight: 400, fontStyle: 'italic', lineHeight: '86px', color: '#C8A86B' }}>A board-ready deck out.</span>
+            </h2>
           </div>
         </div>
 
@@ -626,8 +619,11 @@ export default function Home() {
       <section id="modes" className="py-28 px-6 border-t divider">
         <div className="max-w-5xl mx-auto">
           <div className="mb-16 text-center">
-            <span className="text-xs font-body font-semibold uppercase tracking-widest text-accent">The Workflow</span>
-            <h2 className="font-display text-4xl md:text-5xl text-primary mt-3 leading-tight">Three chapters.<br /><span className="italic text-accent">One workspace.</span></h2>
+            <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: '1.2px', textTransform: 'uppercase', color: '#C8A86B', display: 'block', marginBottom: 16 }}>The Workflow</span>
+            <h2 style={{ margin: 0 }}>
+              <span style={{ display: 'block', fontFamily: "'Instrument Serif',serif", fontSize: 72, fontWeight: 400, lineHeight: '60px', color: '#1A2742' }}>Three chapters.</span>
+              <span style={{ display: 'block', fontFamily: "'Instrument Serif',serif", fontSize: 72, fontWeight: 400, fontStyle: 'italic', lineHeight: '86px', color: '#C8A86B' }}>One workspace.</span>
+            </h2>
           </div>
           <div className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-primary/10" id="modesGrid">
 
@@ -712,56 +708,294 @@ export default function Home() {
       </section>
 
       {/* ═══ PROTOTYPE TEASER ═══ */}
-      <section id="prototype" className="py-20 px-6 border-t divider bg-primary">
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
-          <div className="max-w-lg">
-            <span className="text-xs font-body font-semibold uppercase tracking-widest text-accent mb-4 block">Live Prototype</span>
-            <h2 className="font-display text-4xl text-bg leading-tight mb-4">Ready to feel<br /><span className="italic text-accent">the neural connection?</span></h2>
-            <p className="font-body text-soft/70 leading-relaxed text-base">The Axon prototype is live. Drop a real dataset, watch the agent think, and get your first deck in under 12 minutes.</p>
+      <section id="prototype" style={{ background: '#1A2742', borderTop: '1px solid rgba(26,39,66,0.1)', padding: '112px 24px' }}>
+        <div style={{ maxWidth: 1152, margin: '0 auto', position: 'relative', height: 500 }}>
+
+          {/* LIVE PROTOTYPE label — bottom left */}
+          <div style={{ position: 'absolute', bottom: 0, left: 0, fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: '1.2px', textTransform: 'uppercase', color: '#C8A86B' }}>
+            Live Prototype
           </div>
-          <div className="flex flex-col items-center gap-4 flex-shrink-0">
-            <div className="rounded-2xl border border-bg/10 bg-bg/5 p-5 w-64">
-              <div className="flex gap-1.5 mb-3">
-                {[.20,.15,.10].map((op, i) => <div key={i} className="w-2.5 h-2.5 rounded-full" style={{ background: `rgba(244,240,232,${op})` }} />)}
-                <span className="text-xs font-body text-bg/30 ml-2">axon-app-chi.vercel.app</span>
+
+          {/* "Ready to feel" — italic serif */}
+          <div style={{ position: 'absolute', left: 'calc(50% - 286px)', top: 48, transform: 'translateY(-50%)', fontFamily: "'Instrument Serif',serif", fontStyle: 'italic', fontSize: 82, lineHeight: '86px', color: '#C8A86B', whiteSpace: 'nowrap' }}>
+            Ready to feel
+          </div>
+
+          {/* "connection?" — bold Inter */}
+          <div style={{ position: 'absolute', left: 'calc(50% - 165px)', top: 106, transform: 'translateY(-50%)', fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 72, lineHeight: '72px', color: '#C8A86B', letterSpacing: '-5.04px', whiteSpace: 'nowrap' }}>
+            connection?
+          </div>
+
+          {/* Step pills */}
+          <div style={{ position: 'absolute', left: 273, top: 148, display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {[
+              { num: '1', label: 'Drop real dataset' },
+              { num: '2', label: 'Watch agent think' },
+              { num: '3', label: 'Get your first deck' },
+            ].map(step => (
+              <div key={step.num} style={{ display: 'flex', alignItems: 'center', gap: 4, height: 24, padding: '0 5px', background: 'rgba(139,149,168,0.45)', border: '1px solid rgba(244,240,232,0.1)', borderRadius: 4, width: 148 }}>
+                <div style={{ width: 16, height: 16, borderRadius: '50%', background: 'rgba(139,149,168,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, color: 'white', lineHeight: 1 }}>{step.num}</span>
+                </div>
+                <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 500, color: '#F4F0E8', whiteSpace: 'nowrap' }}>{step.label}</span>
               </div>
-              <div className="grid gap-2">
-                <div className="h-8 rounded-lg bg-accent/20 border border-accent/20 flex items-center px-3"><span className="text-xs font-body text-accent/80">▪ Revenue insight</span></div>
-                <div className="h-8 rounded-lg bg-bg/8 border border-bg/10 flex items-center px-3"><span className="text-xs font-body text-bg/40">▪ Churn signal</span></div>
-                <div className="h-6 rounded bg-bg/5 border border-bg/8 flex items-center px-3"><span className="text-xs font-body text-bg/25">[ dataset canvas ]</span></div>
+            ))}
+          </div>
+
+          {/* Stacked browser mockups — Picts */}
+          <div style={{ position: 'absolute', left: 'calc(50% - 7.5px)', top: 131.5, width: 309, height: 268, transform: 'translateX(-50%)', opacity: 0.9 }}>
+
+            {/* Mock 1 (back): insights chips + connector + category nodes */}
+            <div style={{ position: 'absolute', left: 0, right: 74, top: 0.5, borderRadius: 8, background: '#F4F0E8', border: '1.52px solid rgba(26,39,66,0.12)', boxShadow: '0 0.84px 8.44px rgba(26,39,66,0.06)', overflow: 'hidden', height: 143 }}>
+              <div style={{ background: 'rgba(26,39,66,0.05)', borderBottom: '0.42px solid rgba(26,39,66,0.08)', padding: '3.4px 6.75px', display: 'flex', gap: 2.5, alignItems: 'center' }}>
+                {[0.18, 0.13, 0.08].map((op, i) => <div key={i} style={{ width: 4.2, height: 4.2, borderRadius: '50%', background: `rgba(26,39,66,${op})`, flexShrink: 0 }} />)}
+                <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 4.6, color: 'rgba(139,149,168,0.5)', marginLeft: 3.4 }}>axon.ai/canvas</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', padding: '8px 8.44px 8px 8.44px', height: 'calc(143px - 22px)', gap: 2 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2.5, flex: 1 }}>
+                  {[
+                    { label: 'Rev ↑12%', gold: true, light: false },
+                    { label: 'Churn ↓', gold: false, light: false },
+                    { label: 'CAC stable', gold: false, light: false },
+                    { label: 'EU leads', gold: true, light: true },
+                    { label: 'Q3 peak', gold: false, light: false },
+                    { label: 'NPS 72', gold: true, light: false },
+                  ].map((chip, i) => (
+                    <div key={i} style={{ borderRadius: 3.4, padding: '2.7px 3.4px', background: chip.gold ? (chip.light ? 'rgba(200,168,107,0.1)' : 'rgba(200,168,107,0.15)') : 'rgba(26,39,66,0.06)', border: `0.42px solid ${chip.gold ? (chip.light ? 'rgba(200,168,107,0.2)' : 'rgba(200,168,107,0.25)') : 'rgba(26,39,66,0.1)'}`, fontFamily: "'Inter',sans-serif", fontSize: 4.2, lineHeight: '6.3px', color: chip.gold ? 'rgba(26,39,66,0.7)' : '#8B95A8' }}>{chip.label}</div>
+                  ))}
+                </div>
+                <svg width="17" style={{ flexShrink: 0, alignSelf: 'stretch' }} viewBox="0 0 17 100" preserveAspectRatio="none">
+                  <path d="M0 12 Q8 12 17 45" stroke="#C8A86B" strokeWidth="0.8" fill="none" opacity="0.5" />
+                  <path d="M0 28 Q8 28 17 45" stroke="#8B95A8" strokeWidth="0.8" fill="none" opacity="0.4" />
+                  <path d="M0 45 Q8 45 17 60" stroke="#8B95A8" strokeWidth="0.8" fill="none" opacity="0.4" />
+                  <path d="M0 60 Q8 60 17 60" stroke="#C8A86B" strokeWidth="0.8" fill="none" opacity="0.5" />
+                  <path d="M0 76 Q8 76 17 78" stroke="#8B95A8" strokeWidth="0.8" fill="none" opacity="0.4" />
+                  <path d="M0 90 Q8 90 17 78" stroke="#8B95A8" strokeWidth="0.8" fill="none" opacity="0.3" />
+                </svg>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 5, width: 32, paddingLeft: 2.5 }}>
+                  {[{ label: 'Growth', gold: false }, { label: 'Revenue', gold: true }, { label: 'Retention', gold: false }].map((cat, i) => (
+                    <div key={i} style={{ borderRadius: 3.4, padding: '3.8px', textAlign: 'center', background: cat.gold ? 'rgba(200,168,107,0.1)' : 'rgba(26,39,66,0.07)', border: `0.42px solid ${cat.gold ? 'rgba(200,168,107,0.2)' : 'rgba(26,39,66,0.1)'}`, fontFamily: "'Inter',sans-serif", fontSize: 4.6, lineHeight: '7px', color: cat.gold ? '#C8A86B' : '#8B95A8' }}>{cat.label}</div>
+                  ))}
+                </div>
               </div>
             </div>
-            <a href="https://axon-app-chi.vercel.app/" target="_blank" className="inline-flex items-center gap-3 bg-accent text-primary font-body font-semibold text-sm px-8 py-4 rounded-xl hover:bg-accent/90 transition-all">Open the prototype →</a>
-            <p className="text-xs font-body text-soft/40">No signup needed</p>
+
+            {/* Mock 2 (middle): AI thinking chat */}
+            <div style={{ position: 'absolute', left: 37, right: 37, top: 62.5, borderRadius: 8, background: '#F4F0E8', border: '1.52px solid rgba(26,39,66,0.12)', boxShadow: '0 0.84px 8.44px rgba(26,39,66,0.06)', overflow: 'hidden', height: 143 }}>
+              <div style={{ background: 'rgba(26,39,66,0.05)', borderBottom: '0.42px solid rgba(26,39,66,0.08)', padding: '3.4px 6.75px', display: 'flex', gap: 2.5, alignItems: 'center' }}>
+                {[0.18, 0.13, 0.08].map((op, i) => <div key={i} style={{ width: 4.2, height: 4.2, borderRadius: '50%', background: `rgba(26,39,66,${op})`, flexShrink: 0 }} />)}
+                <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 4.6, color: 'rgba(139,149,168,0.5)', marginLeft: 3.4 }}>axon.ai/canvas</span>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 5, padding: 10, height: 'calc(143px - 22px)', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', gap: 5, alignItems: 'flex-start' }}>
+                  <div style={{ width: 11.8, height: 11.8, borderRadius: '50%', background: '#1A2742', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <svg width="5" height="5" viewBox="0 0 24 24" fill="none" stroke="#F4F0E8" strokeWidth="2.5"><circle cx="12" cy="12" r="3" /></svg>
+                  </div>
+                  <div style={{ flex: 1, background: '#E8EAED', border: '0.42px solid rgba(26,39,66,0.1)', borderRadius: '5px 5px 5px 0.84px', padding: '5.9px 6.3px', fontFamily: "'Inter',sans-serif", fontSize: 5.5, color: '#1A2742', lineHeight: '8.4px' }}>
+                    Parsing 3 files, 47 tables, 218K rows...
+                  </div>
+                </div>
+                <div style={{ display: 'flex', gap: 5, alignItems: 'flex-start' }}>
+                  <div style={{ width: 11.8, height: 11.8, borderRadius: '50%', background: '#1A2742', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <svg width="5" height="5" viewBox="0 0 24 24" fill="none" stroke="#F4F0E8" strokeWidth="2.5"><circle cx="12" cy="12" r="3" /></svg>
+                  </div>
+                  <div style={{ flex: 1, background: '#E8EAED', border: '0.42px solid rgba(26,39,66,0.1)', borderRadius: '5px 5px 5px 0.84px', padding: '5.9px 6.3px', fontFamily: "'Inter',sans-serif", fontSize: 5.5, color: '#1A2742', lineHeight: '8.4px' }}>
+                    Detected <span style={{ color: '#C8A86B', fontWeight: 500 }}>6 insights</span> worth surfacing.
+                  </div>
+                </div>
+                <div style={{ display: 'flex', gap: 2.5, paddingLeft: 16.9 }}>
+                  {[0, 1, 2].map(i => <div key={i} style={{ width: 2.5, height: 2.5, borderRadius: '50%', background: 'rgba(139,149,168,0.5)' }} />)}
+                </div>
+              </div>
+            </div>
+
+            {/* Mock 3 (front): charts canvas */}
+            <div style={{ position: 'absolute', left: 74, right: 0, top: 124.5, borderRadius: 8, background: '#F4F0E8', border: '1.52px solid rgba(26,39,66,0.12)', boxShadow: '0 0.84px 8.44px rgba(26,39,66,0.06)', overflow: 'hidden', height: 143 }}>
+              <div style={{ background: 'rgba(26,39,66,0.05)', borderBottom: '0.42px solid rgba(26,39,66,0.08)', padding: '3.4px 6.75px', display: 'flex', gap: 2.5, alignItems: 'center' }}>
+                {[0.18, 0.13, 0.08].map((op, i) => <div key={i} style={{ width: 4.2, height: 4.2, borderRadius: '50%', background: `rgba(26,39,66,${op})`, flexShrink: 0 }} />)}
+                <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 4.6, color: 'rgba(139,149,168,0.5)', marginLeft: 3.4 }}>axon.ai/canvas</span>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 3.4, padding: 5.9, height: 'calc(143px - 22px)' }}>
+                <div style={{ borderRadius: 3.4, border: '0.42px solid rgba(26,39,66,0.1)', background: 'rgba(255,255,255,0.5)', padding: 3.8, display: 'flex', flexDirection: 'column', gap: 1.7 }}>
+                  <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 3.4, color: 'rgba(139,149,168,0.7)', textTransform: 'uppercase', letterSpacing: '0.2px' }}>Revenue mix</span>
+                  <div style={{ flex: 1, display: 'grid', gap: 1.3, gridTemplateColumns: '2fr 1fr', gridTemplateRows: '1fr 1fr' }}>
+                    <div style={{ background: '#1A2742', borderRadius: 1.3, gridRow: 'span 2', opacity: 0.78 }} />
+                    <div style={{ background: '#C8A86B', borderRadius: 1.3, opacity: 0.65 }} />
+                    <div style={{ background: '#8B95A8', borderRadius: 1.3, opacity: 0.38 }} />
+                  </div>
+                </div>
+                <div style={{ borderRadius: 3.4, border: '0.42px solid rgba(26,39,66,0.1)', background: 'rgba(255,255,255,0.5)', padding: 3.8, display: 'flex', flexDirection: 'column', gap: 3.4 }}>
+                  <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 3.4, color: 'rgba(139,149,168,0.7)', textTransform: 'uppercase', letterSpacing: '0.2px' }}>Churn</span>
+                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
+                    {[[0.45, 'rgba(26,39,66,0.45)'], [0.7, '#C8A86B'], [0.82, 'rgba(26,39,66,0.45)'], [0.28, 'rgba(139,149,168,0.5)']].map(([w, col], i) => (
+                      <div key={i} style={{ position: 'relative', height: 1, background: 'rgba(26,39,66,0.12)' }}>
+                        <div style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', height: 0.42, background: col as string, width: `${(w as number) * 100}%` }} />
+                        <div style={{ position: 'absolute', left: `${(w as number) * 100}%`, top: '50%', transform: 'translate(-50%,-50%)', width: 2.95, height: 2.95, borderRadius: '50%', background: col as string }} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div style={{ gridColumn: 'span 2', borderRadius: 3.4, border: '0.42px solid rgba(26,39,66,0.1)', background: 'rgba(255,255,255,0.5)', padding: 3.8, display: 'flex', flexDirection: 'column', gap: 2.5 }}>
+                  <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 3.4, color: 'rgba(139,149,168,0.7)', textTransform: 'uppercase', letterSpacing: '0.2px' }}>Activity heatmap</span>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(8,1fr)', gap: 0.84 }}>
+                    {[['#C8A86B',0.22],['#C8A86B',0.58],['#C8A86B',0.82],['#C8A86B',0.35],['#1A2742',0.18],['#C8A86B',0.68],['#1A2742',0.1],['#C8A86B',0.9],
+                      ['#1A2742',0.22],['#C8A86B',0.42],['#1A2742',0.14],['#C8A86B',0.72],['#C8A86B',0.52],['#1A2742',0.18],['#C8A86B',0.48],['#1A2742',0.28],
+                      ['#C8A86B',0.22],['#C8A86B',0.58],['#C8A86B',0.82],['#C8A86B',0.35],['#1A2742',0.18],['#C8A86B',0.68],['#1A2742',0.1],['#C8A86B',0.9],
+                    ].map(([col, op], i) => (
+                      <div key={i} style={{ height: 5.9, borderRadius: 0.84, background: col as string, opacity: op as number }} />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
+
+          {/* "in under" — right edge at 800px from left */}
+          <div style={{ position: 'absolute', right: 352, top: 420, transform: 'translateY(-50%)', fontFamily: "'Instrument Serif',serif", fontSize: 72, lineHeight: '60px', color: '#C8A86B', whiteSpace: 'nowrap' }}>
+            in under
+          </div>
+
+          {/* "12 minutes" */}
+          <div style={{ position: 'absolute', left: 490, top: 474, transform: 'translateY(-50%)', fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 72, lineHeight: '72px', color: '#C8A86B', letterSpacing: '-2.88px', whiteSpace: 'nowrap' }}>
+            12 minutes
+          </div>
+
+          {/* Open prototype button — right:155 puts left edge at ~856px, 133px clear of mocks (right edge 723px) */}
+          <a
+            href="https://axon-app-chi.vercel.app/"
+            target="_blank"
+            rel="noopener"
+            style={{ position: 'absolute', right: 155, top: '50%', transform: 'translateY(-50%)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#C8A86B', color: '#1A2742', borderRadius: 8, padding: '12px 28px', height: 41, fontFamily: "'Inter',sans-serif", fontSize: 13, fontWeight: 500, textDecoration: 'none', whiteSpace: 'nowrap' }}
+          >
+            Open prototype
+          </a>
+
         </div>
       </section>
 
       {/* ═══ FEATURES ═══ */}
-      <section id="features" className="py-28 px-6 border-t divider">
-        <div className="max-w-5xl mx-auto">
-          <div className="mb-14">
-            <span className="text-xs font-body font-semibold uppercase tracking-widest text-accent">Built for analysts</span>
-            <h2 className="font-display text-4xl text-primary mt-3 leading-tight">Everything the neural<br /><span className="italic text-accent">connection needs.</span></h2>
+      {/*
+        Grid layout (3 cols × 4 rows):
+          Row 1 (auto)  : heading [cols 1-2] | Live presentations tall card [col 3, rows 1-2, alignSelf:end]
+          Row 2 (186px) : One-click export [col 1] | Signal detection [col 2] | (tall card ends here)
+          Row 3 (22px)  : gap — empty
+          Row 4 (186px) : Smart charts [col 1] | Data privacy [col 2] | Team collaboration [col 3]
+        The tall card (h=400) + alignSelf:end pins its bottom to the row-2 baseline.
+      */}
+      <section id="features" style={{ background: '#F4F0E8', borderTop: '1px solid rgba(26,39,66,0.1)', padding: '113px 24px 112px' }}>
+        <div style={{ maxWidth: 1152, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', columnGap: 20, gridTemplateRows: 'auto 186px 22px 186px' }}>
+
+          {/* ── Heading: cols 1-2, row 1 ── */}
+          <div style={{ gridColumn: '1 / 3', gridRow: 1, paddingTop: 5.5, paddingBottom: 56 }}>
+            <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: '1.2px', textTransform: 'uppercase', color: '#C8A86B', display: 'block', marginBottom: 16 }}>Built for analysts</span>
+            <h2 style={{ margin: 0 }}>
+              <span style={{ display: 'block', fontFamily: "'Instrument Serif',serif", fontSize: 72, fontWeight: 400, lineHeight: '60px', color: '#1A2742' }}>Everything the neural</span>
+              <span style={{ display: 'block', fontFamily: "'Instrument Serif',serif", fontSize: 72, fontWeight: 400, fontStyle: 'italic', lineHeight: '86px', color: '#C8A86B' }}>connection needs.</span>
+            </h2>
           </div>
-          <div className="grid md:grid-cols-3 gap-5">
-            {[
-              { icon: <><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></>, title: 'Signal detection', desc: 'The agent identifies trends, outliers, and correlations before you even ask.' },
-              { icon: <><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /></>, title: 'Smart charts', desc: 'Chart type is chosen by the story, not by default. No more misleading bar charts.' },
-              { icon: <><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></>, title: 'One-click export', desc: 'PPTX, PDF, or a shareable live link. Ready for any room.' },
-              { icon: <><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 00-3-3.87" /><path d="M16 3.13a4 4 0 010 7.75" /></>, title: 'Team collaboration', desc: 'Comment, iterate, and version-track with your whole team in real time.' },
-              { icon: <><rect x="2" y="3" width="20" height="14" rx="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" /></>, title: 'Live presentations', desc: 'Present straight from Axon. No downloads, no version confusion.' },
-              { icon: <><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></>, title: 'Data privacy', desc: 'Your data is never used to train models. Processed and discarded.' },
-            ].map(f => (
-              <div key={f.title} className="feature-card rounded-xl p-6">
-                <div className="w-9 h-9 rounded-lg bg-accent/15 flex items-center justify-center mb-5">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A86B" strokeWidth="1.8">{f.icon}</svg>
-                </div>
-                <h3 className="font-display text-lg text-primary mb-2">{f.title}</h3>
-                <p className="font-body text-sm text-soft leading-relaxed">{f.desc}</p>
+
+          {/* ── TALL Live presentations: col 3, rows 1+2, pinned to row-2 bottom ── */}
+          <div style={{ gridColumn: 3, gridRow: '1 / 3', alignSelf: 'end', height: 400, background: 'rgba(255,255,255,0.5)', border: '1px solid rgba(26,39,66,0.1)', borderRadius: 12, padding: 25, display: 'flex', flexDirection: 'column', gap: 7, boxSizing: 'border-box' }}>
+            <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(200,168,107,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A86B" strokeWidth="1.8">
+                <rect x="2" y="3" width="20" height="14" rx="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" />
+              </svg>
+            </div>
+            <div style={{ paddingTop: 13 }}>
+              <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 18, fontWeight: 400, lineHeight: '28px', color: '#1A2742', margin: 0 }}>Live presentations</h3>
+            </div>
+            <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: '22px', color: '#8B95A8', margin: 0 }}>
+              Present straight from Axon. No downloads, no version confusion.
+            </p>
+            {/* Mini activity heatmap widget */}
+            <div style={{ background: 'white', border: '1px solid rgba(26,39,66,0.12)', borderRadius: 12, padding: 11, width: 192, height: 112, display: 'flex', flexDirection: 'column', gap: 5, boxShadow: '0 2px 6px rgba(26,39,66,0.05)', flexShrink: 0 }}>
+              <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 8, letterSpacing: '0.56px', textTransform: 'uppercase', color: '#8B95A8' }}>Activity heatmap</span>
+              <div style={{ flex: 1, display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gridTemplateRows: 'repeat(3, 1fr)', gap: 3 }}>
+                {([
+                  ['#C8A86B', 0.22], ['#C8A86B', 0.68], ['#1A2742', 0.18], ['#C8A86B', 0.88],
+                  ['#1A2742', 0.13], ['#C8A86B', 0.48], ['#C8A86B', 0.78], ['#1A2742', 0.10],
+                  ['#C8A86B', 0.38], ['#1A2742', 0.22], ['#C8A86B', 0.58], ['#C8A86B', 0.32],
+                ] as [string, number][]).map(([col, op], i) => (
+                  <div key={i} style={{ borderRadius: 2, background: col, opacity: op }} />
+                ))}
               </div>
-            ))}
+            </div>
+            {/* CTA */}
+            <a href="https://axon-app-chi.vercel.app/" target="_blank" rel="noopener" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#1A2742', color: '#F4F0E8', fontFamily: "'Inter',sans-serif", fontSize: 13, fontWeight: 500, padding: '12px 24px', borderRadius: 8, textDecoration: 'none', marginTop: 'auto', whiteSpace: 'nowrap' }}>
+              Try Axon free →
+            </a>
           </div>
+
+          {/* ── Row 1 feature cards: cols 1-2, row 2 ── */}
+
+          {/* One-click export */}
+          <div style={{ gridColumn: 1, gridRow: 2, background: 'rgba(255,255,255,0.5)', border: '1px solid rgba(26,39,66,0.1)', borderRadius: 12, padding: 25, display: 'flex', flexDirection: 'column', gap: 6.9, boxSizing: 'border-box' }}>
+            <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(200,168,107,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A86B" strokeWidth="1.8">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
+              </svg>
+            </div>
+            <div style={{ paddingTop: 13 }}>
+              <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 18, fontWeight: 400, lineHeight: '28px', color: '#1A2742', margin: 0 }}>One-click export</h3>
+            </div>
+            <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: '22px', color: '#8B95A8', margin: 0 }}>PPTX, PDF, or a shareable live link. Ready for any room.</p>
+          </div>
+
+          {/* Signal detection */}
+          <div style={{ gridColumn: 2, gridRow: 2, background: 'rgba(255,255,255,0.5)', border: '1px solid rgba(26,39,66,0.1)', borderRadius: 12, padding: 25, display: 'flex', flexDirection: 'column', gap: 6.9, boxSizing: 'border-box' }}>
+            <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(200,168,107,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A86B" strokeWidth="1.8">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+              </svg>
+            </div>
+            <div style={{ paddingTop: 13 }}>
+              <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 18, fontWeight: 400, lineHeight: '28px', color: '#1A2742', margin: 0 }}>Signal detection</h3>
+            </div>
+            <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: '22px', color: '#8B95A8', margin: 0 }}>The agent identifies trends, outliers, and correlations before you even ask.</p>
+          </div>
+
+          {/* ── Row 2 feature cards: cols 1-3, row 4 (row 3 is the 22px gap) ── */}
+
+          {/* Smart charts */}
+          <div style={{ gridColumn: 1, gridRow: 4, background: 'rgba(255,255,255,0.5)', border: '1px solid rgba(26,39,66,0.1)', borderRadius: 12, padding: 25, display: 'flex', flexDirection: 'column', gap: 6.9, boxSizing: 'border-box' }}>
+            <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(200,168,107,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A86B" strokeWidth="1.8">
+                <rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" />
+              </svg>
+            </div>
+            <div style={{ paddingTop: 13 }}>
+              <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 18, fontWeight: 400, lineHeight: '28px', color: '#1A2742', margin: 0 }}>Smart charts</h3>
+            </div>
+            <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: '22px', color: '#8B95A8', margin: 0 }}>Chart type is chosen by the story, not by default. No more misleading bar charts.</p>
+          </div>
+
+          {/* Data privacy */}
+          <div style={{ gridColumn: 2, gridRow: 4, background: 'rgba(255,255,255,0.5)', border: '1px solid rgba(26,39,66,0.1)', borderRadius: 12, padding: 25, display: 'flex', flexDirection: 'column', gap: 6.9, boxSizing: 'border-box' }}>
+            <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(200,168,107,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A86B" strokeWidth="1.8">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+            </div>
+            <div style={{ paddingTop: 13 }}>
+              <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 18, fontWeight: 400, lineHeight: '28px', color: '#1A2742', margin: 0 }}>Data privacy</h3>
+            </div>
+            <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: '22px', color: '#8B95A8', margin: 0 }}>Your data is never used to train models. Processed and discarded.</p>
+          </div>
+
+          {/* Team collaboration */}
+          <div style={{ gridColumn: 3, gridRow: 4, background: 'rgba(255,255,255,0.5)', border: '1px solid rgba(26,39,66,0.1)', borderRadius: 12, padding: 25, display: 'flex', flexDirection: 'column', gap: 6.9, boxSizing: 'border-box' }}>
+            <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(200,168,107,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A86B" strokeWidth="1.8">
+                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 00-3-3.87" /><path d="M16 3.13a4 4 0 010 7.75" />
+              </svg>
+            </div>
+            <div style={{ paddingTop: 13 }}>
+              <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 18, fontWeight: 400, lineHeight: '28px', color: '#1A2742', margin: 0 }}>Team collaboration</h3>
+            </div>
+            <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: '22px', color: '#8B95A8', margin: 0 }}>Comment, iterate, and version-track with your whole team in real time.</p>
+          </div>
+
         </div>
       </section>
 
@@ -769,8 +1003,11 @@ export default function Home() {
       <section id="proof" className="py-28 px-6 border-t divider">
         <div className="max-w-5xl mx-auto">
           <div className="mb-14 text-center">
-            <span className="text-xs font-body font-semibold uppercase tracking-widest text-accent">What people say</span>
-            <h2 className="font-display text-4xl text-primary mt-3 leading-tight">The data spoke.<br /><span className="italic text-accent">They just listened.</span></h2>
+            <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: '1.2px', textTransform: 'uppercase', color: '#C8A86B', display: 'block', marginBottom: 16 }}>What people say</span>
+            <h2 style={{ margin: 0 }}>
+              <span style={{ display: 'block', fontFamily: "'Instrument Serif',serif", fontSize: 72, fontWeight: 400, lineHeight: '60px', color: '#1A2742' }}>The data spoke.</span>
+              <span style={{ display: 'block', fontFamily: "'Instrument Serif',serif", fontSize: 72, fontWeight: 400, fontStyle: 'italic', lineHeight: '86px', color: '#C8A86B' }}>They just listened.</span>
+            </h2>
           </div>
           <div className="grid md:grid-cols-3 gap-5">
             {[
@@ -793,7 +1030,10 @@ export default function Home() {
       {/* ═══ CTA ═══ */}
       <section id="cta" className="py-28 px-6 border-t divider">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="font-display text-5xl text-primary mb-5 leading-tight">Your data has a story.<br /><span className="italic text-accent">Time to tell it.</span></h2>
+          <h2 style={{ margin: '0 0 20px' }}>
+            <span style={{ display: 'block', fontFamily: "'Instrument Serif',serif", fontSize: 72, fontWeight: 400, lineHeight: '60px', color: '#1A2742' }}>Your data has a story.</span>
+            <span style={{ display: 'block', fontFamily: "'Instrument Serif',serif", fontSize: 72, fontWeight: 400, fontStyle: 'italic', lineHeight: '86px', color: '#C8A86B' }}>Time to tell it.</span>
+          </h2>
           <p className="font-body text-soft mb-10 leading-relaxed">Join thousands of analysts who&apos;ve stopped translating and started presenting.</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center mb-5">
             <a href="https://axon-app-chi.vercel.app/" target="_blank" className="inline-flex items-center justify-center gap-2 bg-primary text-bg font-body font-medium text-sm px-8 py-4 rounded-lg hover:bg-primary/90 transition-all">Try Axon free →</a>
