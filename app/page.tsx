@@ -36,12 +36,16 @@ export default function Home() {
 
   // ── "Easy-peasy" section animation ──
   const problemRef = useRef<HTMLElement>(null);
-  const problemEntered = useInView(problemRef, { amount: 0.3, once: true });
+  const problemEntered = useInView(problemRef, { amount: 0.3 }); // replays every time the section re-enters view
   const reduced = useReducedMotion() ?? false;
   const showFinal = reduced || problemEntered;
   const [activeStep, setActiveStep] = useState(0);
   const [stepsStarted, setStepsStarted] = useState(false);
   const [counts, setCounts] = useState<{ a: number; b: number }>(() => (reduced ? { a: 6, b: 12 } : { a: 0, b: 0 }));
+
+  // ── Live Prototype: run the showcase loop once 30% of its section is in view ──
+  const protoSectionRef = useRef<HTMLElement>(null);
+  const protoInView = useInView(protoSectionRef, { amount: 0.3 });
 
   // ── Hero chaos animation ──
   useEffect(() => {
@@ -261,7 +265,7 @@ export default function Home() {
   // ── "Easy-peasy": after the cards settle, count 0→6 / 0→12 ──
   useEffect(() => {
     if (reduced) { setCounts({ a: 6, b: 12 }); return; }
-    if (!problemEntered) return;
+    if (!problemEntered) { setCounts({ a: 0, b: 0 }); return; } // reset so it re-counts on re-entry
     let raf = 0;
     const start = setTimeout(() => {
       const t0 = performance.now();
@@ -278,7 +282,7 @@ export default function Home() {
 
   // ── "Easy-peasy": once the numbers settle, cycle the gold highlight across steps 1–4 ──
   useEffect(() => {
-    if (reduced || !problemEntered) return;
+    if (reduced || !problemEntered) { setStepsStarted(false); return; } // reset so it re-cycles on re-entry
     let id = 0;
     const start = setTimeout(() => {
       setStepsStarted(true);
@@ -479,7 +483,7 @@ export default function Home() {
                         <span style={{ position: 'absolute', left: 0, right: 0, top: 0 }}>{counts.a}</span>
                         {/* reused strike line — same angle/position; only the draw-in (scaleX) is new */}
                         <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%) rotate(126deg)' }}>
-                          <motion.div initial={false} animate={{ scaleX: showFinal ? 1 : 0 }} transition={reduced ? { duration: 0 } : { duration: STRIKE_DUR, delay: NUMBERS_DONE, ease: 'easeInOut' }} style={{ width: 68, height: 2, background: 'rgba(139,149,168,0.75)', borderRadius: 1, transformOrigin: 'left center' }} />
+                          <motion.div initial={false} animate={{ scaleX: showFinal ? 1 : 0 }} transition={reduced ? { duration: 0 } : { duration: STRIKE_DUR, delay: showFinal ? NUMBERS_DONE : 0, ease: 'easeInOut' }} style={{ width: 68, height: 2, background: 'rgba(139,149,168,0.75)', borderRadius: 1, transformOrigin: 'left center' }} />
                         </div>
                       </span>
                       <span style={{ fontFamily: "'Instrument Serif',serif", fontSize: 30.2, lineHeight: '30.24px', color: '#8B95A8' }}>hrs</span>
@@ -789,7 +793,7 @@ export default function Home() {
       </section>
 
       {/* ═══ PROTOTYPE TEASER ═══ */}
-      <section id="prototype" style={{ background: '#1A2742', borderTop: '1px solid rgba(26,39,66,0.1)', padding: '112px 24px' }}>
+      <section ref={protoSectionRef} id="prototype" style={{ background: '#1A2742', borderTop: '1px solid rgba(26,39,66,0.1)', padding: '112px 24px' }}>
         <div style={{ maxWidth: 1152, margin: '0 auto', position: 'relative', height: 598 }}>
 
           {/* LIVE PROTOTYPE label — bottom left */}
@@ -843,7 +847,7 @@ export default function Home() {
             {/* Background */}
             <div style={{ position: 'absolute', left: '50%', top: 'calc(50% - 0.5px)', transform: 'translate(-50%, -50%)', width: 209, height: 209, background: '#8b95a8', border: '0.609px solid rgba(26,39,66,0.1)', borderRadius: 6.531 }} />
 
-            <PrototypeShowcase />
+            <PrototypeShowcase inView={protoInView} />
 
           </div>
 

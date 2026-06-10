@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import { InsightCard } from "./InsightCard";
 import { TOKENS, COLORS } from "./rawData";
 import { SHOWCASE_INSIGHTS, SHOWCASE_DATASET, SHOWCASE_SLIDE } from "./showcaseData";
@@ -254,12 +254,11 @@ function SlideLayer({ phase }: { phase: number }) {
 }
 
 /* ════════════════ Orchestrator ════════════════ */
-export function PrototypeShowcase() {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { amount: 0.4 });
+export function PrototypeShowcase({ inView }: { inView: boolean }) {
   const [phase, setPhase] = useState(0);
 
-  /* Chained timeline so each beat can hold for a different length. */
+  /* Chained timeline so each beat can hold for a different length. The parent
+     starts/pauses this by toggling `inView` (at 30% of the section). */
   useEffect(() => {
     if (!inView) return;
     const id = setTimeout(() => setPhase((p) => (p + 1) % PHASES), (PHASE_HOLD[phase] + CROSSFADE) * 1000);
@@ -267,7 +266,7 @@ export function PrototypeShowcase() {
   }, [inView, phase]);
 
   return (
-    <div ref={ref} style={{ position: "absolute", inset: 0, background: CANVAS_BG, overflow: "hidden" }}>
+    <div style={{ position: "absolute", inset: 0, background: CANVAS_BG, overflow: "hidden" }}>
       <RawLayer phase={phase} />
       <FlowLayer phase={phase} />
       <SlideLayer phase={phase} />
