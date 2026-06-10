@@ -384,7 +384,9 @@ export default function Home() {
 
             {/* RIGHT BOX — numbered steps + stats */}
             <div style={{ borderRadius: 16, overflow: 'hidden', background: 'rgba(200,168,107,0.15)', height: 775, position: 'relative', flexShrink: 0 }}>
-              <div style={{ position: 'absolute', left: 113, right: 89, top: 179 }}>
+              {/* Easy-peasy heading */}
+              <div style={{ position: 'absolute', left: 85, top: 216, transform: 'translateY(-50%)', fontFamily: "'Instrument Serif',serif", fontStyle: 'italic', fontSize: 36, lineHeight: '45px', color: '#1A2742', whiteSpace: 'nowrap' }}>Easy-peasy</div>
+              <div style={{ position: 'absolute', left: 85, right: 60, top: 257 }}>
 
                 {/* Numbered steps */}
                 {[
@@ -393,7 +395,7 @@ export default function Home() {
                   'Selects chart types that serve the story, not the default',
                   "Assembles a deck you're proud to put your name on",
                 ].map((txt, i) => (
-                  <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: 6.875, paddingTop: 8, paddingBottom: 8, ...(i < 3 ? { borderRight: '1px solid rgba(244,240,232,0.08)', paddingRight: 1 } : {}) }}>
+                  <div key={i} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 6, paddingTop: 6, paddingBottom: 6, opacity: 0.6, ...(i < 3 ? { borderRight: '1px solid rgba(244,240,232,0.08)' } : {}) }}>
                     <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'rgba(200,168,107,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                       <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, color: '#C8A86B', lineHeight: 1 }}>{i + 1}</span>
                     </div>
@@ -405,12 +407,12 @@ export default function Home() {
                 <div style={{ marginTop: 24, position: 'relative' }}>
                   <div style={{ background: '#1A2742', borderRadius: 8, height: 80, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 32, border: '1px solid rgba(244,240,232,0.08)' }}>
                     {/* 6 hrs — crossed out */}
-                    <div style={{ position: 'relative', display: 'flex', alignItems: 'baseline', gap: 2 }}>
-                      <span style={{ fontFamily: "'Instrument Serif',serif", fontSize: 72, lineHeight: '60px', color: '#8B95A8' }}>6</span>
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: 2 }}>
+                      <span style={{ position: 'relative', display: 'inline-block', fontFamily: "'Instrument Serif',serif", fontSize: 72, lineHeight: '60px', color: '#8B95A8' }}>
+                        6
+                        <div style={{ position: 'absolute', top: '50%', left: '50%', width: 68, height: 2, background: 'rgba(139,149,168,0.75)', borderRadius: 1, transform: 'translate(-50%, -50%) rotate(126deg)' }} />
+                      </span>
                       <span style={{ fontFamily: "'Instrument Serif',serif", fontSize: 30.2, lineHeight: '30.24px', color: '#8B95A8' }}>hrs</span>
-                      <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <div style={{ width: '120%', height: 1.5, background: 'rgba(139,149,168,0.75)', borderRadius: 1, transform: 'rotate(-30deg)' }} />
-                      </div>
                     </div>
                     {/* with Axon + arrow */}
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
