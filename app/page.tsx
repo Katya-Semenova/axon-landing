@@ -868,29 +868,38 @@ export default function Home() {
           </div>
 
           {/* ── One-click export — terracotta, left col row 2 ── */}
-          <div style={{ gridColumn: 1, gridRow: 2, background: '#C8A86B', borderRadius: 16, padding: '28px 28px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: 210, boxSizing: 'border-box', boxShadow: '0 2px 16px rgba(26,39,66,0.08)' }}>
-            <div>
-              <span style={{ fontFamily: "'Instrument Serif',serif", fontSize: 80, fontWeight: 400, lineHeight: 1, color: '#1A2742', display: 'block' }}>3×</span>
-              <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 15, fontWeight: 600, color: 'rgba(26,39,66,0.6)', display: 'block', marginTop: 4 }}>faster to export</span>
+          <div style={{ gridColumn: 1, gridRow: 2, background: '#C8A86B', borderRadius: 16, padding: '28px 26px 18px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 6, minHeight: 250, boxSizing: 'border-box', boxShadow: '0 2px 16px rgba(26,39,66,0.08)' }}>
+            {/* metric + icon on one row; icon is top-aligned to the digit (not centered) */}
+            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 16 }}>
+              <span style={{ display: 'inline-flex', alignItems: 'baseline', color: '#1A2742', lineHeight: 1, position: 'relative', top: -12 }}>
+                <span style={{ fontFamily: "'JetBrains Mono',monospace", fontWeight: 300, fontSize: 132 }}>X</span>
+                <span style={{ fontFamily: "'Instrument Serif',serif", fontWeight: 400, fontSize: 150 }}>3</span>
+              </span>
+              {/* icon — height matched to the digit "3" */}
+              <div style={{ width: 68, height: 68, borderRadius: 16, background: 'rgba(26,39,66,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1A2742" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M2 3h20" />
+                  <path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3" />
+                  <path d="m7 21 5-5 5 5" />
+                </svg>
+              </div>
             </div>
-            <div>
-              <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 20, fontWeight: 400, color: '#1A2742', margin: '0 0 5px' }}>One-click export</h3>
-              <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 13, lineHeight: '20px', color: 'rgba(26,39,66,0.65)', margin: 0 }}>PPTX, PDF, or a shareable live link. Ready for any room.</p>
-            </div>
+            <span style={{ fontFamily: "'Instrument Serif',serif", fontWeight: 400, fontSize: 42, lineHeight: '46px', color: '#1A2742' }}>Faster to present</span>
           </div>
 
           {/* ── Live presentations — navy hero, right col rows 2–3 ── */}
           <div style={{ gridColumn: 2, gridRow: '2 / 4', background: '#1A2742', borderRadius: 16, padding: 32, display: 'flex', flexDirection: 'column', gap: 24, boxSizing: 'border-box', boxShadow: '0 4px 24px rgba(26,39,66,0.15)' }}>
-            {/* Photo placeholder — replace with real image later */}
-            <div style={{ flex: 1, minHeight: 200, background: 'rgba(255,255,255,0.05)', border: '1.5px dashed rgba(244,240,232,0.18)', borderRadius: 12, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(244,240,232,0.25)" strokeWidth="1.4">
-                <rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" />
-              </svg>
-              <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(244,240,232,0.25)' }}>Photo placeholder</span>
+            {/* Photo — fills the card; the img is absolutely placed so it never dictates height.
+                Top stays put, bottom reveals more, and the text below sits at the card's bottom edge. */}
+            <div style={{ position: 'relative', flex: '1 1 0', minHeight: 150, borderRadius: 12, overflow: 'hidden' }}>
+              <img src="/built-for-analysts.jpeg" alt="Analyst presenting live with Axon" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 22%', display: 'block' }} />
+              {/* subtle scrim so the credit stays legible over the photo's bright corner */}
+              <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 38, background: 'linear-gradient(to top, rgba(0,0,0,0.38), rgba(0,0,0,0))', pointerEvents: 'none' }} />
+              <a href="https://www.cosmos.so/" target="_blank" rel="noopener noreferrer" style={{ position: 'absolute', bottom: 7, right: 10, zIndex: 1, fontFamily: "'Inter',sans-serif", fontSize: 9, color: 'rgba(255,255,255,0.85)', textDecoration: 'none', textShadow: '0 1px 3px rgba(0,0,0,0.55)' }}>Photo via Cosmos</a>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 26, fontWeight: 400, lineHeight: '34px', color: '#F4F0E8', margin: 0 }}>Live presentations</h3>
-              <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: '22px', color: 'rgba(244,240,232,0.6)', margin: 0 }}>Present straight from Axon. No downloads, no version confusion. Your deck, live and in sync.</p>
+              <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 42, fontWeight: 400, lineHeight: '46px', color: '#F4F0E8', margin: 0 }}>Live presentations</h3>
+              <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 15, lineHeight: 1.6, color: 'rgba(244,240,232,0.6)', margin: 0 }}>Present straight from Axon. No downloads, no version confusion. Your deck, live and in sync.</p>
               <a href="https://axon-app-chi.vercel.app/" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#C8A86B', color: '#1A2742', fontFamily: "'Inter',sans-serif", fontSize: 13, fontWeight: 600, padding: '12px 24px', borderRadius: 8, textDecoration: 'none', whiteSpace: 'nowrap', alignSelf: 'flex-start', boxShadow: '0 2px 12px rgba(200,168,107,0.4)' }}>
                 Try Axon free →
               </a>
@@ -898,15 +907,15 @@ export default function Home() {
           </div>
 
           {/* ── Signal detection — cream, left col row 3 ── */}
-          <div style={{ gridColumn: 1, gridRow: 3, background: 'rgba(255,255,255,0.65)', border: '1px solid rgba(26,39,66,0.08)', borderRadius: 16, padding: 28, display: 'flex', flexDirection: 'column', gap: 16, minHeight: 210, boxSizing: 'border-box', boxShadow: '0 2px 12px rgba(26,39,66,0.06)' }}>
-            <div style={{ width: 56, height: 56, borderRadius: 14, background: 'rgba(26,39,66,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1A2742" strokeWidth="1.6">
-                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+          <div style={{ gridColumn: 1, gridRow: 3, background: 'rgba(255,255,255,0.65)', border: '1px solid rgba(26,39,66,0.08)', borderRadius: 16, padding: 28, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 16, minHeight: 250, boxSizing: 'border-box', boxShadow: '0 2px 12px rgba(26,39,66,0.06)' }}>
+            <div style={{ width: 68, height: 68, borderRadius: 16, background: 'rgba(26,39,66,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1A2742" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
               </svg>
             </div>
             <div>
-              <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 20, fontWeight: 400, lineHeight: '28px', color: '#1A2742', margin: '0 0 8px' }}>Signal detection</h3>
-              <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: '22px', color: '#8B95A8', margin: 0 }}>The agent identifies trends, outliers, and correlations before you even ask.</p>
+              <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 42, fontWeight: 400, lineHeight: '46px', color: '#1A2742', margin: '0 0 10px' }}>Signal detection</h3>
+              <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 16, lineHeight: 1.6, color: '#8B95A8', margin: 0 }}>The agent identifies trends, outliers, and correlations before you even ask.</p>
             </div>
           </div>
 
