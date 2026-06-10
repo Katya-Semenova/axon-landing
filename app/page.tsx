@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { TOKENS, COLORS } from './_axon/rawData';
+import { PrototypeShowcase } from './_axon/PrototypeShowcase';
 
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
@@ -23,9 +25,6 @@ export default function Home() {
     const bottom = heroBottom;
 
     let heroState = 'before';
-
-    const TOKENS = ['218,439','47','$1,040M','0.78','-12%','Q3','71%','0.82','SELECT *','GROUP BY','WHERE date >','JOIN ON','null,4.2,89','2024-Q3','user_id','revenue','churn_rate','mrr','retention','/','<','>','{','}','→','≠'];
-    const COLORS = ['rgba(26,39,66,0.55)','rgba(26,39,66,0.40)','rgba(139,149,168,0.60)','rgba(139,149,168,0.45)','rgba(200,168,107,0.65)','rgba(200,168,107,0.48)'];
 
     const SCREENSHOT_SVGS = [
       `<svg xmlns='http://www.w3.org/2000/svg' width='110' height='72' viewBox='0 0 110 72'><rect width='110' height='72' rx='6' fill='white' stroke='rgba(26,39,66,0.12)' stroke-width='1'/><rect x='4' y='4' width='102' height='10' rx='2' fill='rgba(26,39,66,0.08)'/><rect x='4' y='18' width='34' height='7' rx='1' fill='rgba(200,168,107,0.3)'/><rect x='42' y='18' width='28' height='7' rx='1' fill='rgba(26,39,66,0.07)'/><rect x='74' y='18' width='32' height='7' rx='1' fill='rgba(26,39,66,0.07)'/><rect x='4' y='29' width='34' height='7' rx='1' fill='rgba(26,39,66,0.06)'/><rect x='42' y='29' width='28' height='7' rx='1' fill='rgba(200,168,107,0.18)'/><rect x='74' y='29' width='32' height='7' rx='1' fill='rgba(26,39,66,0.06)'/><rect x='4' y='40' width='34' height='7' rx='1' fill='rgba(26,39,66,0.05)'/><rect x='42' y='40' width='28' height='7' rx='1' fill='rgba(26,39,66,0.05)'/><rect x='74' y='40' width='32' height='7' rx='1' fill='rgba(200,168,107,0.22)'/><rect x='4' y='51' width='34' height='7' rx='1' fill='rgba(26,39,66,0.04)'/><rect x='42' y='51' width='28' height='7' rx='1' fill='rgba(26,39,66,0.04)'/><rect x='74' y='51' width='32' height='7' rx='1' fill='rgba(26,39,66,0.04)'/><rect x='4' y='62' width='60' height='4' rx='1' fill='rgba(139,149,168,0.2)'/></svg>`,
@@ -758,89 +757,13 @@ export default function Home() {
             Open prototype
           </a>
 
-          {/* Picts — two overlapping browser mockups, centered */}
+          {/* Live Prototype preview — Axon flow showcase (Raw data → Insights → Datasets → Slides) */}
           <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', width: 209, height: 200, overflow: 'hidden', borderRadius: 8 }}>
 
             {/* Background */}
             <div style={{ position: 'absolute', left: '50%', top: 'calc(50% - 0.5px)', transform: 'translate(-50%, -50%)', width: 209, height: 209, background: '#8b95a8', border: '0.609px solid rgba(26,39,66,0.1)', borderRadius: 6.531 }} />
 
-            {/* Mock 1 (back): insights chips + connectors + category nodes */}
-            <div style={{ position: 'absolute', left: 15.67, top: 15.67, width: 161.975, height: 99.275, background: '#afbed8', borderRadius: 4.231, overflow: 'hidden' }}>
-              <div style={{ background: 'rgba(255,255,255,0.4)', border: '1.054px solid rgba(26,39,66,0.12)', borderRadius: 4.231, boxShadow: '0 0.586px 5.859px rgba(26,39,66,0.06)', overflow: 'hidden', height: '100%', display: 'flex', flexDirection: 'column' }}>
-                <div style={{ background: 'rgba(26,39,66,0.05)', borderBottom: '0.293px solid rgba(26,39,66,0.08)', padding: '2.344px 4.688px', display: 'flex', gap: 1.758, alignItems: 'center', flexShrink: 0 }}>
-                  {[0.18, 0.13, 0.08].map((op, i) => <div key={i} style={{ width: 2.93, height: 2.93, borderRadius: '50%', background: `rgba(26,39,66,${op})` }} />)}
-                  <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 3.223, color: 'rgba(139,149,168,0.5)', marginLeft: 2.344 }}>axon.ai/canvas</span>
-                </div>
-                <div style={{ flex: 1, display: 'flex', alignItems: 'center', padding: '0 2px', gap: 2 }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2.372, flex: 1 }}>
-                    {[
-                      { label: 'Rev ↑12%', gold: true, light: false },
-                      { label: 'Churn ↓', gold: false, light: false },
-                      { label: 'CAC stable', gold: false, light: false },
-                      { label: 'EU leads', gold: true, light: true },
-                      { label: 'Q3 peak', gold: false, light: false },
-                      { label: 'NPS 72', gold: true, light: false },
-                    ].map((chip, i) => (
-                      <div key={i} style={{ borderRadius: 2.342, padding: '4.212px 2.372px', background: chip.gold ? (chip.light ? 'rgba(200,168,107,0.1)' : 'rgba(200,168,107,0.15)') : 'rgba(26,39,66,0.06)', border: `0.293px solid ${chip.gold ? (chip.light ? 'rgba(200,168,107,0.2)' : 'rgba(200,168,107,0.25)') : 'rgba(26,39,66,0.1)'}`, fontFamily: "'Inter',sans-serif", fontSize: 2.899, lineHeight: '4.348px', color: chip.gold ? 'rgba(26,39,66,0.7)' : '#8B95A8' }}>{chip.label}</div>
-                    ))}
-                  </div>
-                  <svg width="11.7" style={{ flexShrink: 0, alignSelf: 'stretch' }} viewBox="0 0 12 78" preserveAspectRatio="none">
-                    <path d="M0 8 Q6 8 12 35" stroke="#C8A86B" strokeWidth="0.6" fill="none" opacity="0.5" />
-                    <path d="M0 22 Q6 22 12 35" stroke="#8B95A8" strokeWidth="0.6" fill="none" opacity="0.4" />
-                    <path d="M0 35 Q6 35 12 47" stroke="#8B95A8" strokeWidth="0.6" fill="none" opacity="0.4" />
-                    <path d="M0 47 Q6 47 12 47" stroke="#C8A86B" strokeWidth="0.6" fill="none" opacity="0.5" />
-                    <path d="M0 60 Q6 60 12 60" stroke="#8B95A8" strokeWidth="0.6" fill="none" opacity="0.4" />
-                    <path d="M0 72 Q6 72 12 60" stroke="#8B95A8" strokeWidth="0.6" fill="none" opacity="0.3" />
-                  </svg>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 3.514, width: 22.253 }}>
-                    {[{ label: 'Growth', gold: false }, { label: 'Revenue', gold: true }, { label: 'Retention', gold: false }].map((cat, i) => (
-                      <div key={i} style={{ borderRadius: 2.342, padding: 2.635, textAlign: 'center', background: cat.gold ? 'rgba(200,168,107,0.1)' : 'rgba(26,39,66,0.07)', border: `0.293px solid ${cat.gold ? 'rgba(200,168,107,0.2)' : 'rgba(26,39,66,0.1)'}`, fontFamily: "'Inter',sans-serif", fontSize: 3.221, lineHeight: '4.831px', color: cat.gold ? '#C8A86B' : '#8B95A8' }}>{cat.label}</div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Mock 2 (front): charts canvas */}
-            <div style={{ position: 'absolute', left: 31, top: 89, width: 161.975, height: 99.275, background: '#afbed8', borderRadius: 4.231, overflow: 'hidden' }}>
-              <div style={{ background: 'rgba(255,255,255,0.4)', border: '1.054px solid rgba(26,39,66,0.12)', borderRadius: 4.231, boxShadow: '0 0.586px 5.859px rgba(26,39,66,0.06)', overflow: 'hidden', height: '100%', display: 'flex', flexDirection: 'column' }}>
-                <div style={{ background: 'rgba(26,39,66,0.05)', borderBottom: '0.293px solid rgba(26,39,66,0.08)', padding: '2.344px 4.688px', display: 'flex', gap: 1.758, alignItems: 'center', flexShrink: 0 }}>
-                  {[0.18, 0.13, 0.08].map((op, i) => <div key={i} style={{ width: 2.93, height: 2.93, borderRadius: '50%', background: `rgba(26,39,66,${op})` }} />)}
-                  <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 3.223, color: 'rgba(139,149,168,0.5)', marginLeft: 2.344 }}>axon.ai/canvas</span>
-                </div>
-                <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2.344, padding: '4.1px 3.05px 4.1px 4.1px' }}>
-                  <div style={{ background: 'rgba(255,255,255,0.5)', border: '0.293px solid rgba(26,39,66,0.1)', borderRadius: 2.344, padding: 2.637, display: 'flex', flexDirection: 'column', gap: 1.172 }}>
-                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 2.344, color: 'rgba(139,149,168,0.7)', textTransform: 'uppercase', letterSpacing: '0.141px' }}>Revenue mix</span>
-                    <div style={{ flex: 1, display: 'grid', gap: 0.879, gridTemplateColumns: 'minmax(0, 2fr) minmax(0, 1fr)', gridTemplateRows: 'repeat(2, minmax(0, 1fr))' }}>
-                      <div style={{ background: '#1A2742', borderRadius: 0.879, gridRow: '1 / span 2', opacity: 0.78 }} />
-                      <div style={{ background: '#C8A86B', borderRadius: 0.879, opacity: 0.65 }} />
-                      <div style={{ background: '#8B95A8', borderRadius: 0.879, opacity: 0.38 }} />
-                    </div>
-                  </div>
-                  <div style={{ background: 'rgba(255,255,255,0.5)', border: '0.293px solid rgba(26,39,66,0.1)', borderRadius: 2.344, padding: 2.637, display: 'flex', flexDirection: 'column', gap: 1.172 }}>
-                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 2.344, color: 'rgba(139,149,168,0.7)', textTransform: 'uppercase', letterSpacing: '0.141px' }}>Churn</span>
-                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
-                      {([[0.45, 'rgba(26,39,66,0.45)'], [0.7, '#C8A86B'], [0.82, 'rgba(26,39,66,0.6)'], [0.28, 'rgba(139,149,168,0.5)']] as [number, string][]).map(([w, col], i) => (
-                        <div key={i} style={{ position: 'relative', height: 0.293, background: 'rgba(26,39,66,0.12)' }}>
-                          <div style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', height: 0.293, background: col, width: `${w * 100}%` }} />
-                          <div style={{ position: 'absolute', left: `${w * 100}%`, top: '50%', transform: 'translate(-50%,-50%)', width: 2.051, height: 2.051, borderRadius: '50%', background: col }} />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <div style={{ gridColumn: '1 / span 2', background: 'rgba(255,255,255,0.5)', border: '0.293px solid rgba(26,39,66,0.1)', borderRadius: 2.344, padding: 2.637, display: 'flex', flexDirection: 'column', gap: 1.758 }}>
-                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 2.344, color: 'rgba(139,149,168,0.7)', textTransform: 'uppercase', letterSpacing: '0.141px' }}>Activity heatmap</span>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gap: 0.586 }}>
-                      {([[  '#C8A86B',0.22],['#C8A86B',0.58],['#C8A86B',0.82],['#C8A86B',0.35],['#1A2742',0.18],['#C8A86B',0.68],['#1A2742',0.1],['#C8A86B',0.9],
-                         ['#1A2742',0.22],['#C8A86B',0.42],['#1A2742',0.14],['#C8A86B',0.72],['#C8A86B',0.52],['#1A2742',0.18],['#C8A86B',0.48],['#1A2742',0.28]
-                      ] as [string, number][]).map(([col, op], i) => (
-                        <div key={i} style={{ height: 4.102, borderRadius: 0.586, background: col, opacity: op }} />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <PrototypeShowcase />
 
           </div>
 
@@ -848,19 +771,11 @@ export default function Home() {
       </section>
 
       {/* ═══ FEATURES ═══ */}
-      {/*
-        Grid layout (3 cols × 4 rows):
-          Row 1 (auto)  : heading [cols 1-2] | Live presentations tall card [col 3, rows 1-2, alignSelf:end]
-          Row 2 (186px) : One-click export [col 1] | Signal detection [col 2] | (tall card ends here)
-          Row 3 (22px)  : gap — empty
-          Row 4 (186px) : Smart charts [col 1] | Data privacy [col 2] | Team collaboration [col 3]
-        The tall card (h=400) + alignSelf:end pins its bottom to the row-2 baseline.
-      */}
       <section id="features" style={{ background: '#F4F0E8', borderTop: '1px solid rgba(26,39,66,0.1)', padding: '113px 24px 112px' }}>
-        <div style={{ maxWidth: 1152, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', columnGap: 20, gridTemplateRows: 'auto 186px 22px 186px' }}>
+        <div style={{ maxWidth: 1152, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1.5fr', columnGap: 20, rowGap: 20 }}>
 
-          {/* ── Heading: cols 1-2, row 1 ── */}
-          <div style={{ gridColumn: '1 / 3', gridRow: 1, paddingTop: 5.5, paddingBottom: 56 }}>
+          {/* ── Heading: full width ── */}
+          <div style={{ gridColumn: '1 / -1', paddingTop: 5.5, paddingBottom: 40 }}>
             <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: '1.2px', textTransform: 'uppercase', color: '#C8A86B', display: 'block', marginBottom: 16 }}>Built for analysts</span>
             <h2 style={{ margin: 0 }}>
               <span style={{ display: 'block', fontFamily: "'Instrument Serif',serif", fontSize: 72, fontWeight: 400, lineHeight: '60px', color: '#1A2742' }}>Everything the neural</span>
@@ -868,105 +783,47 @@ export default function Home() {
             </h2>
           </div>
 
-          {/* ── TALL Live presentations: col 3, rows 1+2, pinned to row-2 bottom ── */}
-          <div style={{ gridColumn: 3, gridRow: '1 / 3', alignSelf: 'end', height: 400, background: 'rgba(255,255,255,0.5)', border: '1px solid rgba(26,39,66,0.1)', borderRadius: 12, padding: 25, display: 'flex', flexDirection: 'column', gap: 7, boxSizing: 'border-box' }}>
-            <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(200,168,107,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A86B" strokeWidth="1.8">
-                <rect x="2" y="3" width="20" height="14" rx="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" />
-              </svg>
+          {/* ── One-click export — terracotta, left col row 2 ── */}
+          <div style={{ gridColumn: 1, gridRow: 2, background: '#C8A86B', borderRadius: 16, padding: '28px 28px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: 210, boxSizing: 'border-box', boxShadow: '0 2px 16px rgba(26,39,66,0.08)' }}>
+            <div>
+              <span style={{ fontFamily: "'Instrument Serif',serif", fontSize: 80, fontWeight: 400, lineHeight: 1, color: '#1A2742', display: 'block' }}>3×</span>
+              <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 15, fontWeight: 600, color: 'rgba(26,39,66,0.6)', display: 'block', marginTop: 4 }}>faster to export</span>
             </div>
-            <div style={{ paddingTop: 13 }}>
-              <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 18, fontWeight: 400, lineHeight: '28px', color: '#1A2742', margin: 0 }}>Live presentations</h3>
+            <div>
+              <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 20, fontWeight: 400, color: '#1A2742', margin: '0 0 5px' }}>One-click export</h3>
+              <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 13, lineHeight: '20px', color: 'rgba(26,39,66,0.65)', margin: 0 }}>PPTX, PDF, or a shareable live link. Ready for any room.</p>
             </div>
-            <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: '22px', color: '#8B95A8', margin: 0 }}>
-              Present straight from Axon. No downloads, no version confusion.
-            </p>
-            {/* Mini activity heatmap widget */}
-            <div style={{ background: 'white', border: '1px solid rgba(26,39,66,0.12)', borderRadius: 12, padding: 11, width: 192, height: 112, display: 'flex', flexDirection: 'column', gap: 5, boxShadow: '0 2px 6px rgba(26,39,66,0.05)', flexShrink: 0 }}>
-              <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 8, letterSpacing: '0.56px', textTransform: 'uppercase', color: '#8B95A8' }}>Activity heatmap</span>
-              <div style={{ flex: 1, display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gridTemplateRows: 'repeat(3, 1fr)', gap: 3 }}>
-                {([
-                  ['#C8A86B', 0.22], ['#C8A86B', 0.68], ['#1A2742', 0.18], ['#C8A86B', 0.88],
-                  ['#1A2742', 0.13], ['#C8A86B', 0.48], ['#C8A86B', 0.78], ['#1A2742', 0.10],
-                  ['#C8A86B', 0.38], ['#1A2742', 0.22], ['#C8A86B', 0.58], ['#C8A86B', 0.32],
-                ] as [string, number][]).map(([col, op], i) => (
-                  <div key={i} style={{ borderRadius: 2, background: col, opacity: op }} />
-                ))}
-              </div>
-            </div>
-            {/* CTA */}
-            <a href="https://axon-app-chi.vercel.app/" target="_blank" rel="noopener" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#1A2742', color: '#F4F0E8', fontFamily: "'Inter',sans-serif", fontSize: 13, fontWeight: 500, padding: '12px 24px', borderRadius: 8, textDecoration: 'none', marginTop: 'auto', whiteSpace: 'nowrap' }}>
-              Try Axon free →
-            </a>
           </div>
 
-          {/* ── Row 1 feature cards: cols 1-2, row 2 ── */}
-
-          {/* One-click export */}
-          <div style={{ gridColumn: 1, gridRow: 2, background: 'rgba(255,255,255,0.5)', border: '1px solid rgba(26,39,66,0.1)', borderRadius: 12, padding: 25, display: 'flex', flexDirection: 'column', gap: 6.9, boxSizing: 'border-box' }}>
-            <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(200,168,107,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A86B" strokeWidth="1.8">
-                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
+          {/* ── Live presentations — navy hero, right col rows 2–3 ── */}
+          <div style={{ gridColumn: 2, gridRow: '2 / 4', background: '#1A2742', borderRadius: 16, padding: 32, display: 'flex', flexDirection: 'column', gap: 24, boxSizing: 'border-box', boxShadow: '0 4px 24px rgba(26,39,66,0.15)' }}>
+            {/* Photo placeholder — replace with real image later */}
+            <div style={{ flex: 1, minHeight: 200, background: 'rgba(255,255,255,0.05)', border: '1.5px dashed rgba(244,240,232,0.18)', borderRadius: 12, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(244,240,232,0.25)" strokeWidth="1.4">
+                <rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" />
               </svg>
+              <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 11, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(244,240,232,0.25)' }}>Photo placeholder</span>
             </div>
-            <div style={{ paddingTop: 13 }}>
-              <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 18, fontWeight: 400, lineHeight: '28px', color: '#1A2742', margin: 0 }}>One-click export</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 26, fontWeight: 400, lineHeight: '34px', color: '#F4F0E8', margin: 0 }}>Live presentations</h3>
+              <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: '22px', color: 'rgba(244,240,232,0.6)', margin: 0 }}>Present straight from Axon. No downloads, no version confusion. Your deck, live and in sync.</p>
+              <a href="https://axon-app-chi.vercel.app/" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#C8A86B', color: '#1A2742', fontFamily: "'Inter',sans-serif", fontSize: 13, fontWeight: 600, padding: '12px 24px', borderRadius: 8, textDecoration: 'none', whiteSpace: 'nowrap', alignSelf: 'flex-start', boxShadow: '0 2px 12px rgba(200,168,107,0.4)' }}>
+                Try Axon free →
+              </a>
             </div>
-            <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: '22px', color: '#8B95A8', margin: 0 }}>PPTX, PDF, or a shareable live link. Ready for any room.</p>
           </div>
 
-          {/* Signal detection */}
-          <div style={{ gridColumn: 2, gridRow: 2, background: 'rgba(255,255,255,0.5)', border: '1px solid rgba(26,39,66,0.1)', borderRadius: 12, padding: 25, display: 'flex', flexDirection: 'column', gap: 6.9, boxSizing: 'border-box' }}>
-            <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(200,168,107,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A86B" strokeWidth="1.8">
+          {/* ── Signal detection — cream, left col row 3 ── */}
+          <div style={{ gridColumn: 1, gridRow: 3, background: 'rgba(255,255,255,0.65)', border: '1px solid rgba(26,39,66,0.08)', borderRadius: 16, padding: 28, display: 'flex', flexDirection: 'column', gap: 16, minHeight: 210, boxSizing: 'border-box', boxShadow: '0 2px 12px rgba(26,39,66,0.06)' }}>
+            <div style={{ width: 56, height: 56, borderRadius: 14, background: 'rgba(26,39,66,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1A2742" strokeWidth="1.6">
                 <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
               </svg>
             </div>
-            <div style={{ paddingTop: 13 }}>
-              <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 18, fontWeight: 400, lineHeight: '28px', color: '#1A2742', margin: 0 }}>Signal detection</h3>
+            <div>
+              <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 20, fontWeight: 400, lineHeight: '28px', color: '#1A2742', margin: '0 0 8px' }}>Signal detection</h3>
+              <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: '22px', color: '#8B95A8', margin: 0 }}>The agent identifies trends, outliers, and correlations before you even ask.</p>
             </div>
-            <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: '22px', color: '#8B95A8', margin: 0 }}>The agent identifies trends, outliers, and correlations before you even ask.</p>
-          </div>
-
-          {/* ── Row 2 feature cards: cols 1-3, row 4 (row 3 is the 22px gap) ── */}
-
-          {/* Smart charts */}
-          <div style={{ gridColumn: 1, gridRow: 4, background: 'rgba(255,255,255,0.5)', border: '1px solid rgba(26,39,66,0.1)', borderRadius: 12, padding: 25, display: 'flex', flexDirection: 'column', gap: 6.9, boxSizing: 'border-box' }}>
-            <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(200,168,107,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A86B" strokeWidth="1.8">
-                <rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" />
-              </svg>
-            </div>
-            <div style={{ paddingTop: 13 }}>
-              <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 18, fontWeight: 400, lineHeight: '28px', color: '#1A2742', margin: 0 }}>Smart charts</h3>
-            </div>
-            <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: '22px', color: '#8B95A8', margin: 0 }}>Chart type is chosen by the story, not by default. No more misleading bar charts.</p>
-          </div>
-
-          {/* Data privacy */}
-          <div style={{ gridColumn: 2, gridRow: 4, background: 'rgba(255,255,255,0.5)', border: '1px solid rgba(26,39,66,0.1)', borderRadius: 12, padding: 25, display: 'flex', flexDirection: 'column', gap: 6.9, boxSizing: 'border-box' }}>
-            <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(200,168,107,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A86B" strokeWidth="1.8">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-              </svg>
-            </div>
-            <div style={{ paddingTop: 13 }}>
-              <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 18, fontWeight: 400, lineHeight: '28px', color: '#1A2742', margin: 0 }}>Data privacy</h3>
-            </div>
-            <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: '22px', color: '#8B95A8', margin: 0 }}>Your data is never used to train models. Processed and discarded.</p>
-          </div>
-
-          {/* Team collaboration */}
-          <div style={{ gridColumn: 3, gridRow: 4, background: 'rgba(255,255,255,0.5)', border: '1px solid rgba(26,39,66,0.1)', borderRadius: 12, padding: 25, display: 'flex', flexDirection: 'column', gap: 6.9, boxSizing: 'border-box' }}>
-            <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(200,168,107,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C8A86B" strokeWidth="1.8">
-                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 00-3-3.87" /><path d="M16 3.13a4 4 0 010 7.75" />
-              </svg>
-            </div>
-            <div style={{ paddingTop: 13 }}>
-              <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 18, fontWeight: 400, lineHeight: '28px', color: '#1A2742', margin: 0 }}>Team collaboration</h3>
-            </div>
-            <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, lineHeight: '22px', color: '#8B95A8', margin: 0 }}>Comment, iterate, and version-track with your whole team in real time.</p>
           </div>
 
         </div>
