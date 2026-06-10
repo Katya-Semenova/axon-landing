@@ -1,14 +1,47 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { TOKENS, COLORS } from './_axon/rawData';
 import { PrototypeShowcase } from './_axon/PrototypeShowcase';
+
+// ── "Easy-peasy" / Why-Axon section animation timing (seconds) — tweak freely ──
+const CARD_SLIDE = 0.7;     // bento card slide-in duration
+const CARD_STAGGER = 0.13;  // delay between cards
+const COUNT_DUR = 0.8;      // 0→6 / 0→12 count-up duration (~20% faster)
+const STRIKE_DUR = 0.55;    // strikethrough draw duration
+const STEP_INTERVAL = 1.08; // step highlight cycle interval (~20% slower)
+const ARROW_DRIFT = 1.6;    // arrow back-and-forth period
+const PULSE_PERIOD = 1.8;   // "12 min" pulse period
+const CARD_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1]; // calm slide ease
+
+// Choreography: cards assemble first → numbers count → bullets start once numbers settle.
+const COUNT_DELAY = 3 * CARD_STAGGER + CARD_SLIDE / 2; // count starts when the last card is mid-path
+const NUMBERS_DONE = COUNT_DELAY + COUNT_DUR;          // count finished (strike + pulse fire here)
+const STEPS_DELAY = COUNT_DELAY;                       // bullets cycle starts together with the count
+
+// Slide-in offsets — each card enters through an adjacent empty grid cell (~224px step).
+const CARD_OFFSETS = [
+  { x: 226, y: 0 },   // Control — from the right
+  { x: 0, y: 224 },   // Craft — from below
+  { x: 0, y: -224 },  // Clarity — from above
+  { x: 226, y: 0 },   // Confidence — from the right
+];
 
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
   const chaosLayerRef = useRef<HTMLDivElement>(null);
   const heroCardsRef = useRef<HTMLDivElement>(null);
   const heroBottomRef = useRef<HTMLDivElement>(null);
+
+  // ── "Easy-peasy" section animation ──
+  const problemRef = useRef<HTMLElement>(null);
+  const problemEntered = useInView(problemRef, { amount: 0.3, once: true });
+  const reduced = useReducedMotion() ?? false;
+  const showFinal = reduced || problemEntered;
+  const [activeStep, setActiveStep] = useState(0);
+  const [stepsStarted, setStepsStarted] = useState(false);
+  const [counts, setCounts] = useState<{ a: number; b: number }>(() => (reduced ? { a: 6, b: 12 } : { a: 0, b: 0 }));
 
   // ── Hero chaos animation ──
   useEffect(() => {
@@ -225,6 +258,36 @@ export default function Home() {
     return () => obs.disconnect();
   }, []);
 
+  // ── "Easy-peasy": after the cards settle, count 0→6 / 0→12 ──
+  useEffect(() => {
+    if (reduced) { setCounts({ a: 6, b: 12 }); return; }
+    if (!problemEntered) return;
+    let raf = 0;
+    const start = setTimeout(() => {
+      const t0 = performance.now();
+      const tick = (t: number) => {
+        const p = Math.min(1, (t - t0) / (COUNT_DUR * 1000));
+        const e = 1 - Math.pow(1 - p, 1.35); // gentle, near-even pacing (no front-loaded jump)
+        setCounts({ a: Math.round(e * 6), b: Math.round(e * 12) });
+        if (p < 1) raf = requestAnimationFrame(tick);
+      };
+      raf = requestAnimationFrame(tick);
+    }, COUNT_DELAY * 1000);
+    return () => { clearTimeout(start); cancelAnimationFrame(raf); };
+  }, [problemEntered, reduced]);
+
+  // ── "Easy-peasy": once the numbers settle, cycle the gold highlight across steps 1–4 ──
+  useEffect(() => {
+    if (reduced || !problemEntered) return;
+    let id = 0;
+    const start = setTimeout(() => {
+      setStepsStarted(true);
+      setActiveStep(0);
+      id = window.setInterval(() => setActiveStep(s => (s + 1) % 4), STEP_INTERVAL * 1000);
+    }, STEPS_DELAY * 1000);
+    return () => { clearTimeout(start); clearInterval(id); };
+  }, [problemEntered, reduced]);
+
   return (
     <>
       {/* ═══ NAV ═══ */}
@@ -298,7 +361,7 @@ export default function Home() {
       </section>
 
       {/* ═══ PROBLEM / WHY AXON ═══ */}
-      <section id="problem" style={{ background: '#F4F0E8', borderTop: '1px solid rgba(26,39,66,0.1)', padding: '113px 24px 112px' }}>
+      <section ref={problemRef} id="problem" style={{ background: '#F4F0E8', borderTop: '1px solid rgba(26,39,66,0.1)', padding: '113px 24px 112px' }}>
         <div style={{ maxWidth: 1152, margin: '0 auto' }}>
 
           {/* ── Header ── */}
@@ -345,40 +408,40 @@ export default function Home() {
               {/* ── Cards (z-index 1) ── */}
 
               {/* Control — navy, top-left */}
-              <div style={{ position: 'absolute', zIndex: 1, left: 62, top: 58, width: 216, height: 216, borderRadius: 16, background: 'rgba(26,39,66,0.85)', border: '1px solid rgba(26,39,66,0.1)', padding: 17, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box' }}>
+              <motion.div initial={false} animate={showFinal ? { x: 0, y: 0, opacity: 1 } : { x: CARD_OFFSETS[0].x, y: CARD_OFFSETS[0].y, opacity: 0 }} transition={reduced ? { duration: 0 } : { duration: CARD_SLIDE, delay: 0 * CARD_STAGGER, ease: CARD_EASE }} style={{ position: 'absolute', zIndex: 1, left: 62, top: 58, width: 216, height: 216, borderRadius: 16, background: 'rgba(26,39,66,0.85)', border: '1px solid rgba(26,39,66,0.1)', padding: 17, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box' }}>
                 <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: '1.2px', textTransform: 'uppercase', color: 'rgba(244,240,232,0.88)' }}>Control</span>
                 <div>
                   <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 32, fontWeight: 400, lineHeight: '32px', color: 'rgba(244,240,232,0.88)', margin: '0 0 6px' }}>You stay<br />the director</h3>
                   <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, lineHeight: '16px', color: 'rgba(244,240,232,0.88)', margin: 0 }}>Define the purpose — Axon structures around your intent. The final call is always yours.</p>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Craft — gold, middle-left */}
-              <div style={{ position: 'absolute', zIndex: 1, left: 62, top: 282, width: 216, height: 216, borderRadius: 16, background: 'rgba(200,168,107,0.8)', border: '1px solid rgba(26,39,66,0.1)', padding: 17, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box' }}>
+              <motion.div initial={false} animate={showFinal ? { x: 0, y: 0, opacity: 1 } : { x: CARD_OFFSETS[1].x, y: CARD_OFFSETS[1].y, opacity: 0 }} transition={reduced ? { duration: 0 } : { duration: CARD_SLIDE, delay: 1 * CARD_STAGGER, ease: CARD_EASE }} style={{ position: 'absolute', zIndex: 1, left: 62, top: 282, width: 216, height: 216, borderRadius: 16, background: 'rgba(200,168,107,0.8)', border: '1px solid rgba(26,39,66,0.1)', padding: 17, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box' }}>
                 <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: '1.2px', textTransform: 'uppercase', color: '#1A2742' }}>Craft</span>
                 <div>
                   <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 32, fontWeight: 400, lineHeight: '34px', color: '#1A2742', margin: '0 0 6px' }}>You&apos;re crafting</h3>
                   <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, lineHeight: '16px', color: '#1A2742', margin: 0 }}>Axon proposes visual concepts — you choose the hierarchy, the metaphor, the mood.</p>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Clarity — navy, middle-right */}
-              <div style={{ position: 'absolute', zIndex: 1, left: 288, top: 282, width: 216, height: 216, borderRadius: 16, background: 'rgba(26,39,66,0.85)', border: '1px solid rgba(26,39,66,0.1)', padding: 17, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box' }}>
+              <motion.div initial={false} animate={showFinal ? { x: 0, y: 0, opacity: 1 } : { x: CARD_OFFSETS[2].x, y: CARD_OFFSETS[2].y, opacity: 0 }} transition={reduced ? { duration: 0 } : { duration: CARD_SLIDE, delay: 2 * CARD_STAGGER, ease: CARD_EASE }} style={{ position: 'absolute', zIndex: 1, left: 288, top: 282, width: 216, height: 216, borderRadius: 16, background: 'rgba(26,39,66,0.85)', border: '1px solid rgba(26,39,66,0.1)', padding: 17, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box' }}>
                 <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: '1.2px', textTransform: 'uppercase', color: 'rgba(244,240,232,0.88)' }}>Clarity</span>
                 <div>
                   <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 32, fontWeight: 400, lineHeight: '32px', color: 'rgba(244,240,232,0.88)', margin: '0 0 6px' }}>The exhausting<br />part is invisible</h3>
                   <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, lineHeight: '16px', color: 'rgba(244,240,232,0.88)', margin: 0 }}>AI agent parses, cleans, and ranks. You think about decisions, not formatting.</p>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Confidence — gold, bottom-right */}
-              <div style={{ position: 'absolute', zIndex: 1, left: 288, top: 506, width: 216, height: 216, borderRadius: 16, background: 'rgba(200,168,107,0.8)', border: '1px solid rgba(26,39,66,0.1)', padding: 17, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box' }}>
+              <motion.div initial={false} animate={showFinal ? { x: 0, y: 0, opacity: 1 } : { x: CARD_OFFSETS[3].x, y: CARD_OFFSETS[3].y, opacity: 0 }} transition={reduced ? { duration: 0 } : { duration: CARD_SLIDE, delay: 3 * CARD_STAGGER, ease: CARD_EASE }} style={{ position: 'absolute', zIndex: 1, left: 288, top: 506, width: 216, height: 216, borderRadius: 16, background: 'rgba(200,168,107,0.8)', border: '1px solid rgba(26,39,66,0.1)', padding: 17, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box' }}>
                 <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: '1.2px', textTransform: 'uppercase', color: '#1A2742' }}>Confidence</span>
                 <div>
                   <h3 style={{ fontFamily: "'Instrument Serif',serif", fontSize: 32, fontWeight: 400, lineHeight: '32px', color: '#1A2742', margin: '0 0 6px' }}>Send it without<br />checking twice</h3>
                   <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, lineHeight: '16px', color: '#1A2742', margin: 0 }}>The deck builds itself in real time — charts, headers, data blocks assembling as you work.</p>
                 </div>
-              </div>
+              </motion.div>
             </div>
 
             {/* RIGHT BOX — numbered steps + stats */}
@@ -393,34 +456,51 @@ export default function Home() {
                   'Ranks insights by financial, time, and strategic value',
                   'Selects chart types that serve the story, not the default',
                   "Assembles a deck you're proud to put your name on",
-                ].map((txt, i) => (
-                  <div key={i} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 6, paddingTop: 6, paddingBottom: 6, opacity: 0.6, ...(i < 3 ? { borderRight: '1px solid rgba(244,240,232,0.08)' } : {}) }}>
-                    <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'rgba(200,168,107,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                ].map((txt, i) => {
+                  const on = !reduced && stepsStarted && i === activeStep;
+                  return (
+                  <div key={i} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 6, paddingTop: 6, paddingBottom: 6, opacity: on ? 1 : 0.6, transition: 'opacity .4s ease', ...(i < 3 ? { borderRight: '1px solid rgba(244,240,232,0.08)' } : {}) }}>
+                    <div style={{ width: 24, height: 24, borderRadius: '50%', background: on ? 'rgba(200,168,107,0.55)' : 'rgba(200,168,107,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, transition: 'background .4s ease' }}>
                       <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, color: '#C8A86B', lineHeight: 1 }}>{i + 1}</span>
                     </div>
-                    <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, lineHeight: '16px', color: 'rgba(26,39,66,0.6)', margin: 0 }}>{txt}</p>
+                    <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, lineHeight: '16px', color: on ? 'rgba(26,39,66,0.92)' : 'rgba(26,39,66,0.6)', margin: 0, transition: 'color .4s ease' }}>{txt}</p>
                   </div>
-                ))}
+                  );
+                })}
 
                 {/* Stats block */}
                 <div style={{ marginTop: 24, position: 'relative' }}>
                   <div style={{ background: '#1A2742', borderRadius: 8, height: 80, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 32, border: '1px solid rgba(244,240,232,0.08)' }}>
                     {/* 6 hrs — crossed out */}
                     <div style={{ display: 'flex', alignItems: 'baseline', gap: 2 }}>
-                      <span style={{ position: 'relative', display: 'inline-block', fontFamily: "'Instrument Serif',serif", fontSize: 72, lineHeight: '60px', color: '#8B95A8' }}>
-                        6
-                        <div style={{ position: 'absolute', top: '50%', left: '50%', width: 68, height: 2, background: 'rgba(139,149,168,0.75)', borderRadius: 1, transform: 'translate(-50%, -50%) rotate(126deg)' }} />
+                      <span style={{ position: 'relative', display: 'inline-block', textAlign: 'center', fontFamily: "'Instrument Serif',serif", fontSize: 72, lineHeight: '60px', color: '#8B95A8' }}>
+                        {/* invisible "6" reserves a fixed width so per-digit width changes never reflow the row */}
+                        <span aria-hidden="true" style={{ visibility: 'hidden' }}>6</span>
+                        <span style={{ position: 'absolute', left: 0, right: 0, top: 0 }}>{counts.a}</span>
+                        {/* reused strike line — same angle/position; only the draw-in (scaleX) is new */}
+                        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%) rotate(126deg)' }}>
+                          <motion.div initial={false} animate={{ scaleX: showFinal ? 1 : 0 }} transition={reduced ? { duration: 0 } : { duration: STRIKE_DUR, delay: NUMBERS_DONE, ease: 'easeInOut' }} style={{ width: 68, height: 2, background: 'rgba(139,149,168,0.75)', borderRadius: 1, transformOrigin: 'left center' }} />
+                        </div>
                       </span>
                       <span style={{ fontFamily: "'Instrument Serif',serif", fontSize: 30.2, lineHeight: '30.24px', color: '#8B95A8' }}>hrs</span>
                     </div>
                     {/* with Axon + arrow */}
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
                       <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 14, fontWeight: 600, color: '#F4F0E8', lineHeight: '20px' }}>with Axon</span>
-                      <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 32, color: '#C8A86B', lineHeight: '48px' }}>→</span>
+                      <motion.span animate={reduced ? { x: 0 } : { x: [0, 5, 0] }} transition={reduced ? { duration: 0 } : { duration: ARROW_DRIFT, repeat: Infinity, ease: 'easeInOut' }} style={{ display: 'inline-block', fontFamily: "'Inter',sans-serif", fontSize: 32, color: '#C8A86B', lineHeight: '48px' }}>→</motion.span>
                     </div>
                     {/* 12 min */}
                     <div style={{ display: 'flex', alignItems: 'baseline', gap: 2 }}>
-                      <span style={{ fontFamily: "'Instrument Serif',serif", fontSize: 72, lineHeight: '72px', color: '#F4F0E8' }}>12</span>
+                      {/* invisible "12" reserves a fixed width so counting never reflows the row;
+                          the live number sits absolutely on top and pulses smoothly */}
+                      <span style={{ position: 'relative', display: 'inline-block', textAlign: 'center', fontFamily: "'Instrument Serif',serif", fontSize: 72, lineHeight: '72px', color: '#F4F0E8' }}>
+                        <span aria-hidden="true" style={{ visibility: 'hidden' }}>12</span>
+                        <motion.span
+                          animate={showFinal && !reduced ? { scale: 1.05 } : { scale: 1 }}
+                          transition={showFinal && !reduced ? { duration: PULSE_PERIOD / 2, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut', delay: NUMBERS_DONE } : { duration: 0 }}
+                          style={{ position: 'absolute', left: 0, right: 0, top: 0, display: 'inline-block', transformOrigin: 'center bottom', willChange: 'transform' }}
+                        >{counts.b}</motion.span>
+                      </span>
                       <span style={{ fontFamily: "'Instrument Serif',serif", fontSize: 30.2, lineHeight: '30.24px', color: '#F4F0E8' }}>min</span>
                     </div>
                   </div>
