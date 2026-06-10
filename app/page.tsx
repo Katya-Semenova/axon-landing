@@ -711,167 +711,138 @@ export default function Home() {
 
       {/* ═══ PROTOTYPE TEASER ═══ */}
       <section id="prototype" style={{ background: '#1A2742', borderTop: '1px solid rgba(26,39,66,0.1)', padding: '112px 24px' }}>
-        <div style={{ maxWidth: 1152, margin: '0 auto', position: 'relative', height: 500 }}>
+        <div style={{ maxWidth: 1152, margin: '0 auto', position: 'relative', height: 598 }}>
 
           {/* LIVE PROTOTYPE label — bottom left */}
           <div style={{ position: 'absolute', bottom: 0, left: 0, fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: '1.2px', textTransform: 'uppercase', color: '#C8A86B' }}>
             Live Prototype
           </div>
 
-          {/* "Ready to feel" — italic serif */}
-          <div style={{ position: 'absolute', left: 'calc(50% - 286px)', top: 48, transform: 'translateY(-50%)', fontFamily: "'Instrument Serif',serif", fontStyle: 'italic', fontSize: 82, lineHeight: '86px', color: '#C8A86B', whiteSpace: 'nowrap' }}>
-            Ready to feel
+          {/* "Ready to" */}
+          <div style={{ position: 'absolute', left: 'calc(50% - 207px)', top: 106, transform: 'translateY(-50%)', fontFamily: "'Inter',sans-serif", fontWeight: 700, fontSize: 48, lineHeight: 1.2, color: '#C8A86B', letterSpacing: '-0.96px', whiteSpace: 'nowrap' }}>
+            Ready to
           </div>
 
-          {/* "connection?" — bold Inter */}
-          <div style={{ position: 'absolute', left: 'calc(50% - 165px)', top: 106, transform: 'translateY(-50%)', fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 72, lineHeight: '72px', color: '#C8A86B', letterSpacing: '-5.04px', whiteSpace: 'nowrap' }}>
-            connection?
+          {/* "connect?" */}
+          <div style={{ position: 'absolute', left: 'calc(50% - 112px)', top: 162, transform: 'translateY(-50%)', fontFamily: "'Inter',sans-serif", fontWeight: 700, fontSize: 72, lineHeight: 1.2, color: '#C8A86B', letterSpacing: '-2.16px', whiteSpace: 'nowrap' }}>
+            connect?
           </div>
 
-          {/* Step pills */}
-          <div style={{ position: 'absolute', left: 273, top: 148, display: 'flex', flexDirection: 'column', gap: 8 }}>
-            {[
-              { num: '1', label: 'Drop real dataset' },
-              { num: '2', label: 'Watch agent think' },
-              { num: '3', label: 'Get your first deck' },
-            ].map(step => (
-              <div key={step.num} style={{ display: 'flex', alignItems: 'center', gap: 4, height: 24, padding: '0 5px', background: 'rgba(139,149,168,0.45)', border: '1px solid rgba(244,240,232,0.1)', borderRadius: 4, width: 148 }}>
-                <div style={{ width: 16, height: 16, borderRadius: '50%', background: 'rgba(139,149,168,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, color: 'white', lineHeight: 1 }}>{step.num}</span>
-                </div>
-                <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 500, color: '#F4F0E8', whiteSpace: 'nowrap' }}>{step.label}</span>
-              </div>
-            ))}
+          {/* "Drop Watch" */}
+          <div style={{ position: 'absolute', left: 200, top: 231, transform: 'translateY(-50%)', fontFamily: "'Inter',sans-serif", fontWeight: 700, fontSize: 48, lineHeight: 1.2, color: '#C8A86B', letterSpacing: '-0.96px', whiteSpace: 'nowrap' }}>
+            Drop Watch
           </div>
 
-          {/* Stacked browser mockups — Picts */}
-          <div style={{ position: 'absolute', left: 'calc(50% - 7.5px)', top: 131.5, width: 309, height: 268, transform: 'translateX(-50%)', opacity: 0.9 }}>
-
-            {/* Mock 1 (back): insights chips + connector + category nodes */}
-            <div style={{ position: 'absolute', left: 0, right: 74, top: 0.5, borderRadius: 8, background: '#F4F0E8', border: '1.52px solid rgba(26,39,66,0.12)', boxShadow: '0 0.84px 8.44px rgba(26,39,66,0.06)', overflow: 'hidden', height: 143 }}>
-              <div style={{ background: 'rgba(26,39,66,0.05)', borderBottom: '0.42px solid rgba(26,39,66,0.08)', padding: '3.4px 6.75px', display: 'flex', gap: 2.5, alignItems: 'center' }}>
-                {[0.18, 0.13, 0.08].map((op, i) => <div key={i} style={{ width: 4.2, height: 4.2, borderRadius: '50%', background: `rgba(26,39,66,${op})`, flexShrink: 0 }} />)}
-                <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 4.6, color: 'rgba(139,149,168,0.5)', marginLeft: 3.4 }}>axon.ai/canvas</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', padding: '8px 8.44px 8px 8.44px', height: 'calc(143px - 22px)', gap: 2 }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2.5, flex: 1 }}>
-                  {[
-                    { label: 'Rev ↑12%', gold: true, light: false },
-                    { label: 'Churn ↓', gold: false, light: false },
-                    { label: 'CAC stable', gold: false, light: false },
-                    { label: 'EU leads', gold: true, light: true },
-                    { label: 'Q3 peak', gold: false, light: false },
-                    { label: 'NPS 72', gold: true, light: false },
-                  ].map((chip, i) => (
-                    <div key={i} style={{ borderRadius: 3.4, padding: '2.7px 3.4px', background: chip.gold ? (chip.light ? 'rgba(200,168,107,0.1)' : 'rgba(200,168,107,0.15)') : 'rgba(26,39,66,0.06)', border: `0.42px solid ${chip.gold ? (chip.light ? 'rgba(200,168,107,0.2)' : 'rgba(200,168,107,0.25)') : 'rgba(26,39,66,0.1)'}`, fontFamily: "'Inter',sans-serif", fontSize: 4.2, lineHeight: '6.3px', color: chip.gold ? 'rgba(26,39,66,0.7)' : '#8B95A8' }}>{chip.label}</div>
-                  ))}
-                </div>
-                <svg width="17" style={{ flexShrink: 0, alignSelf: 'stretch' }} viewBox="0 0 17 100" preserveAspectRatio="none">
-                  <path d="M0 12 Q8 12 17 45" stroke="#C8A86B" strokeWidth="0.8" fill="none" opacity="0.5" />
-                  <path d="M0 28 Q8 28 17 45" stroke="#8B95A8" strokeWidth="0.8" fill="none" opacity="0.4" />
-                  <path d="M0 45 Q8 45 17 60" stroke="#8B95A8" strokeWidth="0.8" fill="none" opacity="0.4" />
-                  <path d="M0 60 Q8 60 17 60" stroke="#C8A86B" strokeWidth="0.8" fill="none" opacity="0.5" />
-                  <path d="M0 76 Q8 76 17 78" stroke="#8B95A8" strokeWidth="0.8" fill="none" opacity="0.4" />
-                  <path d="M0 90 Q8 90 17 78" stroke="#8B95A8" strokeWidth="0.8" fill="none" opacity="0.3" />
-                </svg>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 5, width: 32, paddingLeft: 2.5 }}>
-                  {[{ label: 'Growth', gold: false }, { label: 'Revenue', gold: true }, { label: 'Retention', gold: false }].map((cat, i) => (
-                    <div key={i} style={{ borderRadius: 3.4, padding: '3.8px', textAlign: 'center', background: cat.gold ? 'rgba(200,168,107,0.1)' : 'rgba(26,39,66,0.07)', border: `0.42px solid ${cat.gold ? 'rgba(200,168,107,0.2)' : 'rgba(26,39,66,0.1)'}`, fontFamily: "'Inter',sans-serif", fontSize: 4.6, lineHeight: '7px', color: cat.gold ? '#C8A86B' : '#8B95A8' }}>{cat.label}</div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Mock 2 (middle): AI thinking chat */}
-            <div style={{ position: 'absolute', left: 37, right: 37, top: 62.5, borderRadius: 8, background: '#F4F0E8', border: '1.52px solid rgba(26,39,66,0.12)', boxShadow: '0 0.84px 8.44px rgba(26,39,66,0.06)', overflow: 'hidden', height: 143 }}>
-              <div style={{ background: 'rgba(26,39,66,0.05)', borderBottom: '0.42px solid rgba(26,39,66,0.08)', padding: '3.4px 6.75px', display: 'flex', gap: 2.5, alignItems: 'center' }}>
-                {[0.18, 0.13, 0.08].map((op, i) => <div key={i} style={{ width: 4.2, height: 4.2, borderRadius: '50%', background: `rgba(26,39,66,${op})`, flexShrink: 0 }} />)}
-                <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 4.6, color: 'rgba(139,149,168,0.5)', marginLeft: 3.4 }}>axon.ai/canvas</span>
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 5, padding: 10, height: 'calc(143px - 22px)', justifyContent: 'center' }}>
-                <div style={{ display: 'flex', gap: 5, alignItems: 'flex-start' }}>
-                  <div style={{ width: 11.8, height: 11.8, borderRadius: '50%', background: '#1A2742', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <svg width="5" height="5" viewBox="0 0 24 24" fill="none" stroke="#F4F0E8" strokeWidth="2.5"><circle cx="12" cy="12" r="3" /></svg>
-                  </div>
-                  <div style={{ flex: 1, background: '#E8EAED', border: '0.42px solid rgba(26,39,66,0.1)', borderRadius: '5px 5px 5px 0.84px', padding: '5.9px 6.3px', fontFamily: "'Inter',sans-serif", fontSize: 5.5, color: '#1A2742', lineHeight: '8.4px' }}>
-                    Parsing 3 files, 47 tables, 218K rows...
-                  </div>
-                </div>
-                <div style={{ display: 'flex', gap: 5, alignItems: 'flex-start' }}>
-                  <div style={{ width: 11.8, height: 11.8, borderRadius: '50%', background: '#1A2742', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <svg width="5" height="5" viewBox="0 0 24 24" fill="none" stroke="#F4F0E8" strokeWidth="2.5"><circle cx="12" cy="12" r="3" /></svg>
-                  </div>
-                  <div style={{ flex: 1, background: '#E8EAED', border: '0.42px solid rgba(26,39,66,0.1)', borderRadius: '5px 5px 5px 0.84px', padding: '5.9px 6.3px', fontFamily: "'Inter',sans-serif", fontSize: 5.5, color: '#1A2742', lineHeight: '8.4px' }}>
-                    Detected <span style={{ color: '#C8A86B', fontWeight: 500 }}>6 insights</span> worth surfacing.
-                  </div>
-                </div>
-                <div style={{ display: 'flex', gap: 2.5, paddingLeft: 16.9 }}>
-                  {[0, 1, 2].map(i => <div key={i} style={{ width: 2.5, height: 2.5, borderRadius: '50%', background: 'rgba(139,149,168,0.5)' }} />)}
-                </div>
-              </div>
-            </div>
-
-            {/* Mock 3 (front): charts canvas */}
-            <div style={{ position: 'absolute', left: 74, right: 0, top: 124.5, borderRadius: 8, background: '#F4F0E8', border: '1.52px solid rgba(26,39,66,0.12)', boxShadow: '0 0.84px 8.44px rgba(26,39,66,0.06)', overflow: 'hidden', height: 143 }}>
-              <div style={{ background: 'rgba(26,39,66,0.05)', borderBottom: '0.42px solid rgba(26,39,66,0.08)', padding: '3.4px 6.75px', display: 'flex', gap: 2.5, alignItems: 'center' }}>
-                {[0.18, 0.13, 0.08].map((op, i) => <div key={i} style={{ width: 4.2, height: 4.2, borderRadius: '50%', background: `rgba(26,39,66,${op})`, flexShrink: 0 }} />)}
-                <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 4.6, color: 'rgba(139,149,168,0.5)', marginLeft: 3.4 }}>axon.ai/canvas</span>
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 3.4, padding: 5.9, height: 'calc(143px - 22px)' }}>
-                <div style={{ borderRadius: 3.4, border: '0.42px solid rgba(26,39,66,0.1)', background: 'rgba(255,255,255,0.5)', padding: 3.8, display: 'flex', flexDirection: 'column', gap: 1.7 }}>
-                  <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 3.4, color: 'rgba(139,149,168,0.7)', textTransform: 'uppercase', letterSpacing: '0.2px' }}>Revenue mix</span>
-                  <div style={{ flex: 1, display: 'grid', gap: 1.3, gridTemplateColumns: '2fr 1fr', gridTemplateRows: '1fr 1fr' }}>
-                    <div style={{ background: '#1A2742', borderRadius: 1.3, gridRow: 'span 2', opacity: 0.78 }} />
-                    <div style={{ background: '#C8A86B', borderRadius: 1.3, opacity: 0.65 }} />
-                    <div style={{ background: '#8B95A8', borderRadius: 1.3, opacity: 0.38 }} />
-                  </div>
-                </div>
-                <div style={{ borderRadius: 3.4, border: '0.42px solid rgba(26,39,66,0.1)', background: 'rgba(255,255,255,0.5)', padding: 3.8, display: 'flex', flexDirection: 'column', gap: 3.4 }}>
-                  <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 3.4, color: 'rgba(139,149,168,0.7)', textTransform: 'uppercase', letterSpacing: '0.2px' }}>Churn</span>
-                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
-                    {[[0.45, 'rgba(26,39,66,0.45)'], [0.7, '#C8A86B'], [0.82, 'rgba(26,39,66,0.45)'], [0.28, 'rgba(139,149,168,0.5)']].map(([w, col], i) => (
-                      <div key={i} style={{ position: 'relative', height: 1, background: 'rgba(26,39,66,0.12)' }}>
-                        <div style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', height: 0.42, background: col as string, width: `${(w as number) * 100}%` }} />
-                        <div style={{ position: 'absolute', left: `${(w as number) * 100}%`, top: '50%', transform: 'translate(-50%,-50%)', width: 2.95, height: 2.95, borderRadius: '50%', background: col as string }} />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div style={{ gridColumn: 'span 2', borderRadius: 3.4, border: '0.42px solid rgba(26,39,66,0.1)', background: 'rgba(255,255,255,0.5)', padding: 3.8, display: 'flex', flexDirection: 'column', gap: 2.5 }}>
-                  <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 3.4, color: 'rgba(139,149,168,0.7)', textTransform: 'uppercase', letterSpacing: '0.2px' }}>Activity heatmap</span>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(8,1fr)', gap: 0.84 }}>
-                    {[['#C8A86B',0.22],['#C8A86B',0.58],['#C8A86B',0.82],['#C8A86B',0.35],['#1A2742',0.18],['#C8A86B',0.68],['#1A2742',0.1],['#C8A86B',0.9],
-                      ['#1A2742',0.22],['#C8A86B',0.42],['#1A2742',0.14],['#C8A86B',0.72],['#C8A86B',0.52],['#1A2742',0.18],['#C8A86B',0.48],['#1A2742',0.28],
-                      ['#C8A86B',0.22],['#C8A86B',0.58],['#C8A86B',0.82],['#C8A86B',0.35],['#1A2742',0.18],['#C8A86B',0.68],['#1A2742',0.1],['#C8A86B',0.9],
-                    ].map(([col, op], i) => (
-                      <div key={i} style={{ height: 5.9, borderRadius: 0.84, background: col as string, opacity: op as number }} />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-
+          {/* "Get" */}
+          <div style={{ position: 'absolute', left: 345, top: 290, transform: 'translateY(-50%)', fontFamily: "'Inter',sans-serif", fontWeight: 700, fontSize: 72, lineHeight: 1.2, color: '#C8A86B', letterSpacing: '-2.16px', whiteSpace: 'nowrap' }}>
+            Get
           </div>
 
-          {/* "in under" — right edge at 800px from left */}
-          <div style={{ position: 'absolute', right: 352, top: 420, transform: 'translateY(-50%)', fontFamily: "'Instrument Serif',serif", fontSize: 72, lineHeight: '60px', color: '#C8A86B', whiteSpace: 'nowrap' }}>
+          {/* "in under" */}
+          <div style={{ position: 'absolute', left: 577, top: 423, transform: 'translateY(-50%)', fontFamily: "'Inter',sans-serif", fontWeight: 700, fontSize: 48, lineHeight: 1.2, color: '#C8A86B', letterSpacing: '-0.96px', whiteSpace: 'nowrap' }}>
             in under
           </div>
 
           {/* "12 minutes" */}
-          <div style={{ position: 'absolute', left: 490, top: 474, transform: 'translateY(-50%)', fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 72, lineHeight: '72px', color: '#C8A86B', letterSpacing: '-2.88px', whiteSpace: 'nowrap' }}>
+          <div style={{ position: 'absolute', left: 488, top: 478, transform: 'translateY(-50%)', fontFamily: "'Inter',sans-serif", fontWeight: 700, fontSize: 72, lineHeight: 1.2, color: '#C8A86B', letterSpacing: '-2.16px', whiteSpace: 'nowrap' }}>
             12 minutes
           </div>
 
-          {/* Open prototype button — right:155 puts left edge at ~856px, 133px clear of mocks (right edge 723px) */}
+          {/* Open prototype button */}
           <a
             href="https://axon-app-chi.vercel.app/"
             target="_blank"
             rel="noopener"
-            style={{ position: 'absolute', right: 155, top: '50%', transform: 'translateY(-50%)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#C8A86B', color: '#1A2742', borderRadius: 8, padding: '12px 28px', height: 41, fontFamily: "'Inter',sans-serif", fontSize: 13, fontWeight: 500, textDecoration: 'none', whiteSpace: 'nowrap' }}
+            style={{ position: 'absolute', left: 741, top: 345, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: '#C8A86B', color: '#1A2742', borderRadius: 8, padding: '12px 36px 10px', height: 41, fontFamily: "'Inter',sans-serif", fontSize: 13, fontWeight: 500, textDecoration: 'none', whiteSpace: 'nowrap', boxSizing: 'border-box' }}
           >
             Open prototype
           </a>
+
+          {/* Picts — two overlapping browser mockups, centered */}
+          <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', width: 209, height: 200, overflow: 'hidden', borderRadius: 8 }}>
+
+            {/* Background */}
+            <div style={{ position: 'absolute', left: '50%', top: 'calc(50% - 0.5px)', transform: 'translate(-50%, -50%)', width: 209, height: 209, background: '#8b95a8', border: '0.609px solid rgba(26,39,66,0.1)', borderRadius: 6.531 }} />
+
+            {/* Mock 1 (back): insights chips + connectors + category nodes */}
+            <div style={{ position: 'absolute', left: 15.67, top: 15.67, width: 161.975, height: 99.275, background: '#afbed8', borderRadius: 4.231, overflow: 'hidden' }}>
+              <div style={{ background: 'rgba(255,255,255,0.4)', border: '1.054px solid rgba(26,39,66,0.12)', borderRadius: 4.231, boxShadow: '0 0.586px 5.859px rgba(26,39,66,0.06)', overflow: 'hidden', height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ background: 'rgba(26,39,66,0.05)', borderBottom: '0.293px solid rgba(26,39,66,0.08)', padding: '2.344px 4.688px', display: 'flex', gap: 1.758, alignItems: 'center', flexShrink: 0 }}>
+                  {[0.18, 0.13, 0.08].map((op, i) => <div key={i} style={{ width: 2.93, height: 2.93, borderRadius: '50%', background: `rgba(26,39,66,${op})` }} />)}
+                  <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 3.223, color: 'rgba(139,149,168,0.5)', marginLeft: 2.344 }}>axon.ai/canvas</span>
+                </div>
+                <div style={{ flex: 1, display: 'flex', alignItems: 'center', padding: '0 2px', gap: 2 }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2.372, flex: 1 }}>
+                    {[
+                      { label: 'Rev ↑12%', gold: true, light: false },
+                      { label: 'Churn ↓', gold: false, light: false },
+                      { label: 'CAC stable', gold: false, light: false },
+                      { label: 'EU leads', gold: true, light: true },
+                      { label: 'Q3 peak', gold: false, light: false },
+                      { label: 'NPS 72', gold: true, light: false },
+                    ].map((chip, i) => (
+                      <div key={i} style={{ borderRadius: 2.342, padding: '4.212px 2.372px', background: chip.gold ? (chip.light ? 'rgba(200,168,107,0.1)' : 'rgba(200,168,107,0.15)') : 'rgba(26,39,66,0.06)', border: `0.293px solid ${chip.gold ? (chip.light ? 'rgba(200,168,107,0.2)' : 'rgba(200,168,107,0.25)') : 'rgba(26,39,66,0.1)'}`, fontFamily: "'Inter',sans-serif", fontSize: 2.899, lineHeight: '4.348px', color: chip.gold ? 'rgba(26,39,66,0.7)' : '#8B95A8' }}>{chip.label}</div>
+                    ))}
+                  </div>
+                  <svg width="11.7" style={{ flexShrink: 0, alignSelf: 'stretch' }} viewBox="0 0 12 78" preserveAspectRatio="none">
+                    <path d="M0 8 Q6 8 12 35" stroke="#C8A86B" strokeWidth="0.6" fill="none" opacity="0.5" />
+                    <path d="M0 22 Q6 22 12 35" stroke="#8B95A8" strokeWidth="0.6" fill="none" opacity="0.4" />
+                    <path d="M0 35 Q6 35 12 47" stroke="#8B95A8" strokeWidth="0.6" fill="none" opacity="0.4" />
+                    <path d="M0 47 Q6 47 12 47" stroke="#C8A86B" strokeWidth="0.6" fill="none" opacity="0.5" />
+                    <path d="M0 60 Q6 60 12 60" stroke="#8B95A8" strokeWidth="0.6" fill="none" opacity="0.4" />
+                    <path d="M0 72 Q6 72 12 60" stroke="#8B95A8" strokeWidth="0.6" fill="none" opacity="0.3" />
+                  </svg>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 3.514, width: 22.253 }}>
+                    {[{ label: 'Growth', gold: false }, { label: 'Revenue', gold: true }, { label: 'Retention', gold: false }].map((cat, i) => (
+                      <div key={i} style={{ borderRadius: 2.342, padding: 2.635, textAlign: 'center', background: cat.gold ? 'rgba(200,168,107,0.1)' : 'rgba(26,39,66,0.07)', border: `0.293px solid ${cat.gold ? 'rgba(200,168,107,0.2)' : 'rgba(26,39,66,0.1)'}`, fontFamily: "'Inter',sans-serif", fontSize: 3.221, lineHeight: '4.831px', color: cat.gold ? '#C8A86B' : '#8B95A8' }}>{cat.label}</div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Mock 2 (front): charts canvas */}
+            <div style={{ position: 'absolute', left: 31, top: 89, width: 161.975, height: 99.275, background: '#afbed8', borderRadius: 4.231, overflow: 'hidden' }}>
+              <div style={{ background: 'rgba(255,255,255,0.4)', border: '1.054px solid rgba(26,39,66,0.12)', borderRadius: 4.231, boxShadow: '0 0.586px 5.859px rgba(26,39,66,0.06)', overflow: 'hidden', height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ background: 'rgba(26,39,66,0.05)', borderBottom: '0.293px solid rgba(26,39,66,0.08)', padding: '2.344px 4.688px', display: 'flex', gap: 1.758, alignItems: 'center', flexShrink: 0 }}>
+                  {[0.18, 0.13, 0.08].map((op, i) => <div key={i} style={{ width: 2.93, height: 2.93, borderRadius: '50%', background: `rgba(26,39,66,${op})` }} />)}
+                  <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 3.223, color: 'rgba(139,149,168,0.5)', marginLeft: 2.344 }}>axon.ai/canvas</span>
+                </div>
+                <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2.344, padding: '4.1px 3.05px 4.1px 4.1px' }}>
+                  <div style={{ background: 'rgba(255,255,255,0.5)', border: '0.293px solid rgba(26,39,66,0.1)', borderRadius: 2.344, padding: 2.637, display: 'flex', flexDirection: 'column', gap: 1.172 }}>
+                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 2.344, color: 'rgba(139,149,168,0.7)', textTransform: 'uppercase', letterSpacing: '0.141px' }}>Revenue mix</span>
+                    <div style={{ flex: 1, display: 'grid', gap: 0.879, gridTemplateColumns: 'minmax(0, 2fr) minmax(0, 1fr)', gridTemplateRows: 'repeat(2, minmax(0, 1fr))' }}>
+                      <div style={{ background: '#1A2742', borderRadius: 0.879, gridRow: '1 / span 2', opacity: 0.78 }} />
+                      <div style={{ background: '#C8A86B', borderRadius: 0.879, opacity: 0.65 }} />
+                      <div style={{ background: '#8B95A8', borderRadius: 0.879, opacity: 0.38 }} />
+                    </div>
+                  </div>
+                  <div style={{ background: 'rgba(255,255,255,0.5)', border: '0.293px solid rgba(26,39,66,0.1)', borderRadius: 2.344, padding: 2.637, display: 'flex', flexDirection: 'column', gap: 1.172 }}>
+                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 2.344, color: 'rgba(139,149,168,0.7)', textTransform: 'uppercase', letterSpacing: '0.141px' }}>Churn</span>
+                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
+                      {([[0.45, 'rgba(26,39,66,0.45)'], [0.7, '#C8A86B'], [0.82, 'rgba(26,39,66,0.6)'], [0.28, 'rgba(139,149,168,0.5)']] as [number, string][]).map(([w, col], i) => (
+                        <div key={i} style={{ position: 'relative', height: 0.293, background: 'rgba(26,39,66,0.12)' }}>
+                          <div style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', height: 0.293, background: col, width: `${w * 100}%` }} />
+                          <div style={{ position: 'absolute', left: `${w * 100}%`, top: '50%', transform: 'translate(-50%,-50%)', width: 2.051, height: 2.051, borderRadius: '50%', background: col }} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div style={{ gridColumn: '1 / span 2', background: 'rgba(255,255,255,0.5)', border: '0.293px solid rgba(26,39,66,0.1)', borderRadius: 2.344, padding: 2.637, display: 'flex', flexDirection: 'column', gap: 1.758 }}>
+                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 2.344, color: 'rgba(139,149,168,0.7)', textTransform: 'uppercase', letterSpacing: '0.141px' }}>Activity heatmap</span>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(8, 1fr)', gap: 0.586 }}>
+                      {([[  '#C8A86B',0.22],['#C8A86B',0.58],['#C8A86B',0.82],['#C8A86B',0.35],['#1A2742',0.18],['#C8A86B',0.68],['#1A2742',0.1],['#C8A86B',0.9],
+                         ['#1A2742',0.22],['#C8A86B',0.42],['#1A2742',0.14],['#C8A86B',0.72],['#C8A86B',0.52],['#1A2742',0.18],['#C8A86B',0.48],['#1A2742',0.28]
+                      ] as [string, number][]).map(([col, op], i) => (
+                        <div key={i} style={{ height: 4.102, borderRadius: 0.586, background: col, opacity: op }} />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
 
         </div>
       </section>
@@ -1001,35 +972,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══ SOCIAL PROOF ═══ */}
-      <section id="proof" className="py-28 px-6 border-t divider">
-        <div className="max-w-5xl mx-auto">
-          <div className="mb-14 text-center">
-            <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: '1.2px', textTransform: 'uppercase', color: '#C8A86B', display: 'block', marginBottom: 16 }}>What people say</span>
-            <h2 style={{ margin: 0 }}>
-              <span style={{ display: 'block', fontFamily: "'Instrument Serif',serif", fontSize: 72, fontWeight: 400, lineHeight: '60px', color: '#1A2742' }}>The data spoke.</span>
-              <span style={{ display: 'block', fontFamily: "'Instrument Serif',serif", fontSize: 72, fontWeight: 400, fontStyle: 'italic', lineHeight: '86px', color: '#C8A86B' }}>They just listened.</span>
-            </h2>
-          </div>
-          <div className="grid md:grid-cols-3 gap-5">
-            {[
-              { quote: '"I used to spend Sunday night reformatting pivot tables. Now I spend Sunday night doing literally anything else."', initials: 'SR', name: 'Sarah R.', role: 'Senior Analyst, Fintech', highlight: false },
-              { quote: '"The chart choices alone are worth it. I\'d been using bar charts for everything. Axon knew better."', initials: 'MK', name: 'Marcus K.', role: 'Head of Strategy, SaaS', highlight: true },
-              { quote: '"My team went from three-day deck cycles to same-day. The board doesn\'t know what happened. We do."', initials: 'JP', name: 'Jamie P.', role: 'VP Data, Retail Group', highlight: false },
-            ].map(t => (
-              <div key={t.initials} className={`rounded-xl border ${t.highlight ? 'border-accent/20 bg-white/50' : 'border-primary/10 bg-white/40'} p-7`}>
-                <p className="font-display text-base text-primary/80 leading-relaxed mb-6 italic">{t.quote}</p>
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-accent/20 flex items-center justify-center font-body text-sm font-semibold text-accent">{t.initials}</div>
-                  <div><p className="font-body text-sm font-semibold text-primary">{t.name}</p><p className="font-body text-xs text-soft">{t.role}</p></div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══ CTA ═══ */}
+{/* ═══ CTA ═══ */}
       <section id="cta" className="py-28 px-6 border-t divider">
         <div className="max-w-2xl mx-auto text-center">
           <h2 style={{ margin: '0 0 20px' }}>
