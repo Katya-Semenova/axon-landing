@@ -125,6 +125,14 @@ nav {
   transition: transform 0.3s ease;
 }
 
+/* Card lift on hover — same gentle behavior as The Workflow cards */
+.lift-card {
+  transition: transform 0.3s ease;
+}
+.lift-card:hover {
+  transform: translateY(-3px);
+}
+
 /* Canvas breathe */
 .canvas-preview .node-chip { animation: nodePulse 3s ease-in-out infinite; }
 .canvas-preview .node-chip:nth-child(2) { animation-delay: 0.8s; }
